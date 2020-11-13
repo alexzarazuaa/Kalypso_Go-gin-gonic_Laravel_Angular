@@ -2,9 +2,10 @@ package common
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"os"
 )
 
 type Database struct {
@@ -21,6 +22,8 @@ func Init() *gorm.DB {
 	}
 	db.DB().SetMaxIdleConns(10)
 	//db.LogMode(true)
+
+	//proooof
 	DB = db
 	return DB
 }
