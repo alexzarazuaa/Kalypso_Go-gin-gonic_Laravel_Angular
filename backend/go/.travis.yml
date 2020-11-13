@@ -1,0 +1,23 @@
+language: go
+
+go:
+  - 1.7
+  - 1.8.x
+  - master
+
+go_import_path: github.com/wangzitian0/golang-gin-starter-kit
+
+services:
+  - sqlite3
+
+install:
+  - go get -u github.com/wangzitian0/golang-gin-starter-kit
+  - go get -u github.com/kardianos/govendor
+  - govendor sync
+script:
+#  - go test -v ./...
+  - bash ./scripts/gofmt.sh
+  - bash ./scripts/coverage.sh
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
