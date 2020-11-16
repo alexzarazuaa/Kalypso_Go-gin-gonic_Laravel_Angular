@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class BuysProducts extends Seeder
 {
@@ -11,19 +12,16 @@ class BuysProducts extends Seeder
      */
     public function run()
     {
-        DB::table('BuysProducts')->insert([
-            'name' => str_random(3),
-            'brand' => str_random(3),
-            'rating' => str_random(3),
-            'category' => str_random(3)
-        ]);
-
-          DB::table('BuysProducts')->insert([
-            'name' => str_random(3),
-            'brand' => str_random(3),
-            'rating' => str_random(3),
-            'category' => str_random(3)
-        ]);
+        $faker = Faker::create();
+        for ($i=0; $i < 5; $i++) {
+            \DB::table('BuysProducts')->insert(array(
+                   'id_user' => $faker->randomDigit,
+                   'name' => $faker->firstName,
+                   'brand'  => $faker->company,
+                   'rating' => $faker->randomDigit,
+                   'category' => $faker->word
+            ));
+        }
 
     }
 }
