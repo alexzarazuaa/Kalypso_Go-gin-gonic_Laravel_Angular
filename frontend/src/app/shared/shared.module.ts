@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { ProductsComponent } from './products-helpers';
 import { ArticleListComponent, ArticleMetaComponent, ArticlePreviewComponent } from './article-helpers';
 import { FavoriteButtonComponent, FollowButtonComponent } from './buttons';
 import { ListErrorsComponent } from './list-errors.component';
@@ -24,7 +24,8 @@ import { ShowAuthedDirective } from './show-authed.directive';
     FavoriteButtonComponent,
     FollowButtonComponent,
     ListErrorsComponent,
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    ProductsComponent
   ],
   exports: [
     ArticleListComponent,
@@ -38,7 +39,8 @@ import { ShowAuthedDirective } from './show-authed.directive';
     HttpClientModule,
     ListErrorsComponent,
     RouterModule,
-    ShowAuthedDirective
+    ShowAuthedDirective,
+    ProductsComponent
   ]
 })
 export class SharedModule {}
