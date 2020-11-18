@@ -2,8 +2,8 @@ package articles
 
 import (
 	"errors"
-	"github.com/wangzitian0/golang-gin-starter-kit/common"
-	"github.com/wangzitian0/golang-gin-starter-kit/users"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 	"strconv"

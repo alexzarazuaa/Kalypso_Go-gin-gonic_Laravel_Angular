@@ -11,8 +11,7 @@ import {
   JwtService,
   ProfilesService,
   TagsService,
-  UserService,
-  BuysProducts
+  UserService
 } from './services';
 
 @NgModule({
@@ -28,8 +27,7 @@ import {
     JwtService,
     ProfilesService,
     TagsService,
-    UserService,
-    BuysProducts
+    UserService
   ],
   declarations: []
 })
