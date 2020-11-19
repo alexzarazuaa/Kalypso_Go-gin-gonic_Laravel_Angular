@@ -11,7 +11,7 @@ export class ProductsComponent implements OnInit {
     private buysProducts: BuysProducts) { }
 
   ngOnInit() {
-    console.log('holi');
+    console.log('Entra en el oninit');
     this.buysProducts.query().subscribe(data => {
       console.log(data);
     })

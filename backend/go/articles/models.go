@@ -2,6 +2,8 @@ package articles
 
 import (
 	_ "fmt"
+
+	"github.com/jinzhu/gorm"
 	"strconv"
 
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"

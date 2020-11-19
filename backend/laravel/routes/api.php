@@ -11,7 +11,15 @@
 |
 */
 
-Route::group(['middleware' => 'cors'], function () {
+Route::group(['namespace' => 'Api'], function () {
+
+        
+    Route::post('/product', 'buysProducts@create');
+    Route::get('/products', 'buysProducts@show');
+    Route::get('/product/{id}', 'buysProducts@showBuyProduct');
+    Route::put('/product/{id}', 'buysProducts@update');
+    Route::delete('/product/{id}', 'buysProducts@delete');
+
 
     Route::post('users/login', 'AuthController@login');
     Route::post('users', 'AuthController@register');
@@ -41,13 +49,6 @@ Route::group(['middleware' => 'cors'], function () {
     ]);
 
     Route::get('tags', 'TagController@index');
-    
-    
-    Route::post('/product', 'buysProducts@create');
-    Route::get('/products', 'buysProducts@show');
-    Route::get('/product/{id}', 'buysProducts@showBuyProduct');
-    Route::put('/product/{id}', 'buysProducts@update');
-    Route::delete('/product/{id}', 'buysProducts@delete');
 
 
 });
