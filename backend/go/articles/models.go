@@ -2,10 +2,11 @@ package articles
 
 import (
 	_ "fmt"
-	"github.com/jinzhu/gorm"
-	"github.com/wangzitian0/golang-gin-starter-kit/common"
-	"github.com/wangzitian0/golang-gin-starter-kit/users"
 	"strconv"
+
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"github.com/jinzhu/gorm"
 )
 
 type ArticleModel struct {

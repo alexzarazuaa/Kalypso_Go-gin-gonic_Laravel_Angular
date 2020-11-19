@@ -1,8 +1,8 @@
 package articles
 
 import (
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 	"github.com/gosimple/slug"
-	"github.com/wangzitian0/golang-gin-starter-kit/users"
 	"gopkg.in/gin-gonic/gin.v1"
 )
 

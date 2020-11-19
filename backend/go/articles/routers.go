@@ -2,11 +2,14 @@ package articles
 
 import (
 	"errors"
-	"github.com/wangzitian0/golang-gin-starter-kit/common"
-	"github.com/wangzitian0/golang-gin-starter-kit/users"
-	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 	"strconv"
+	"fmt"
+
+
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"gopkg.in/gin-gonic/gin.v1"
 )
 
 func ArticlesRegister(router *gin.RouterGroup) {
@@ -23,6 +26,7 @@ func ArticlesAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/", ArticleList)
 	router.GET("/:slug", ArticleRetrieve)
 	router.GET("/:slug/comments", ArticleCommentList)
+
 }
 
 func TagsAnonymousRegister(router *gin.RouterGroup) {
@@ -118,7 +122,10 @@ func ArticleUpdate(c *gin.Context) {
 
 func ArticleDelete(c *gin.Context) {
 	slug := c.Param("slug")
+	fmt.Println(slug);
+	fmt.Println("------------------------------")
 	err := DeleteArticleModel(&ArticleModel{Slug: slug})
+	fmt.Println(err)
 	if err != nil {
 		c.JSON(http.StatusNotFound, common.NewError("articles", errors.New("Invalid slug")))
 		return
@@ -204,6 +211,7 @@ func ArticleCommentList(c *gin.Context) {
 	serializer := CommentsSerializer{c, articleModel.Comments}
 	c.JSON(http.StatusOK, gin.H{"comments": serializer.Response()})
 }
+
 func TagList(c *gin.Context) {
 	tagModels, err := getAllTags()
 	if err != nil {
