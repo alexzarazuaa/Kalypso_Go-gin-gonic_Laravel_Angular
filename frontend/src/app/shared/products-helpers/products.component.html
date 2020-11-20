@@ -1,16 +1,17 @@
-<div class = "article-meta row-prodcuts" *ngFor="let products of buyProducts">
-    <div class = "container-prodcuts-list" ng-click = "$ctrl.opendt()">
-        <div class = "ite" style = "padding-right: 25px;">
-            <img style = "width: 65px!important; height: 65px!important;">
-        </div>
-        <div class = "ite">
-            <h3>NAME</h3>
-            <div>{{products.name}}</div>
-            <br>
-            <h3>BRAND</h3>
-            <div>{{products.brand}}</div>
-            <h3>RATING</h3>
-            <div>{{products.rating}}</div>
+<section class="shop-row">
+    <div class="article-meta row-prodcuts" *ngFor="let products of buyProducts">
+        <div class="container-prodcuts-list" ng-click="$ctrl.opendt()">
+ 
+            <div class="ite">
+                <img style="width: 65px!important; height: 65px!important;" >
+                <h3>NAME</h3>
+                <div>{{products.name}}</div>
+                <br>
+                <h3>BRAND</h3>
+                <div>{{products.brand}}</div>
+                <h3>RATING</h3>
+                <div>{{products.rating}}</div>
+            </div>
         </div>
     </div>
-  </div>
+</section>
