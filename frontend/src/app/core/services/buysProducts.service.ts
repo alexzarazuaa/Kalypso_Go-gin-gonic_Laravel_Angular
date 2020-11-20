@@ -21,7 +21,7 @@ export class BuysProducts {
   
 
   get(slug): Observable<BuyProduct> {
-    return this.apiService.get('/product/' + slug)
+    return this.apiService.get('/products/' + slug)
       .pipe(map(data => {
         console.log(data);
         return data.buyproduct;

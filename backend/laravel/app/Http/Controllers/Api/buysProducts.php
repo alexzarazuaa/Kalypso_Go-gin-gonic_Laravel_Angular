@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Model_buysProducts;
 
 
-class buysProducts extends Controller
+class buysProducts extends ApiController
 {
 
     public function create(Request $request){
@@ -21,11 +21,12 @@ class buysProducts extends Controller
         $model_buysProducts -> rating = $request -> rating;
         $model_buysProducts -> Category = $request -> Category;
 
-        //print_r($model_buysProducts);
+        print_r($model_buysProducts);
 
         $model_buysProducts -> save();
 
         return response() -> json($model_buysProducts);
+        // return $this->respondWithPagination($model_buysProducts);
     }
 
 
@@ -36,6 +37,13 @@ class buysProducts extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
+    {
+        $model_buysProducts = Model_buysProducts::all();
+
+        return response() -> json($model_buysProducts);
+    }
+
+    public function index()
     {
         $model_buysProducts = Model_buysProducts::all();
 

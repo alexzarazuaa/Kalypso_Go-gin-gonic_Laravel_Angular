@@ -13,6 +13,6 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("EIII ENTRA EN Product Component");
+    // console.log("EIII ENTRA EN Product Component");
   }
 }
