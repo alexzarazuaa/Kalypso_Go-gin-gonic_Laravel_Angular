@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   api_url: '/api',
-  laravel: '/api'
+  laravel: '/api',
+  go:'/api'
 };

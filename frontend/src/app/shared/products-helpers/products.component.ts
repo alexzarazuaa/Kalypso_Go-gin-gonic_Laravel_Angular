@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit {
     console.log('Entra en el oninit');
     this.buysProducts.query().subscribe(data => {
       this.buyProducts = data;
-      console.log(this.buyProducts);
+      console.log(this.buyProducts,'products laravel');
     })
   }
 

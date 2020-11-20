@@ -17,6 +17,11 @@ const routes: Routes = [
   {
     path: 'article',
     loadChildren: './article/article.module#ArticleModule'
+  },
+  {
+    path:'product',
+    loadChildren : './product/products.module#ProductModule'
+
   }
 ];
 
