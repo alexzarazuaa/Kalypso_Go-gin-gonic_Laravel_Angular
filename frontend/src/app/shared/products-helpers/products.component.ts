@@ -9,11 +9,13 @@ import { BuyProduct, BuysProducts } from '../../core';
 export class ProductsComponent implements OnInit {
   constructor(
     private buysProducts: BuysProducts) { }
+    buyProducts = [];
 
   ngOnInit() {
     console.log('Entra en el oninit');
     this.buysProducts.query().subscribe(data => {
-      console.log(data);
+      this.buyProducts = data;
+      console.log(this.buyProducts);
     })
   }
 

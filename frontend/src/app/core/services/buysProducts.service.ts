@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
@@ -14,18 +14,20 @@ export class BuysProducts {
   constructor(private apiService: ApiService) {
   }
 
-  query(): Observable<{ buyProducts: BuyProduct[] }> {
-
+  query(): Observable<BuyProduct[]> {
+    const params = {};
     return this.apiService.get('/products');
   }// end_query
+  
 
   get(slug): Observable<BuyProduct> {
     return this.apiService.get('/product/' + slug)
       .pipe(map(data => {
         console.log(data);
-        return data;
+        return data.buyproduct;
       }));
   }// end_get
+
 
 
 }

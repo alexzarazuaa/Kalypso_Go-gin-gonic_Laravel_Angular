@@ -1,3 +1,12 @@
-<p>
-    VAAAMOS SE VEN LOS PRODUCTOS
-</p>
+<div class = "article-meta row-prodcuts" *ngFor="let products of buyProducts">
+    <div class = "container-prodcuts-list" ng-click = "$ctrl.opendt()">
+        <div class = "ite" style = "padding-right: 25px;">
+            <img style = "width: 65px!important; height: 65px!important;">
+        </div>
+        <div class = "ite">
+            <div>{{products.name}}</div>
+            <div>{{products.brand}}</div>
+            <div>{{products.rating}}</div>
+        </div>
+    </div>
+  </div>
