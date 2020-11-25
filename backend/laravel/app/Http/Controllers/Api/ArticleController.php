@@ -10,7 +10,6 @@ use App\Http\Requests\Api\CreateArticle;
 use App\Http\Requests\Api\UpdateArticle;
 use App\Http\Requests\Api\DeleteArticle;
 use App\RealWorld\Transformers\ArticleTransformer;
-use Illuminate\Http\Request;
 
 class ArticleController extends ApiController
 {
@@ -34,16 +33,10 @@ class ArticleController extends ApiController
      * @return \Illuminate\Http\JsonResponse
      */
     public function index(ArticleFilter $filter)
-    // public function index(Request $request)
     {
         $articles = new Paginate(Article::loadRelations()->filter($filter));
+
         return $this->respondWithPagination($articles);
-
-        // $limit = $request->has('limit') ? $request->get('limit') : 10;
-        // $offset = $request->has('offset') ? $request->get('offset') : 1;
-        // $articles = Article::skip($offset)->take($limit)->get();
-        // return $this->respondWithTransformer($articles);
-
     }
 
     /**

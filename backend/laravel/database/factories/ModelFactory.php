@@ -22,6 +22,17 @@ $factory->define(App\User::class, function (\Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Article::class, function (\Faker\Generator $faker) {
+
+    static $reduce = 999;
+
+    return [
+        'title' => $faker->sentence,
+        'description' => $faker->sentence(10),
+        'body' => $faker->paragraphs($faker->numberBetween(1, 3), true),
+        'created_at' => \Carbon\Carbon::now()->subSeconds($reduce--),
+    ];
+});
 $factory->define(App\Model_buysProducts::class , function(\Faker\Generator $faker){
 
     static $reduce = 999;
@@ -35,18 +46,6 @@ $factory->define(App\Model_buysProducts::class , function(\Faker\Generator $fake
         'rating' => $faker->randomDigit($faker->numberBetween(1, 99999), true),
         'category' => $faker->word
         
-    ];
-});
-
-$factory->define(App\Article::class, function(\Faker\Generator $faker) {
-
-    static $reduce = 999;
-
-    return [
-        'title' => $faker->sentence,
-        'description' => $faker->sentence(10),
-        'body' => $faker->paragraphs($faker->numberBetween(1, 3), true),
-        'created_at' => \Carbon\Carbon::now()->subSeconds($reduce--),
     ];
 });
 

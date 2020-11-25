@@ -1,4 +1,3 @@
-
 <?php
 
 return [
@@ -19,3 +18,4 @@ return [
     'exposedHeaders' => [],
     'maxAge' => 864000,
 ];
+

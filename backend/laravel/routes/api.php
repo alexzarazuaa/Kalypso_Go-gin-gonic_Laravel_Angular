@@ -13,6 +13,7 @@
 
 Route::group(['namespace' => 'Api'], function () {
 
+
         
     // Route::post('products', 'buysProducts@create');
     // Route::get('products', 'buysProducts@show');
@@ -20,17 +21,13 @@ Route::group(['namespace' => 'Api'], function () {
     // Route::put('products/{id}', 'buysProducts@update');
     // Route::delete('products/{id}', 'buysProducts@delete');
 
-    Route::resource('products', 'buysProducts');
-
-  
-
+     Route::resource('products', 'buysProducts');
 
     Route::post('users/login', 'AuthController@login');
     Route::post('users', 'AuthController@register');
 
     Route::get('user', 'UserController@index');
     Route::match(['put', 'patch'], 'user', 'UserController@update');
-    // Route::put('user', 'UserController@update');
 
     Route::get('profiles/{user}', 'ProfileController@show');
     Route::post('profiles/{user}/follow', 'ProfileController@follow');
@@ -40,10 +37,6 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('articles/{article}/favorite', 'FavoriteController@add');
     Route::delete('articles/{article}/favorite', 'FavoriteController@remove');
 
-
-    
-
-    
     Route::resource('articles', 'ArticleController', [
         'except' => [
             'create', 'edit'
@@ -57,8 +50,5 @@ Route::group(['namespace' => 'Api'], function () {
     ]);
 
     Route::get('tags', 'TagController@index');
-    
-
 
 });
-
