@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\createBuyProduct;
+use App\Http\Requests\Api\UpdateProduct;
+use App\Http\Requests\Api\DeleteBuyProduct;
+use App\RealWorld\Transformers\BuyProductTransformer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model_buysProducts;
@@ -10,39 +14,24 @@ use App\Model_buysProducts;
 class buysProducts extends ApiController
 {
 
-    public function create(Request $request){
-        
-        $model_buysProducts = new Model_buysProducts();
-   
 
-        $model_buysProducts -> id_user = $request -> id_user;
-        $model_buysProducts -> name = $request -> name;
-        $model_buysProducts -> brand = $request -> brand;
-        $model_buysProducts -> rating = $request -> rating;
-        $model_buysProducts -> Category = $request -> Category;
+    /**
+     * ArticleController constructor.
+     *
+     * @param BuyProductTransformer $transformer
+     */
+    public function __construct(BuyProductTransformer $transformer)
+    {
+        $this->transformer = $transformer;
 
-        print_r($model_buysProducts);
-
-        $model_buysProducts -> save();
-
-        return response() -> json($model_buysProducts);
-        // return $this->respondWithPagination($model_buysProducts);
+        // $this->middleware('auth.api')->except(['index', 'show']);
+        // $this->middleware('auth.api:optional')->only(['index', 'show']);
     }
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * GET ALL BUY PRODUCTS
      */
-    public function show()
-    {
-        $model_buysProducts = Model_buysProducts::all();
-
-        return response() -> json($model_buysProducts);
-    }
-
     public function index()
     {
         $model_buysProducts = Model_buysProducts::all();
@@ -50,17 +39,37 @@ class buysProducts extends ApiController
         return response() -> json($model_buysProducts);
     }
 
+    
+    public function store(CreateBuyProduct $request){
+        
+        $user = auth()->user();
+
+        $buyProduct = $user->model_buysProducts()->create([
+            'slug' =>$request->input('buyProduct.slug'),
+            'name' => $request->input('buyProduct.name'),
+            'brand' => $request->input('buyProduct.brand'),
+            'image' =>$request->input('buyProduct.image'),
+            'desc' =>$request->input('buyProduct.desc'),
+            'rating' => $request->input('buyProduct.rating'),
+            'category' => $request->input('buyProduct.category')
+
+        ]);
+
+
+        return $this->respondWithTransformer($buyProduct);
+    }
+
 
     /**
      * RETURN ONE BUY PRODUCT
      */
-    public function showBuyProduct($id) {
 
-        $model_buysProducts = Model_buysProducts::find($id);
+
+    public function show($id)
+    {        $model_buysProducts = Model_buysProducts::find($id);
         print_r($id);
         return response() -> json($model_buysProducts);
-
-    }// end_showSong
+    }
 
 
     /**
@@ -70,22 +79,13 @@ class buysProducts extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProduct $request,Model_buysProducts $buyProduct)
     {
-        $model_buysProducts = Model_buysProducts::find($id);
+        if ($request->has('buyProduct')) {
+            $buyProduct->update($request->get('buyProduct'));
+        }
 
-        if (!$model_buysProducts) return response() -> json('Not Found');
-
-        $model_buysProducts -> id_user = $request -> id_user;
-        $model_buysProducts -> name = $request -> name;
-        $model_buysProducts -> brand = $request -> brand;
-        $model_buysProducts -> rating = $request -> rating;
-        $model_buysProducts -> Category = $request -> Category;
-    
-
-        $model_buysProducts -> save();
-
-        return response() -> json($model_buysProducts);
+        return $this->respondWithTransformer($buyProduct);
     }
 
     /**
@@ -94,14 +94,10 @@ class buysProducts extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DeleteBuyProduct $request, Model_buysProducts $buyProduct)
     {
-        $model_buysProducts = Model_buysProducts::find($id);
-        
-        if(!$Model_buysProducts) return response() -> json('Not Found');
+        $buyProduct->delete();
 
-        $model_buysProducts -> delete();
-
-        return response() -> json($model_buysProducts);
+        return $this->respondSuccess();
     }
 }

@@ -16,8 +16,11 @@ class CrearTablaBuysProducts extends Migration
         Schema::create('BuysProducts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('id_user');
+            $table->integer('slug');
             $table->string('name');
             $table->string('brand');
+            $table->string('image');
+            $table->string('desc');
             $table->integer('rating');
             $table->string('category');
             $table->timestamps();

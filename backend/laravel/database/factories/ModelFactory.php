@@ -22,7 +22,23 @@ $factory->define(App\User::class, function (\Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Article::class, function (\Faker\Generator $faker) {
+$factory->define(App\Model_buysProducts::class , function(\Faker\Generator $faker){
+
+    static $reduce = 999;
+    return[
+        'id_user' => $faker->randomDigit($faker->numberBetween(1, 99999), true),
+        'slug' =>$faker->randomDigit($faker->numberBetween(1, 99999), true),
+        'name' => $faker->firstName,
+        'brand'  => $faker->company,
+        'image' => $faker->imageUrl($width = 640, $height = 480),
+        'desc' => $faker->sentence($nbWords = 6, $variableNbWords = true),
+        'rating' => $faker->randomDigit($faker->numberBetween(1, 99999), true),
+        'category' => $faker->word
+        
+    ];
+});
+
+$factory->define(App\Article::class, function(\Faker\Generator $faker) {
 
     static $reduce = 999;
 
