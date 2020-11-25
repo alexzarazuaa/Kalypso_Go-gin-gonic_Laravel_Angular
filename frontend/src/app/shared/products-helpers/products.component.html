@@ -1,4 +1,4 @@
-<section class="shop-row">
+<!-- <section class="shop-row">
     <div class="article-meta row-prodcuts" *ngFor="let products of buyProducts">
         <div class="container-prodcuts-list" ng-click="$ctrl.opendt()">
  
@@ -14,4 +14,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+
+<app-products-preview
+  *ngFor="let product of buyProduct"
+  [products]="products">
+</app-products-preview>
