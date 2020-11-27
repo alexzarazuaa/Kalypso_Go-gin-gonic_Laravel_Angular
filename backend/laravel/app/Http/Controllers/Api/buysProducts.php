@@ -2,67 +2,74 @@
 
 namespace App\Http\Controllers\Api;
 
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\RealWorld\Transformers\BuyProductTransformer;
 use App\Model_buysProducts;
+use App\Http\Requests\Api\CreateBuyProduct;
 
 
 class buysProducts extends ApiController
 {
 
-    public function store(Request $request){
-        
-        $model_buysProducts = new Model_buysProducts();
-        $model_buysProducts -> id_user = $request -> id_user;
-        $model_buysProducts -> slug = $request -> slug;
-        $model_buysProducts -> name = $request -> name;
-        $model_buysProducts -> brand = $request -> brand;
-        $model_buysProducts -> image = $request -> image;
-        $model_buysProducts -> desc = $request -> desc;
-        $model_buysProducts -> rating = $request -> rating;
-        $model_buysProducts -> category = $request -> category;
+    /**
+     * buysProducts constructor.
+     *
+     * @param BuyProductTransformer $transformer
+     */
+    public function __construct(BuyProductTransformer $transformer)
+    {
+        $this->transformer = $transformer;
 
-
-        //print_r($model_buysProducts);
-
-        $model_buysProducts -> save();
-
-        return response() -> json($model_buysProducts);
-        // return $this->respondWithPagination($model_buysProducts);
+        // $this->middleware('auth.api')->except(['index', 'show']);
+        // $this->middleware('auth.api:optional')->only(['index', 'show']);
     }
 
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * INDEX FOR GET ALL BUYSPRODUCTS
      */
-    public function show()
-    {
-        $model_buysProducts = Model_buysProducts::all();
-
-        return response() -> json($model_buysProducts);
-    }
 
     public function index()
     {
-        $model_buysProducts = Model_buysProducts::all();
+        $buyProduct = Model_buysProducts::all();
+        print_r($buyProduct);
 
-        return response() -> json($model_buysProducts);
+        return $this->respondWithTransformer($buyProduct);
     }
+
+    public function store(CreateBuyProduct $request){
+        
+        $buyProduct = new Model_buysProducts();
+        $buyProduct -> id_user = $request -> id_user;
+        $buyProduct -> slug = $request -> slug;
+        $buyProduct -> name = $request -> name;
+        $buyProduct -> brand = $request -> brand;
+        $buyProduct -> image = $request -> image;
+        $buyProduct -> desc = $request -> desc;
+        $buyProduct -> rating = $request -> rating;
+        $buyProduct -> category = $request -> category;
+
+     
+
+
+  
+        // return response() -> json($buyProduct);
+         return $this->respondWithTransformer($buyProduct);
+    }
+
 
 
     /**
      * RETURN ONE BUY PRODUCT
      */
-    public function showBuyProduct($id) {
-
-        $model_buysProducts = Model_buysProducts::find($id);
-        print_r($id);
-        return response() -> json($model_buysProducts);
-
+    public function show(Model_buysProducts $buyProduct)
+    {
+        return $this->respondWithTransformer($buyProduct);
     }// end_showSong
+    
+
 
 
     /**
