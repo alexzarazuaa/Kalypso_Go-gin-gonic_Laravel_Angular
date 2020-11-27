@@ -30,7 +30,6 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	}
 	self.userModel.Username = self.User.Username
 	self.userModel.Email = self.User.Email
-	self.userModel.Bio = self.User.Bio
 
 	if self.User.Password != common.NBRandomPassword {
 		self.userModel.setPassword(self.User.Password)
@@ -38,6 +37,11 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	if self.User.Image != "" {
 		self.userModel.Image = &self.User.Image
 	}
+
+	self.userModel.Karma = 0
+	self.userModel.Type = "admin"
+
+
 	return nil
 }
 
@@ -52,7 +56,6 @@ func NewUserModelValidatorFillWith(userModel UserModel) UserModelValidator {
 	userModelValidator := NewUserModelValidator()
 	userModelValidator.User.Username = userModel.Username
 	userModelValidator.User.Email = userModel.Email
-	userModelValidator.User.Bio = userModel.Bio
 	userModelValidator.User.Password = common.NBRandomPassword
 
 	if userModel.Image != nil {

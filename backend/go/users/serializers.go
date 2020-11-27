@@ -15,20 +15,18 @@ type ProfileSerializer struct {
 type ProfileResponse struct {
 	ID        uint    `json:"-"`
 	Username  string  `json:"username"`
-	Bio       string  `json:"bio"`
+	Email     string  `json:"email"`
 	Image     *string `json:"image"`
-	Following bool    `json:"following"`
+	Karma 	   int    `json:"karma"`
+	Type	   string  `json:"type"`
 }
 
 // Put your response logic including wrap the userModel here.
 func (self *ProfileSerializer) Response() ProfileResponse {
-	myUserModel := self.C.MustGet("my_user_model").(UserModel)
 	profile := ProfileResponse{
 		ID:        self.ID,
 		Username:  self.Username,
-		Bio:       self.Bio,
 		Image:     self.Image,
-		Following: myUserModel.isFollowing(self.UserModel),
 	}
 	return profile
 }
@@ -40,8 +38,9 @@ type UserSerializer struct {
 type UserResponse struct {
 	Username string  `json:"username"`
 	Email    string  `json:"email"`
-	Bio      string  `json:"bio"`
-	Image    *string `json:"image"`
+	Image     *string `json:"image"`
+	Karma 	   int    `json:"karma"`
+	Type	   string  `json:"type"`
 	Token    string  `json:"token"`
 }
 
@@ -50,8 +49,9 @@ func (self *UserSerializer) Response() UserResponse {
 	user := UserResponse{
 		Username: myUserModel.Username,
 		Email:    myUserModel.Email,
-		Bio:      myUserModel.Bio,
 		Image:    myUserModel.Image,
+		Karma: 	   myUserModel.Karma,
+		Type:	  myUserModel.Type,
 		Token:    common.GenToken(myUserModel.ID),
 	}
 	return user
