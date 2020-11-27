@@ -1,8 +1,6 @@
-<div class = "article-meta row-product" *ngFor="let product of buyProducts">
-    <div class = "container-product-list" ng-click = "$ctrl.opendt()">
-        <div class = "ite" style = "padding-right: 25px;">
-            <img style = "width: 65px!important; height: 65px!important;">
-        </div>
+<section class = "article-meta ">
+    <article class = "container-product-list row-product " ng-click = "$ctrl.opendt()">
+     
         <div class = "ite">
             <h3>NAME</h3>
             <div>{{product.name}}</div>
@@ -12,11 +10,10 @@
             <h3>DESCRIPTION</h3>
             <div>{{product.desc}}</div>
             <h3>RATING</h3>
-            <div>{{product.rating}}</div>
-
-    
-
+            <div>{{product.rating}}</div>    
+            <a  [routerLink]="['/products', product.slug]" class="preview-link">READ MORE</a>
         </div>
-    </div>
-  </div>
-  <a [routerLink]="['/product', product.id" class="preview-link">
+    
+    </article>
+
+</section>

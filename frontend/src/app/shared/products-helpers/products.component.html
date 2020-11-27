@@ -1,22 +1,4 @@
-<!-- <section class="shop-row">
-    <div class="article-meta row-prodcuts" *ngFor="let products of buyProducts">
-        <div class="container-prodcuts-list" ng-click="$ctrl.opendt()">
- 
-            <div class="ite">
-              <div>{{products.image}}</div>
-                <h3>NAME</h3>
-                <div>{{products.name}}</div>
-                <br>
-                <h3>BRAND</h3>
-                <div>{{products.brand}}</div>
-                <h3>RATING</h3>
-                <div>{{products.rating}}</div>
-            </div>
-        </div>
-    </div>
-</section> -->
-
 <app-products-preview
-  *ngFor="let product of buyProduct"
-  [products]="products">
+  *ngFor="let product of buyProducts"
+  [product]="product">
 </app-products-preview>

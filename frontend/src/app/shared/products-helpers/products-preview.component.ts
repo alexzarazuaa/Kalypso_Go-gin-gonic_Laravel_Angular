@@ -4,10 +4,17 @@ import { BuyProduct } from '../../core';
 
 @Component({
   selector: 'app-products-preview',
-  templateUrl: './products-preview.component.html'
+  templateUrl: './products-preview.component.html',
+  styleUrls: ['./products-preview.component.css']
 })
 export class ProductsPreviewComponent {
-  @Input() buyProducts: BuyProduct;
+  @Input() product: BuyProduct;
 
 
+  ngOnInit() {
+    this.product;
+    console.log('Entra en el preview component', this.product);
+
+
+  }
 }

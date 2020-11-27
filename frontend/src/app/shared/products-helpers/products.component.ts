@@ -12,6 +12,7 @@ export class ProductsComponent implements OnInit {
     buyProducts = [];
 
   ngOnInit() {
+     this.buyProducts = [];
     console.log('Entra en el oninit');
     this.buysProducts.query().subscribe(data => {
       this.buyProducts = data;
