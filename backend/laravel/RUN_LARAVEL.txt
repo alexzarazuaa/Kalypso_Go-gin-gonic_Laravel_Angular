@@ -5,7 +5,7 @@
 
 2. php artisan jwt:secret
 
-3 php artisan server
+3 php artisan serve
 
 ----------------------------------------------------------------------------
 
