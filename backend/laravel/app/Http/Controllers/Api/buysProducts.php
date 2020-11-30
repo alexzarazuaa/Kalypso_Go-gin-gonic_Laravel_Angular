@@ -34,9 +34,8 @@ class buysProducts extends ApiController
     public function index()
     {
         $buyProduct = Model_buysProducts::all();
-        print_r($buyProduct);
-
-        return $this->respondWithTransformer($buyProduct);
+    
+        return response() -> json($buyProduct);
     }
 
     public function store(CreateBuyProduct $request){
@@ -55,8 +54,8 @@ class buysProducts extends ApiController
 
 
   
-        // return response() -> json($buyProduct);
-         return $this->respondWithTransformer($buyProduct);
+        return response() -> json($buyProduct);
+         //return $this->respondWithTransformer($buyProduct);
     }
 
 
