@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 //import { Award, AwardsService } from '../core';
 
 @Component({
@@ -13,6 +14,6 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("EIII ENTRA EN Product Component");
+    console.log("EIII ENTRA EN Product Component");
   }
 }

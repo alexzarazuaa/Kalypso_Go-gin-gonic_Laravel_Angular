@@ -24,7 +24,7 @@
     "@angular/platform-browser-dynamic": "11.0.2",
     "@angular/platform-server": "11.0.2",
     "@angular/router": "11.0.2",
-    "core-js": "^2.4.1",
+    "core-js": "^2.6.12",
     "marked": "^0.3.9",
     "rxjs": "6.6.3",
     "tslib": "^1.9.0",

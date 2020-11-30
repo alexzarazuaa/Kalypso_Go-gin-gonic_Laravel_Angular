@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { ApiService } from './api.service';
-import { BuyProduct } from '../models';
+import { BuyProduct  } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BuysProducts {
+export class BuysProductsService {
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService) {}
+
+  getAll(): Observable<BuyProduct[]> {
+
+    return this.apiService.get('/products');
   }
 
-  query(): Observable<BuyProduct[]> {
-    const params = {};
-    return this.apiService.get('/products');
-  }// end_query
   
-
   get(slug): Observable<BuyProduct> {
     return this.apiService.get('/products/' + slug)
-      .pipe(map(data => {
-        console.log(data);
-        return data.buyproduct;
-      }));
+      .pipe(map(data => data.product));
   }// end_get
 
 
+  destroy(slug) {
+    return this.apiService.delete('/product/' + slug);
+  }
 
 }
+
+
+

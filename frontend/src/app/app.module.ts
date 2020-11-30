@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'
+
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
+import { ProductModule } from './product/products.module';
 import {
   FooterComponent,
   HeaderComponent,
   SharedModule
 } from './shared';
+import {PanelModule} from './panel-admin/panel.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent],
@@ -21,7 +24,8 @@ import { CoreModule } from './core/core.module';
     HomeModule,
     AuthModule,
     AppRoutingModule,
-    HttpClientModule,
+    ProductModule,
+    PanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]

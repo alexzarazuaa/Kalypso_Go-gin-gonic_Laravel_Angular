@@ -4,8 +4,8 @@ import { BuyProduct } from '../../core';
 
 @Component({
   selector: 'app-products-preview',
-  templateUrl: './products-preview.component.html',
-  styleUrls: ['./products-preview.component.css']
+  templateUrl: './product-preview.component.html',
+  styleUrls: ['./product-preview.component.css']
 })
 export class ProductsPreviewComponent {
   @Input() product: BuyProduct;

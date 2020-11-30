@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BuyProduct, BuysProducts } from '../../core';
+import { BuyProduct, BuysProductsService } from '../../core';
 
 @Component({
   selector: 'app-products',
@@ -8,13 +8,14 @@ import { BuyProduct, BuysProducts } from '../../core';
 })
 export class ProductsComponent implements OnInit {
   constructor(
-    private buysProducts: BuysProducts) { }
-    buyProducts = [];
+    private buysProducts: BuysProductsService) { }
+
+
+    buyProducts : BuyProduct[];
 
   ngOnInit() {
      this.buyProducts = [];
-    console.log('Entra en el oninit');
-    this.buysProducts.query().subscribe(data => {
+    this.buysProducts.getAll().subscribe(data => {
       this.buyProducts = data;
       console.log(this.buyProducts,'products laravel');
     })

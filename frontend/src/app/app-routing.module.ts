@@ -22,6 +22,10 @@ const routes: Routes = [
     path:'product',
     loadChildren : './product/products.module#ProductModule'
 
+  },
+  {
+    path:'panel-admin',
+    loadChildren : './panel-admin/panel.module#PanelModule'
   }
 ];
 
