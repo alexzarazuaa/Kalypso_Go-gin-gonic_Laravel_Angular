@@ -10,7 +10,6 @@ import {
   HeaderComponent,
   SharedModule
 } from './shared';
-import {PanelModule} from './panel-admin/panel.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { from } from 'rxjs';
@@ -25,7 +24,6 @@ import { from } from 'rxjs';
     AuthModule,
     AppRoutingModule,
     ProductModule,
-    PanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
