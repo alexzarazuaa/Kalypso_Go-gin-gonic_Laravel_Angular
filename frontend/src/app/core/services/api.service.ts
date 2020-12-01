@@ -22,6 +22,17 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
+  /**
+   * Method go data
+   * @param path 
+   * @param params 
+   */
+
+  get_Go(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    return this.http.get(`${environment.go}${path}`, { params })
+      .pipe(catchError(this.formatErrors));
+  }
+
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
       `${environment.laravel}${path}`,

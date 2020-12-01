@@ -14,15 +14,14 @@ export class BuysProductsService {
 
   getAll(): Observable<BuyProduct[]> {
     const params = {};
-    return this.apiService.get('/products');
+    return this.apiService.get('/products/');
   }// end_query
+  
 
-
-  get(id): Observable<BuyProduct> {
+  getOne(id): Observable<BuyProduct> {
     return this.apiService.get('/products/' + id)
-    
       .pipe(map(data => {
-        console.log(data);
+        console.log('data in service',data);
         return data.product;
       }));
   }// end_get

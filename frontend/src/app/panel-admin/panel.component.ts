@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PanelGo, PanelService } from '../core';
 
 
 @Component({
@@ -9,13 +10,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-
   constructor(
-    private router: Router
-  ) { }
+    private panelService: PanelService) { }
+
+
+    algo : PanelGo[];
 
   ngOnInit() {
-    console.log('PANEL ADDMIIN');
+     this.algo = [];
+    this.panelService.getAll().subscribe(data => {
+      this.algo = data;
+      console.log(this.algo,'products laravel');
+    })
   }
 
 }
