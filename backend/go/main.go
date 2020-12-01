@@ -5,7 +5,7 @@ import (
 
 	"gopkg.in/gin-gonic/gin.v1"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/articles"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/products"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 	"github.com/jinzhu/gorm"
@@ -13,8 +13,8 @@ import (
 
 func Migrate(db *gorm.DB) {
 	users.AutoMigrate()
-	db.AutoMigrate(&articles.ArticleModel{})
-	db.AutoMigrate(&articles.ArticleUserModel{})
+	db.AutoMigrate(&products.ProductModel{})
+	db.AutoMigrate(&products.ProductUserModel{})
 }
 
 func main() {
@@ -30,12 +30,12 @@ func main() {
 
 	users.UsersRegister(v1.Group("/users"))
 	v1.Use(users.AuthMiddleware(false))
-	articles.ArticlesAnonymousRegister(v1.Group("/articles"))
+	products.ProductsAnonymousRegister(v1.Group("/products"))
 
 	v1.Use(users.AuthMiddleware(true))
+	products.ProductsRegister(v1.Group("/products"))
 	users.UserRegister(v1.Group("/user"))
 	users.ProfileRegister(v1.Group("/profiles"))
-	articles.ArticlesRegister(v1.Group("/articles"))
 
 	// testAuth := r.Group("/api/ping")
 	// testAuth.GET("/", func(c *gin.Context) {
@@ -56,11 +56,11 @@ func main() {
 	// tx1.Commit()
 	// fmt.Println(userA)
 
-	//db.Save(&ArticleUserModel{
+	//db.Save(&ProductUserModel{
 	//    UserModelID:userA.ID,
 	//})
-	//var userAA ArticleUserModel
-	//db.Where(&ArticleUserModel{
+	//var userAA ProductUserModel
+	//db.Where(&ProductUserModel{
 	//    UserModelID:userA.ID,
 	//}).First(&userAA)
 	//fmt.Println(userAA)

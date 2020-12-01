@@ -1,25 +1,25 @@
-package articles
+package products
 
 import (
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 	"gopkg.in/gin-gonic/gin.v1"
 )
-type ArticleUserSerializer struct {
+type ProductUserSerializer struct {
 	C *gin.Context
-	ArticleUserModel
+	ProductUserModel
 }
 
-func (s *ArticleUserSerializer) Response() users.ProfileResponse {
-	response := users.ProfileSerializer{s.C, s.ArticleUserModel.UserModel}
+func (s *ProductUserSerializer) Response() users.ProfileResponse {
+	response := users.ProfileSerializer{s.C, s.ProductUserModel.UserModel}
 	return response.Response()
 }
 
-type ArticleSerializer struct {
+type ProductSerializer struct {
 	C *gin.Context
-	ArticleModel
+	ProductModel
 }
 
-type ArticleResponse struct {
+type ProductResponse struct {
 	ID             uint                  `json:"-"`
 	Slug           string                `json:"slug"`
 	Name           string  				 `json:"name"`
@@ -33,15 +33,15 @@ type ArticleResponse struct {
 	Author         users.ProfileResponse `json:"author"`
 }
 
-type ArticlesSerializer struct {
+type ProductsSerializer struct {
 	C        *gin.Context
-	Articles []ArticleModel
+	Products []ProductModel
 }
 
-func (s *ArticleSerializer) Response() ArticleResponse {
+func (s *ProductSerializer) Response() ProductResponse {
 	// myUserModel := s.C.MustGet("my_user_model").(users.UserModel)
-	authorSerializer := ArticleUserSerializer{s.C, s.Author}
-	response := ArticleResponse{
+	authorSerializer := ProductUserSerializer{s.C, s.Author}
+	response := ProductResponse{
 		ID:          s.ID,
 		Slug:        s.Slug,
 		Name:        s.Name,
@@ -57,10 +57,10 @@ func (s *ArticleSerializer) Response() ArticleResponse {
 	return response
 }
 
-func (s *ArticlesSerializer) Response() []ArticleResponse {
-	response := []ArticleResponse{}
-	for _, article := range s.Articles {
-		serializer := ArticleSerializer{s.C, article}
+func (s *ProductsSerializer) Response() []ProductResponse {
+	response := []ProductResponse{}
+	for _, product := range s.Products {
+		serializer := ProductSerializer{s.C, product}
 		response = append(response, serializer.Response())
 	}
 	return response
