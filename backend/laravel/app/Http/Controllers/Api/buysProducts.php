@@ -51,6 +51,7 @@ class buysProducts extends ApiController
         $buyProduct -> category = $request -> category;
 
      
+        $buyProduct -> save();
 
 
   
@@ -60,16 +61,24 @@ class buysProducts extends ApiController
 
 
 
+    // /**
+    //  * RETURN ONE BUY PRODUCT
+    //  */
+    // public function show(Model_buysProducts $buyProduct)
+    // {
+    //     return response() -> json($buyProduct);
+    // }// end_product
+    
+
     /**
      * RETURN ONE BUY PRODUCT
      */
-    public function show(Model_buysProducts $buyProduct)
-    {
-        return $this->respondWithTransformer($buyProduct);
-    }// end_showSong
-    
+    public function show($id) {
 
+        $model_buysProducts = Model_buysProducts::find($id);
+        return response() -> json($model_buysProducts);
 
+    }// end_product
 
     /**
      * Update the specified resource in storage.

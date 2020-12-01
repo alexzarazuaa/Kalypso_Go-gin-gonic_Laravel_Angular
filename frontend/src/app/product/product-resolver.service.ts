@@ -19,7 +19,10 @@ export class ProductsResolver implements Resolve<BuyProduct> {
     state: RouterStateSnapshot
   ): Observable<any> {
 
-    return this.buysProductsService.get(route.params['slug'])
-      .pipe(catchError((err) => this.router.navigateByUrl('/')));
+    return this.buysProductsService.get(route.params['id'])
+      .pipe(catchError((err) => {
+        console.log('sadjfg');
+        return this.router.navigateByUrl('/');
+      }));
   }
 }

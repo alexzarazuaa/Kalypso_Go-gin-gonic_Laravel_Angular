@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BuyProduct, BuysProductsService, UserService, User } from '../core';
 
-
-//import { Award, AwardsService } from '../core';
 
 @Component({
   selector: 'app-product-page',
@@ -10,10 +9,34 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './product.component.html'
 })
 export class ProductComponent implements OnInit {
-  constructor() {
-  }
+
+  product: BuyProduct;
+  currentUser: User;
+  canModify: boolean;
+  isSubmitting = false;
+  isDeleting = false;
+  constructor(
+    private buysProductsService: BuysProductsService,
+    private router: Router,
+    private userService: UserService,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
-    console.log("EIII ENTRA EN Product Component");
+    // Retreive the prefetched product
+    this.route.data.subscribe(
+      (data: { product: BuyProduct; }) => {
+        console.log(data)
+        this.product = data.product;
+      }
+    );
+
+    // Load the current user's data
+    this.userService.currentUser.subscribe(
+      (userData: User) => {
+        this.currentUser = userData;
+
+      }
+    );
   }
 }
