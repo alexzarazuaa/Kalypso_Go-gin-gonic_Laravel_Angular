@@ -14,7 +14,6 @@ export class PanelService {
 
 
   getAll(): Observable<PanelGo[]> {
-    const params = {};
     return this.apiService.get_Go('/products/')
     .pipe(map(data => {
             console.log('dataGo in service',data);

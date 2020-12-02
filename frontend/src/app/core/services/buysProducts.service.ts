@@ -22,7 +22,7 @@ export class BuysProductsService {
     return this.apiService.get('/products/' + id)
       .pipe(map(data => {
         console.log('data in service',data);
-        return data.product;
+        return data;
       }));
   }// end_get
 
