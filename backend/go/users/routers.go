@@ -1,6 +1,7 @@
 package users
 
 import (
+	"fmt"
 	"errors"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 	"gopkg.in/gin-gonic/gin.v1"
@@ -10,6 +11,8 @@ import (
 func UsersRegister(router *gin.RouterGroup) {
 	router.POST("/", UsersRegistration)
 	router.POST("/login", UsersLogin)
+	router.GET("/find/:email", UsersFind)
+
 }
 
 func UserRegister(router *gin.RouterGroup) {
@@ -23,6 +26,21 @@ func ProfileRegister(router *gin.RouterGroup) {
 	router.DELETE("/:username/follow", ProfileUnfollow)
 }
 
+func UsersFind(c *gin.Context) {
+	email := c.Param("email")
+	userModel, err := FindOneUser(&UserModel{Email: email})
+	if err != nil {
+		c.JSON(http.StatusNotFound, common.NewError("profile", errors.New("Invalid username")))
+		return
+	}
+	fmt.Println(userModel)
+
+	var users []*userModel
+
+	serializer := FindSerializer{c, userModel}
+	fmt.Println(serializer.Response()
+	c.JSON(http.StatusOK, gin.H{"profile": serializer.Response()})
+}
 func ProfileRetrieve(c *gin.Context) {
 	username := c.Param("username")
 	userModel, err := FindOneUser(&UserModel{Username: username})
@@ -129,3 +147,4 @@ func UserUpdate(c *gin.Context) {
 	serializer := UserSerializer{c}
 	c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 }
+

@@ -1,25 +1,25 @@
-package products
+package buy_products
 
 import (
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 	"gopkg.in/gin-gonic/gin.v1"
 )
-type ProductUserSerializer struct {
+type Buy_ProductUserSerializer struct {
 	C *gin.Context
-	ProductUserModel
+	Buy_ProductUserModel
 }
 
-func (s *ProductUserSerializer) Response() users.ProfileResponse {
-	response := users.ProfileSerializer{s.C, s.ProductUserModel.UserModel}
+func (s *Buy_ProductUserSerializer) Response() users.ProfileResponse {
+	response := users.ProfileSerializer{s.C, s.Buy_ProductUserModel.UserModel}
 	return response.Response()
 }
 
-type ProductSerializer struct {
+type Buy_ProductSerializer struct {
 	C *gin.Context
-	ProductModel
+	Buy_ProductModel
 }
 
-type ProductResponse struct {
+type Buy_ProductResponse struct {
 	ID             uint                  `json:"-"`
 	Slug           string                `json:"slug"`
 	Name           string  				 `json:"name"`
@@ -33,15 +33,15 @@ type ProductResponse struct {
 	Author         users.ProfileResponse `json:"author"`
 }
 
-type ProductsSerializer struct {
+type Buy_ProductsSerializer struct {
 	C        *gin.Context
-	Products []ProductModel
+	Buy_Products []Buy_ProductModel
 }
 
-func (s *ProductSerializer) Response() ProductResponse {
+func (s *Buy_ProductSerializer) Response() Buy_ProductResponse {
 	// myUserModel := s.C.MustGet("my_user_model").(users.UserModel)
-	authorSerializer := ProductUserSerializer{s.C, s.Author}
-	response := ProductResponse{
+	authorSerializer := Buy_ProductUserSerializer{s.C, s.Author}
+	response := Buy_ProductResponse{
 		ID:          s.ID,
 		Slug:        s.Slug,
 		Name:        s.Name,
@@ -55,10 +55,10 @@ func (s *ProductSerializer) Response() ProductResponse {
 	return response
 }
 
-func (s *ProductsSerializer) Response() []ProductResponse {
-	response := []ProductResponse{}
-	for _, product := range s.Products {
-		serializer := ProductSerializer{s.C, product}
+func (s *Buy_ProductsSerializer) Response() []Buy_ProductResponse {
+	response := []Buy_ProductResponse{}
+	for _, buy_product := range s.Buy_Products {
+		serializer := Buy_ProductSerializer{s.C, buy_product}
 		response = append(response, serializer.Response())
 	}
 	return response
