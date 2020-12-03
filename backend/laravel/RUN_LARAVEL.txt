@@ -1,11 +1,14 @@
 -------------------------------------  PARA INICIAR LA APP -------------------------------
 
 
-1.  php artisan key:generate
+1. 
+php artisan key:generate
 
-2. php artisan jwt:secret
+2. 
+php artisan jwt:secret
 
-3 php artisan serve
+3.
+php artisan serve
 
 ----------------------------------------------------------------------------
 

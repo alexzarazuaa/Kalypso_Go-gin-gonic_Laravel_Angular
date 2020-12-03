@@ -2,11 +2,15 @@
 
 Para crear nuestras migraciones en Laravel se usa el siguiente comando:
 
-   ------ php artisan make:migration nombre_migracion
+  ---------
+php artisan make:migration nombre_migracion
+  ---------
 
 que nos crea el archivo limpio para escribir nuestra migración, o bien el comando:
 
------------ php artisan make:migration nombre_migracion --create=nombre_tabla
+  ---------
+php artisan make:migration nombre_migracion --create=nombre_tabla
+  ---------
 
 que nos agrega una plantilla de trabajo básica para empezar a trabajar.
 
