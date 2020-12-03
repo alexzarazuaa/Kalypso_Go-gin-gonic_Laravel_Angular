@@ -1,31 +1,43 @@
-version: '3'
+version: "3"
 services:
   laravel:
-    build: ./backend/laravel
-    ports:
-    - "8000:8000"
-    networks:
-    - kalypso_network
+    tty: true
+    image: bitnami/laravel:7
     depends_on:
-    - mysql
-  go:
-    build: ./backend/go
+      - mysql
+    links:
+      - mysql
     ports:
-     - "3000:3000"
-    networks:
-     - kalypso_network
-    depends_on:
-     - mysql
+      - 8003:3000
+    volumes:
+      - ./backend/laravel:/app
+    command: >
+      bash -c "php artisan route:list
+      && php artisan key:generate
+      && php artisan migrate
+      && php artisan db:seed
+      && php artisan serve --host=0.0.0.0 --port=3000"
   mysql:
     image: mysql:5.7
     ports:
-    - "3306:3306"
-    networks:
-    - kalypso_network
+      - "3306:3306"
+    restart: on-failure
+    volumes:
+      - mysqlBackup:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: Kalypso
+      MYSQL_DATABASE: kalypso
       MYSQL_USER: root
-      MYSQL_PASSWORD: 
-networks:
-    kalypso_network:
+      MYSQL_PASSWORD: root
+  angular:
+      build: ./frontend
+  redis:
+    image: redis:alpine
+    restart: on-failure
+    ports:
+      - "6380:6379"
+    volumes:
+      - "redis:/redis_data"
+volumes:
+  redis:
+  mysqlBackup:

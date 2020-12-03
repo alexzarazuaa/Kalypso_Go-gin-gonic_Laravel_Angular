@@ -1,0 +1,82 @@
+----------------------------------------------------------------------    REDIS   ----------------------------------------------------
+
+
+    URL : https://www.itechempires.com/2018/06/examples-of-using-redis-with-laravel-framework/
+
+ -->  you can install the predis/predis package via Composer:
+    --> composer require predis/predis
+
+ # CONFIGURATION
+
+
+ -- > in app.php 
+
+        --> 'Redis' => Illuminate\Support\Facades\Redis::class,
+        --> 'RedisManager' => Illuminate\Support\Facades\Redis::class,
+
+--> TO USE IN THE CONTROLLERS 
+
+    use Illuminate\Support\Facades\Redis;
+
+
+--> config/database.php
+
+
+
+    --> 'database' => env('DB_DATABASE', 'laravel_docker_redis'),
+
+
+        --> 'redis' => [
+
+                    'client' => env('REDIS_CLIENT', 'phpredis'),
+
+                    'default' => [
+                        'host' => env('REDIS_HOST', '127.0.0.1'),
+                        'password' => env('REDIS_PASSWORD', null),
+                        'port' => env('REDIS_PORT', 6379),
+                        'database' => env('REDIS_DB', 0),
+                    ],
+
+                    'cache' => [
+                        'host' => env('REDIS_HOST', '127.0.0.1'),
+                        'password' => env('REDIS_PASSWORD', null),
+                        'port' => env('REDIS_PORT', 6379),
+                        'database' => env('REDIS_CACHE_DB', 1),
+                    ],
+
+                ],
+
+## REDIS CONECTION
+
+    'redis' => [
+
+            'client' => env('REDIS_CLIENT', 'phpredis'),
+
+            'default' => [
+                'url' => 'tcp://127.0.0.1:6379?database=0',
+            ],
+
+            'cache' => [
+                'url' => 'tls://user:password@127.0.0.1:6380?database=1',
+            ],
+
+        ],
+
+        //////////
+
+        'redis' => [
+
+            'client' => env('REDIS_CLIENT', 'phpredis'),
+
+            'default' => [
+                'scheme' => 'tls',
+                'host' => env('REDIS_HOST', '127.0.0.1'),
+                'password' => env('REDIS_PASSWORD', null),
+                'port' => env('REDIS_PORT', 6379),
+                'database' => env('REDIS_DB', 0),
+            ],
+
+        ],
+
+
+
