@@ -1,4 +1,4 @@
-package products
+package buy_products
 
 import (
 	"strconv"
@@ -8,7 +8,7 @@ import (
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
 )
 
-type ProductModel struct {
+type Buy_ProductModel struct {
 	gorm.Model
 	Slug         string `gorm:"unique_index"`
 	Name     	 string  `gorm:"column:name"`
@@ -17,35 +17,35 @@ type ProductModel struct {
 	Description  string  `gorm:"column:description"`
 	Rating 		 int     `gorm:"column:rating"`
 	Category 	 string  `gorm:"column:category"`
-	Author      ProductUserModel
+	Author      Buy_ProductUserModel
 	AuthorID    uint
 }
 
-type ProductUserModel struct {
+type Buy_ProductUserModel struct {
 	gorm.Model
 	UserModel      users.UserModel
 	UserModelID    uint
-	ProductModels  []ProductModel  `gorm:"ForeignKey:AuthorID"`
+	Buy_ProductModels  []Buy_ProductModel  `gorm:"ForeignKey:AuthorID"`
 }
 
 
-func GetProductUserModel(userModel users.UserModel) ProductUserModel {
-	var productUserModel ProductUserModel
+func GetBuy_ProductUserModel(userModel users.UserModel) Buy_ProductUserModel {
+	var buy_productUserModel Buy_ProductUserModel
 	if userModel.ID == 0 {
-		return productUserModel
+		return buy_productUserModel
 	}
 	db := common.GetDB()
-	db.Where(&ProductUserModel{
+	db.Where(&Buy_ProductUserModel{
 		UserModelID: userModel.ID,
-	}).FirstOrCreate(&productUserModel)
-	productUserModel.UserModel = userModel
-	return productUserModel
+	}).FirstOrCreate(&buy_productUserModel)
+	buy_productUserModel.UserModel = userModel
+	return buy_productUserModel
 }
 
-func FindManyProducts() ([]ProductModel, int, error) {
+func FindManyBuy_Products() ([]Buy_ProductModel, int, error) {
 	db := common.GetDB()
 	var count int
-	var models []ProductModel
+	var models []Buy_ProductModel
 	db.Model(&models).Count(&count)
 	err :=db.Find(&models).Error
 	return models,count, err
@@ -57,16 +57,16 @@ func SaveOne(data interface{}) error {
 	return err
 }
 
-func FindOneProduct(condition interface{}) (ProductModel, error) {
+func FindOneBuy_Product(condition interface{}) (Buy_ProductModel, error) {
 	db := common.GetDB()
-	var model ProductModel
+	var model Buy_ProductModel
 	err :=db.Where(condition).First(&model).Error
 	return model, err
 }
 
-func (self *ProductUserModel) GetProductFeed(limit, offset string) ([]ProductModel, int, error) {
+func (self *Buy_ProductUserModel) GetBuy_ProductFeed(limit, offset string) ([]Buy_ProductModel, int, error) {
 	db := common.GetDB()
-	var models []ProductModel
+	var models []Buy_ProductModel
 	var count int
 
 	offset_int, err := strconv.Atoi(offset)
@@ -80,13 +80,13 @@ func (self *ProductUserModel) GetProductFeed(limit, offset string) ([]ProductMod
 
 	tx := db.Begin()
 	followings := self.UserModel.GetFollowings()
-	var productUserModels []uint
+	var buy_productUserModels []uint
 	for _, following := range followings {
-		productUserModel := GetProductUserModel(following)
-		productUserModels = append(productUserModels, productUserModel.ID)
+		buy_productUserModel := GetBuy_ProductUserModel(following)
+		buy_productUserModels = append(buy_productUserModels, buy_productUserModel.ID)
 	}
 
-	tx.Where("author_id in (?)", productUserModels).Order("updated_at desc").Offset(offset_int).Limit(limit_int).Find(&models)
+	tx.Where("author_id in (?)", buy_productUserModels).Order("updated_at desc").Offset(offset_int).Limit(limit_int).Find(&models)
 
 	for i, _ := range models {
 		tx.Model(&models[i]).Related(&models[i].Author, "Author")

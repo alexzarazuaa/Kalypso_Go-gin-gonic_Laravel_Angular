@@ -18,7 +18,6 @@ type ProfileResponse struct {
 	Email     string  `json:"email"`
 	Image     *string `json:"image"`
 	Karma 	   int    `json:"karma"`
-	Type	   string  `json:"type"`
 }
 
 // Put your response logic including wrap the userModel here.
@@ -27,6 +26,8 @@ func (self *ProfileSerializer) Response() ProfileResponse {
 		ID:        self.ID,
 		Username:  self.Username,
 		Image:     self.Image,
+		Karma:	   self.Karma,
+		Email:	   self.Email,
 	}
 	return profile
 }
@@ -55,4 +56,20 @@ func (self *UserSerializer) Response() UserResponse {
 		Token:    common.GenToken(myUserModel.ID),
 	}
 	return user
+}
+
+type FindSerializer struct {
+	C *gin.Context
+	UserModel
+}
+
+type FindResponse struct {
+	Type	  string   `json:"type"`
+}
+
+func (self *FindSerializer) Response() FindResponse {
+	find := FindResponse{
+		Type:      self.Type,
+	}
+	return find
 }

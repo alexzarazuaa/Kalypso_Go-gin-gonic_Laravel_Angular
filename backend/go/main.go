@@ -5,6 +5,7 @@ import (
 
 	"gopkg.in/gin-gonic/gin.v1"
 
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/buy_products"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/products"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
@@ -13,8 +14,9 @@ import (
 
 func Migrate(db *gorm.DB) {
 	users.AutoMigrate()
+	db.AutoMigrate(&buy_products.Buy_ProductModel{})
 	db.AutoMigrate(&products.ProductModel{})
-	db.AutoMigrate(&products.ProductUserModel{})
+	db.AutoMigrate(&buy_products.Buy_ProductUserModel{})
 }
 
 func main() {
@@ -32,8 +34,9 @@ func main() {
 	v1.Use(users.AuthMiddleware(false))
 	products.ProductsAnonymousRegister(v1.Group("/products"))
 
+
 	v1.Use(users.AuthMiddleware(true))
-	products.ProductsRegister(v1.Group("/products"))
+	buy_products.Buy_ProductsRegister(v1.Group("/buy_products"))
 	users.UserRegister(v1.Group("/user"))
 	users.ProfileRegister(v1.Group("/profiles"))
 
@@ -56,11 +59,11 @@ func main() {
 	// tx1.Commit()
 	// fmt.Println(userA)
 
-	//db.Save(&ProductUserModel{
+	//db.Save(&Buy_ProductUserModel{
 	//    UserModelID:userA.ID,
 	//})
-	//var userAA ProductUserModel
-	//db.Where(&ProductUserModel{
+	//var userAA Buy_ProductUserModel
+	//db.Where(&Buy_ProductUserModel{
 	//    UserModelID:userA.ID,
 	//}).First(&userAA)
 	//fmt.Println(userAA)
