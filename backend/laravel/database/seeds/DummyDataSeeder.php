@@ -9,14 +9,14 @@ class DummyDataSeeder extends Seeder
      *
      * @var int
      */
-    protected $totalUsers = 25;
+    protected $totalUsers = 5;
 
-    /**
-     * Total number of tags.
-     *
-     * @var int
-     */
-    protected $totalTags = 10;
+    // /**
+    //  * Total number of tags.
+    //  *
+    //  * @var int
+    //  */
+    // protected $totalTags = 10;
 
     /**
      * Percentage of users with articles.
@@ -30,7 +30,7 @@ class DummyDataSeeder extends Seeder
      *
      * @var int
      */
-    protected $maxArticlesByUser = 2;
+    protected $maxArticlesByUser = 1;
 
     /**
      * Maximum BuyProducts by user .
@@ -40,19 +40,28 @@ class DummyDataSeeder extends Seeder
 
     protected $maxBuyProductsByUser = 5;
 
+      /**
+     * Maximum Products Faker .
+     *
+     * @var int
+     */
+
+    protected $maxProducts_Faker = 5;
+    
+
     /**
      * Maximum tags that can be attached to an article.
      *
      * @var int
      */
-    protected $maxArticleTags = 3;
+    protected $maxArticleTags = 1;
 
     /**
      * Maximum number of comments that can be added to an article.
      *
      * @var int
      */
-    protected $maxCommentsInArticle = 10;
+    protected $maxCommentsInArticle = 2;
 
     /**
      * Percentage of users with favorites.
@@ -79,23 +88,18 @@ class DummyDataSeeder extends Seeder
     {
         $users = factory(\App\User::class)->times($this->totalUsers)->create();
 
-        $tags = factory(\App\Tag::class)->times($this->totalTags)->create();
+        //$tags = factory(\App\Tag::class)->times($this->totalTags)->create();
         $buyProducts = factory(\App\Model_buysProducts::class)->times($this->maxBuyProductsByUser)->create();
+        $products = factory(\App\Product::class)->times($this->maxProducts_Faker)->create();
 
         $users->random((int) $this->totalUsers * $this->userWithArticleRatio)
-            ->each(function ($user) use ($faker, $tags) {
+            ->each(function ($user) use ($faker) {
                 $user->articles()
                     ->saveMany(
                         factory(\App\Article::class)
                         ->times($faker->numberBetween(1, $this->maxArticlesByUser))
                         ->make()
                     )
-                    ->each(function ($article) use ($faker, $tags) {
-                        $article->tags()->attach(
-                            $tags->random($faker->numberBetween(1, min($this->maxArticleTags, $this->totalTags)))
-                        );
-
-                    })
                     ->each(function ($article) use ($faker) {
                         $article->comments()
                             ->saveMany(

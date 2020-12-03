@@ -1,10 +1,12 @@
+import { CssSelector } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 
 import { User, UserService } from '../../core';
 
 @Component({
   selector: 'app-layout-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   constructor(

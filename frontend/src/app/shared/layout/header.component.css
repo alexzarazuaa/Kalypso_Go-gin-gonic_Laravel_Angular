@@ -1,0 +1,11 @@
+.navbar , .container , .navbar-light{
+    background-color: black;
+}
+
+.nav-link{
+  font-family: titillium web,sans-serif;
+  font-size: 1.5rem!important;
+  padding-top: 0!important;
+  margin-right: 2rem!important;
+  color: #5cb85c!important;
+}

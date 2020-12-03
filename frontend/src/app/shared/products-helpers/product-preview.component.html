@@ -1,18 +1,25 @@
-<section class = "product-meta row-product  ">
-    <article class = "container-product-list " ng-click = "$ctrl.opendt()">
-        <div class = "ite">
+
+<section class="cards">
+
+    <section class="flip-card">
+        <article class="flip-card-inner"  ng-click = "$ctrl.opendt()">
+          <section class="flip-card-front">
+            <img src="img_avatar.png" alt="PRODUCT" style="width:300px;height:300px;">
+          </section>
+          <section class="flip-card-back">
+          
             <h3>NAME</h3>
-            <div>{{product.name}}</div>
-            <br>
+            <span>{{product.name}}</span>
             <h3>BRAND</h3>
-            <div>{{product.brand}}</div>
-            <h3>DESCRIPTION</h3>
-            <div>{{product.desc}}</div>
-            <h3>RATING</h3>
-            <div>{{product.rating}}</div>    
-            <a  [routerLink]="['/product', product.slug]" class="preview-link">READ MORE</a>
-        </div>
-    
-    </article>
+            <span>{{product.brand}}</span>
+            <h3 class="rating">RATING</h3>
+            <span>{{product.rating}}</span>  
+            <br>  
+            <a  [routerLink]="['/product', product.id]" class="preview-link">READ MORE</a>
+          </section>
+        </article>
+    </section>
+      
 
 </section>
+

@@ -22,3 +22,16 @@ export class ProductsComponent implements OnInit {
   }
 
 }
+
+
+/**
+ * NG ON INIT TESTING DATA GO
+ */
+
+// ngOnInit() {
+//   this.buyProducts = [];
+//  this.buysProducts.getAll().subscribe(data => {
+//    this.buyProducts = data;
+//    console.log(this.buyProducts,'products laravel');
+//  })
+// }

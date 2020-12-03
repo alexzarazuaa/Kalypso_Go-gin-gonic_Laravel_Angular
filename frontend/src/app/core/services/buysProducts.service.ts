@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from './api.service';
-import { BuyProduct, BuyProductListConfig } from '../models';
+import { BuyProduct } from '../models';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,21 +12,18 @@ export class BuysProductsService {
 
   constructor(private apiService: ApiService) { }
 
-  getAll(config: BuyProductListConfig): Observable<{ products: BuyProduct[] }> {
-
+  getAll(): Observable<BuyProduct[]> {
     const params = {};
-    return this.apiService
-      .get(
-        '/products/' + ((config.type === 'feed') ? 'feed' : ''),
-        new HttpParams({ fromObject: params })
-      );
-  }
+    return this.apiService.get('/products/');
+  }// end_query
+  
 
-
-
-  get(slug): Observable<BuyProduct> {
-    return this.apiService.get('/products/' + slug)
-      .pipe(map(data => data.product));
+  getOne(id): Observable<BuyProduct> {
+    return this.apiService.get('/products/' + id)
+      .pipe(map(data => {
+        console.log('data in service',data);
+        return data;
+      }));
   }// end_get
 
 
