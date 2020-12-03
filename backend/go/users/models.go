@@ -80,6 +80,16 @@ func FindOneUser(condition interface{}) (UserModel, error) {
 	return model, err
 }
 
+
+
+func FindUser(condition interface{}) (UserModel, []string, error) {
+	db := common.GetDB()
+	var model UserModel
+	var algo []string
+ 	err := db.Where(condition).First(&model).Error
+	return model, algo, err
+}
+
 // You could input an UserModel which will be saved in database returning with error info
 // 	if err := SaveOne(&userModel); err != nil { ... }
 func SaveOne(data interface{}) error {

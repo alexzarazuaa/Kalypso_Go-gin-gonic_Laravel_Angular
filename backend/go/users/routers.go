@@ -28,17 +28,27 @@ func ProfileRegister(router *gin.RouterGroup) {
 
 func UsersFind(c *gin.Context) {
 	email := c.Param("email")
-	userModel, err := FindOneUser(&UserModel{Email: email})
+	userModel, algo, err := FindUser(&UserModel{Email: email})
+
+	fmt.Println("----------------",err)
+	fmt.Println("----------------",algo)
+
 	if err != nil {
 		c.JSON(http.StatusNotFound, common.NewError("profile", errors.New("Invalid username")))
 		return
 	}
-	fmt.Println(userModel)
-
-	var users []*userModel
+	fmt.Println("+++++++++++++++++++++++++++++++",userModel)
 
 	serializer := FindSerializer{c, userModel}
-	fmt.Println(serializer.Response()
+
+	fmt.Println(serializer.Response())
+
+	// if ((serializer.Response())=="client"){
+	// 	fmt.Println("pepep")
+	// }else{
+	// 	fmt.Println("lolololloloolo")
+	// }
+	
 	c.JSON(http.StatusOK, gin.H{"profile": serializer.Response()})
 }
 func ProfileRetrieve(c *gin.Context) {

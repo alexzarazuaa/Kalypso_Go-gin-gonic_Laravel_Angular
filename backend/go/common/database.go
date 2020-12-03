@@ -46,7 +46,7 @@ func BuildDBConfig() *DBConfig {
 		Host:     "localhost",
 		Port:     3306,
 		User:     "root",
-		Password: "",
+		Password: "laspalmas12",
 		DBName:   "Kalypso",
 	}
 	// fmt.Println(&dbConfig)
