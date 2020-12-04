@@ -117,8 +117,8 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 		
 	} else{
+		
 		serializer := NoTypeSerializer{c, userModel}
-
 		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": serializer.Response()})
 
 	}
