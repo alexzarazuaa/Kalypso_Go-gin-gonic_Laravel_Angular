@@ -69,6 +69,7 @@ func (self *UserSerializer) Response() UserResponse {
 
 
 //--------------------ADMIN---------------------------//
+
 type AdminSerializer struct {
 	C *gin.Context
 	UserModel
@@ -94,3 +95,25 @@ func (self *AdminSerializer) Response() AdminResponse {
 }
 
 //------------------------END ADMIN---------------------//
+
+
+
+//--------------------NO NORMAL TYPE---------------------------//
+
+type NoTypeSerializer struct {
+	C *gin.Context
+	UserModel
+}
+
+type NoTypeResponse struct {
+	Type	   string  `json:"type"`
+}
+
+func (self *NoTypeSerializer) Response() NoTypeResponse {
+	user := NoTypeResponse{
+		Type:	   self.Type,
+	}
+	return user
+}
+
+//------------------------END NO NORMAL TYPE---------------------//

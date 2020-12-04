@@ -111,9 +111,15 @@ func UsersLogin(c *gin.Context) {
 		serializer := UserSerializer{c}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
-	}else{
+	}else if ((userModel.Type)=="admin"){
+
 		serializer := AdminSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+		
+	} else{
+		serializer := NoTypeSerializer{c, userModel}
+
+		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": serializer.Response()})
 
 	}
 
