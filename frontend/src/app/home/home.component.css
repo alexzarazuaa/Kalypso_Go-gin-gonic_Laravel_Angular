@@ -1,0 +1,21 @@
+.nav-link {
+  cursor:pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag-pill{
+  cursor:pointer;
+}
+
+.home-page{
+  background-image: url(//d17ol771963kd3.cloudfront.net/assets/bg/1-59b00d663c47e1d9275ef49b685893a4.gif);
+}
+.banner{
+  background-color: black;
+}
+
+
+

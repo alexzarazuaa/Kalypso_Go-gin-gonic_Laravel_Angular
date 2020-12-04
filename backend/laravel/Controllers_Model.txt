@@ -1,0 +1,29 @@
+--------------------------------------------
+
+CREAR EL CONTROLADOR USANDO PHP ARTISAN
+
+php artisan make:controller <nombre del controller>  --resource
+
+---------------------------------------------------------------
+
+CREAR LOS MODELOS
+
+php artisan make:model <nombre modelo>
+
+EJEMPLOS : 
+
+php artisan make:model Order
+php artisan make:model Invoice
+
+-----------------------------------------
+
+PARA PROBAR SI LOS MODELOS FUNCIONAN 
+
+php artisan tinker
+
+---------------------------------
+
+RELATIONSHIP LARAVEL ELOQUENT
+
+
+https://appdividend.com/2017/10/11/laravel-eloquent-relationships/

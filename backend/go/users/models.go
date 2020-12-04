@@ -3,7 +3,11 @@ package users
 import (
 	"errors"
 	"github.com/jinzhu/gorm"
+<<<<<<< HEAD
 	"github.com/yomogan/6_gin_gonic_thinkster/common"
+=======
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+>>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -16,9 +20,16 @@ type UserModel struct {
 	ID           uint    `gorm:"primary_key"`
 	Username     string  `gorm:"column:username"`
 	Email        string  `gorm:"column:email;unique_index"`
+<<<<<<< HEAD
 	Bio          string  `gorm:"column:bio;size:1024"`
 	Image        *string `gorm:"column:image"`
 	PasswordHash string  `gorm:"column:password;not null"`
+=======
+	Image        *string `gorm:"column:image"`
+	PasswordHash string  `gorm:"column:password;not null"`
+	Karma 		 int  `gorm:"column:karma"`
+	Type 		 string  `gorm:"column:type"`
+>>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 }
 
 // A hack way to save ManyToMany relationship,
@@ -79,6 +90,19 @@ func FindOneUser(condition interface{}) (UserModel, error) {
 	return model, err
 }
 
+<<<<<<< HEAD
+=======
+
+
+func FindUser(condition interface{}) (UserModel, []string, error) {
+	db := common.GetDB()
+	var model UserModel
+	var algo []string
+ 	err := db.Where(condition).First(&model).Error
+	return model, algo, err
+}
+
+>>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 // You could input an UserModel which will be saved in database returning with error info
 // 	if err := SaveOne(&userModel); err != nil { ... }
 func SaveOne(data interface{}) error {

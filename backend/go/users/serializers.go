@@ -2,9 +2,11 @@ package users
 
 import (
 	"gopkg.in/gin-gonic/gin.v1"
-
-	"github.com/yomogan/6_gin_gonic_thinkster/common"
+	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 )
+
+//-----------------PROFILE-----------------------------//
+
 
 type ProfileSerializer struct {
 	C *gin.Context
@@ -13,25 +15,30 @@ type ProfileSerializer struct {
 
 // Declare your response schema here
 type ProfileResponse struct {
-	ID        uint    `json:"-"`
 	Username  string  `json:"username"`
-	Bio       string  `json:"bio"`
+	Email     string  `json:"email"`
 	Image     *string `json:"image"`
-	Following bool    `json:"following"`
+	Karma 	   int    `json:"karma"`
 }
 
 // Put your response logic including wrap the userModel here.
 func (self *ProfileSerializer) Response() ProfileResponse {
-	myUserModel := self.C.MustGet("my_user_model").(UserModel)
 	profile := ProfileResponse{
-		ID:        self.ID,
 		Username:  self.Username,
-		Bio:       self.Bio,
 		Image:     self.Image,
-		Following: myUserModel.isFollowing(self.UserModel),
+		Karma:	   self.Karma,
+		Email:	   self.Email,
 	}
 	return profile
 }
+
+
+//----------------END PROFILE-------------------------//
+
+
+
+//-------------------LOGIN---------------------------//
+
 
 type UserSerializer struct {
 	c *gin.Context
@@ -42,6 +49,9 @@ type UserResponse struct {
 	Email    string  `json:"email"`
 	Bio      string  `json:"bio"`
 	Image    *string `json:"image"`
+	Image     *string `json:"image"`
+	Karma 	   int    `json:"karma"`
+	Type	   string  `json:"type"`
 	Token    string  `json:"token"`
 }
 
@@ -52,7 +62,66 @@ func (self *UserSerializer) Response() UserResponse {
 		Email:    myUserModel.Email,
 		Bio:      myUserModel.Bio,
 		Image:    myUserModel.Image,
+		Image:    myUserModel.Image,
+		Karma: 	   myUserModel.Karma,
+		Type:	  myUserModel.Type,
 		Token:    common.GenToken(myUserModel.ID),
 	}
 	return user
 }
+
+
+//--------------------END LOGIN------------------------//
+
+
+
+//--------------------ADMIN---------------------------//
+
+type AdminSerializer struct {
+	C *gin.Context
+	UserModel
+}
+
+type AdminResponse struct {
+	Username string  `json:"username"`
+	Email    string  `json:"email"`
+	Image     *string `json:"image"`
+	Karma 	   int    `json:"karma"`
+	Type	   string  `json:"type"`
+}
+
+func (self *AdminSerializer) Response() AdminResponse {
+	admin := AdminResponse{
+		Username:  self.Username,
+		Image:     self.Image,
+		Karma:	   self.Karma,
+		Email:	   self.Email,
+		Type:	   self.Type,
+	}
+	return admin
+}
+
+//------------------------END ADMIN---------------------//
+
+
+
+//--------------------NO NORMAL TYPE---------------------------//
+
+type NoTypeSerializer struct {
+	C *gin.Context
+	UserModel
+}
+
+type NoTypeResponse struct {
+	Type	   string  `json:"type"`
+}
+
+func (self *NoTypeSerializer) Response() NoTypeResponse {
+	user := NoTypeResponse{
+		Type:	   self.Type,
+	}
+	return user
+}
+
+//------------------------END NO NORMAL TYPE---------------------//
+

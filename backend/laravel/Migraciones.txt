@@ -1,0 +1,78 @@
+------------------------------------------------------ MIGRACIONES PHP ----------------------------------------------------
+
+Para crear nuestras migraciones en Laravel se usa el siguiente comando:
+
+  ---------
+php artisan make:migration nombre_migracion
+  ---------
+
+que nos crea el archivo limpio para escribir nuestra migración, o bien el comando:
+
+  ---------
+php artisan make:migration nombre_migracion --create=nombre_tabla
+  ---------
+
+que nos agrega una plantilla de trabajo básica para empezar a trabajar.
+
+Como ejemplo del curso se tomará este comando:
+
+php artisan make:migration crear_tabla_pasteles --create=pasteles
+
+el cual nos dará este resultado:
+
+Created Migration: 2015_06_23_054801_crear_tabla_pasteles
+
+
+----------------------------------------------------------------
+
+Para correr o iniciar nuestras migraciones usamos el comando:
+
+--- php artisan migrate
+
+---------------------------------------------------------------------
+Con el comando 
+
+ --- php artisan migrate:rollback 
+
+que lo que hará es deshacer la última migración ejecutada y registrada en la base de datos.
+
+Con el comando
+
+---  php artisan migrate:reset
+
+ que lo que hará es deshacer todas las migraciones de la base de datos.
+
+Un comando extra que nos permite actualizar las migraciones es el comando 
+
+--- php artisan migrate:refresh
+
+el cual es equivalente a usar
+
+----- php artisan migrate:reset 
+------ php artisan migrate.
+
+---------------------------------- SEEDER / FAKE------------------------------
+
+php artisan make:seeder nombre_seeder
+
+
+----- FAKE
+
+composer.json
+
+"require-dev" {
+        "fakerphp/faker": "^1.9.1",
+}
+
+composer update
+
+-------------------- PARA EJECUTAR EL ARCHIVO 
+
+ --- php artisan db:seed
+
+
+ ---------------------------------------- PARA GENERAR EL TOKEN JWT 
+
+    --> COMANDO  :  php artisan jwt:secret
+
+
