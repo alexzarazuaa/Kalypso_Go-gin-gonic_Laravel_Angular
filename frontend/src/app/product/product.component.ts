@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BuyProduct, BuysProductsService, UserService, User } from '../core';
+import { ActivatedRoute } from '@angular/router';
+import { BuyProduct, UserService, User } from '../core';
 
 
 @Component({
@@ -16,8 +16,6 @@ export class ProductComponent implements OnInit {
   isSubmitting = false;
   isDeleting = false;
   constructor(
-    private buysProductsService: BuysProductsService,
-    private router: Router,
     private userService: UserService,
     private route: ActivatedRoute,
   ) { }

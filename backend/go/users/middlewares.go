@@ -1,161 +1,67 @@
 package users
 
 import (
-	"errors"
-	"github.com/jinzhu/gorm"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/dgrijalva/jwt-go/request"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"golang.org/x/crypto/bcrypt"
+	"gopkg.in/gin-gonic/gin.v1"
+	"net/http"
+	"strings"
 )
 
-// Models should only be concerned with database schema, more strict checking should be put in validator.
-//
-// More detail you can find here: http://jinzhu.me/gorm/models.html#model-definition
-//
-// HINT: If you want to split null and "", you should use *string instead of string.
-type UserModel struct {
-	ID           uint    `gorm:"primary_key"`
-	Username     string  `gorm:"column:username"`
-	Email        string  `gorm:"column:email;unique_index"`
-	Image        *string `gorm:"column:image"`
-	PasswordHash string  `gorm:"column:password;not null"`
-	Karma 		 int  `gorm:"column:karma"`
-	Type 		 string  `gorm:"column:type"`
-}
-
-// A hack way to save ManyToMany relationship,
-// gorm will build the alias as FollowingBy <-> FollowingByID <-> "following_by_id".
-//
-// DB schema looks like: id, created_at, updated_at, deleted_at, following_id, followed_by_id.
-//
-// Retrieve them by:
-// 	db.Where(FollowModel{ FollowingID:  v.ID, FollowedByID: u.ID, }).First(&follow)
-// 	db.Where(FollowModel{ FollowedByID: u.ID, }).Find(&follows)
-//
-// More details about gorm.Model: http://jinzhu.me/gorm/models.html#conventions
-type FollowModel struct {
-	gorm.Model
-	Following    UserModel
-	FollowingID  uint
-	FollowedBy   UserModel
-	FollowedByID uint
-}
-
-// Migrate the schema of database if needed
-func AutoMigrate() {
-	db := common.GetDB()
-
-	db.AutoMigrate(&UserModel{})
-	db.AutoMigrate(&FollowModel{})
-}
-
-// What's bcrypt? https://en.wikipedia.org/wiki/Bcrypt
-// Golang bcrypt doc: https://godoc.org/golang.org/x/crypto/bcrypt
-// You can change the value in bcrypt.DefaultCost to adjust the security index.
-// 	err := userModel.setPassword("password0")
-func (u *UserModel) setPassword(password string) error {
-	if len(password) == 0 {
-		return errors.New("password should not be empty!")
+// Strips 'TOKEN ' prefix from token string
+func stripBearerPrefixFromTokenString(tok string) (string, error) {
+	// Should be a bearer token
+	if len(tok) > 5 && strings.ToUpper(tok[0:6]) == "TOKEN " {
+		return tok[6:], nil
 	}
-	bytePassword := []byte(password)
-	// Make sure the second param `bcrypt generator cost` between [4, 32)
-	passwordHash, _ := bcrypt.GenerateFromPassword(bytePassword, bcrypt.DefaultCost)
-	u.PasswordHash = string(passwordHash)
-	return nil
+	return tok, nil
 }
 
-// Database will only save the hashed string, you should check it by util function.
-// 	if err := serModel.checkPassword("password0"); err != nil { password error }
-func (u *UserModel) checkPassword(password string) error {
-	bytePassword := []byte(password)
-	byteHashedPassword := []byte(u.PasswordHash)
-	return bcrypt.CompareHashAndPassword(byteHashedPassword, bytePassword)
+// Extract  token from Authorization header
+// Uses PostExtractionFilter to strip "TOKEN " prefix from header
+var AuthorizationHeaderExtractor = &request.PostExtractionFilter{
+	request.HeaderExtractor{"Authorization"},
+	stripBearerPrefixFromTokenString,
 }
 
-// You could input the conditions and it will return an UserModel in database with error info.
-// 	userModel, err := FindOneUser(&UserModel{Username: "username0"})
-func FindOneUser(condition interface{}) (UserModel, error) {
-	db := common.GetDB()
-	var model UserModel
-	err := db.Where(condition).First(&model).Error
-	return model, err
+// Extractor for OAuth2 access tokens.  Looks in 'Authorization'
+// header then 'access_token' argument for a token.
+var MyAuth2Extractor = &request.MultiExtractor{
+	AuthorizationHeaderExtractor,
+	request.ArgumentExtractor{"access_token"},
 }
 
-
-
-func FindUser(condition interface{}) (UserModel, []string, error) {
-	db := common.GetDB()
-	var model UserModel
-	var algo []string
- 	err := db.Where(condition).First(&model).Error
-	return model, algo, err
-}
-
-// You could input an UserModel which will be saved in database returning with error info
-// 	if err := SaveOne(&userModel); err != nil { ... }
-func SaveOne(data interface{}) error {
-	db := common.GetDB()
-	err := db.Save(data).Error
-	return err
-}
-
-// You could update properties of an UserModel to database returning with error info.
-//  err := db.Model(userModel).Update(UserModel{Username: "wangzitian0"}).Error
-func (model *UserModel) Update(data interface{}) error {
-	db := common.GetDB()
-	err := db.Model(model).Update(data).Error
-	return err
-}
-
-// You could add a following relationship as userModel1 following userModel2
-// 	err = userModel1.following(userModel2)
-func (u UserModel) following(v UserModel) error {
-	db := common.GetDB()
-	var follow FollowModel
-	err := db.FirstOrCreate(&follow, &FollowModel{
-		FollowingID:  v.ID,
-		FollowedByID: u.ID,
-	}).Error
-	return err
-}
-
-// You could check whether  userModel1 following userModel2
-// 	followingBool = myUserModel.isFollowing(self.UserModel)
-func (u UserModel) isFollowing(v UserModel) bool {
-	db := common.GetDB()
-	var follow FollowModel
-	db.Where(FollowModel{
-		FollowingID:  v.ID,
-		FollowedByID: u.ID,
-	}).First(&follow)
-	return follow.ID != 0
-}
-
-// You could delete a following relationship as userModel1 following userModel2
-// 	err = userModel1.unFollowing(userModel2)
-func (u UserModel) unFollowing(v UserModel) error {
-	db := common.GetDB()
-	err := db.Where(FollowModel{
-		FollowingID:  v.ID,
-		FollowedByID: u.ID,
-	}).Delete(FollowModel{}).Error
-	return err
-}
-
-// You could get a following list of userModel
-// 	followings := userModel.GetFollowings()
-func (u UserModel) GetFollowings() []UserModel {
-	db := common.GetDB()
-	tx := db.Begin()
-	var follows []FollowModel
-	var followings []UserModel
-	tx.Where(FollowModel{
-		FollowedByID: u.ID,
-	}).Find(&follows)
-	for _, follow := range follows {
-		var userModel UserModel
-		tx.Model(&follow).Related(&userModel, "Following")
-		followings = append(followings, userModel)
+// A helper to write user_id and user_model to the context
+func UpdateContextUserModel(c *gin.Context, my_user_id uint) {
+	var myUserModel UserModel
+	if my_user_id != 0 {
+		db := common.GetDB()
+		db.First(&myUserModel, my_user_id)
 	}
-	tx.Commit()
-	return followings
+	c.Set("my_user_id", my_user_id)
+	c.Set("my_user_model", myUserModel)
+}
+
+// You can custom middlewares yourself as the doc: https://github.com/gin-gonic/gin#custom-middleware
+//  r.Use(AuthMiddleware(true))
+func AuthMiddleware(auto401 bool) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		UpdateContextUserModel(c, 0)
+		token, err := request.ParseFromRequest(c.Request, MyAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
+			b := ([]byte(common.NBSecretPassword))
+			return b, nil
+		})
+		if err != nil {
+			if auto401 {
+				c.AbortWithError(http.StatusUnauthorized, err)
+			}
+			return
+		}
+		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			my_user_id := uint(claims["id"].(float64))
+			//fmt.Println(my_user_id,claims["id"])
+			UpdateContextUserModel(c, my_user_id)
+		}
+	}
 }
