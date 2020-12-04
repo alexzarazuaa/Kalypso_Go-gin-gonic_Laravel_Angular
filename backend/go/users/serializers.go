@@ -2,11 +2,11 @@ package users
 
 import (
 	"gopkg.in/gin-gonic/gin.v1"
+
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 )
 
 //-----------------PROFILE-----------------------------//
-
 
 type ProfileSerializer struct {
 	C *gin.Context
@@ -32,13 +32,11 @@ func (self *ProfileSerializer) Response() ProfileResponse {
 	return profile
 }
 
-
 //----------------END PROFILE-------------------------//
 
 
 
 //-------------------LOGIN---------------------------//
-
 
 type UserSerializer struct {
 	c *gin.Context
@@ -47,8 +45,6 @@ type UserSerializer struct {
 type UserResponse struct {
 	Username string  `json:"username"`
 	Email    string  `json:"email"`
-	Bio      string  `json:"bio"`
-	Image    *string `json:"image"`
 	Image     *string `json:"image"`
 	Karma 	   int    `json:"karma"`
 	Type	   string  `json:"type"`
@@ -60,8 +56,6 @@ func (self *UserSerializer) Response() UserResponse {
 	user := UserResponse{
 		Username: myUserModel.Username,
 		Email:    myUserModel.Email,
-		Bio:      myUserModel.Bio,
-		Image:    myUserModel.Image,
 		Image:    myUserModel.Image,
 		Karma: 	   myUserModel.Karma,
 		Type:	  myUserModel.Type,
@@ -69,7 +63,6 @@ func (self *UserSerializer) Response() UserResponse {
 	}
 	return user
 }
-
 
 //--------------------END LOGIN------------------------//
 
@@ -124,4 +117,3 @@ func (self *NoTypeSerializer) Response() NoTypeResponse {
 }
 
 //------------------------END NO NORMAL TYPE---------------------//
-

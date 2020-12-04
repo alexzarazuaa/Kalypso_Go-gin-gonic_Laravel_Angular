@@ -7,11 +7,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/jinzhu/gorm"
-<<<<<<< HEAD
-	"github.com/yomogan/6_gin_gonic_thinkster/common"
-=======
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 	"net/http/httptest"

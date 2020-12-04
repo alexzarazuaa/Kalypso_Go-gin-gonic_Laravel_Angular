@@ -1,11 +1,7 @@
 package users
 
 import (
-<<<<<<< HEAD
-	"github.com/yomogan/6_gin_gonic_thinkster/common"
-=======
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	"gopkg.in/gin-gonic/gin.v1"
 )
 
@@ -34,10 +30,6 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	}
 	self.userModel.Username = self.User.Username
 	self.userModel.Email = self.User.Email
-<<<<<<< HEAD
-	self.userModel.Bio = self.User.Bio
-=======
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 
 	if self.User.Password != common.NBRandomPassword {
 		self.userModel.setPassword(self.User.Password)
@@ -45,14 +37,11 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	if self.User.Image != "" {
 		self.userModel.Image = &self.User.Image
 	}
-<<<<<<< HEAD
-=======
 
 	self.userModel.Karma = 0
 	self.userModel.Type = "client"
 
 
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	return nil
 }
 
@@ -67,10 +56,6 @@ func NewUserModelValidatorFillWith(userModel UserModel) UserModelValidator {
 	userModelValidator := NewUserModelValidator()
 	userModelValidator.User.Username = userModel.Username
 	userModelValidator.User.Email = userModel.Email
-<<<<<<< HEAD
-	userModelValidator.User.Bio = userModel.Bio
-=======
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	userModelValidator.User.Password = common.NBRandomPassword
 
 	if userModel.Image != nil {

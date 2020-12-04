@@ -1,14 +1,9 @@
 package users
 
 import (
-<<<<<<< HEAD
-	"errors"
-	"github.com/yomogan/6_gin_gonic_thinkster/common"
-=======
 	// "fmt"
 	"errors"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	"gopkg.in/gin-gonic/gin.v1"
 	"net/http"
 )
@@ -92,10 +87,7 @@ func UsersRegistration(c *gin.Context) {
 }
 
 func UsersLogin(c *gin.Context) {
-<<<<<<< HEAD
-=======
 
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 	loginValidator := NewLoginValidator()
 	if err := loginValidator.Bind(c); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
@@ -112,11 +104,6 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email or invalid password")))
 		return
 	}
-<<<<<<< HEAD
-	UpdateContextUserModel(c, userModel.ID)
-	serializer := UserSerializer{c}
-	c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
-=======
 
 
 	if ((userModel.Type)=="client"){	//Type client -> Login
@@ -137,7 +124,6 @@ func UsersLogin(c *gin.Context) {
 
 	}
 
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
 }
 
 func UserRetrieve(c *gin.Context) {
@@ -162,7 +148,3 @@ func UserUpdate(c *gin.Context) {
 	serializer := UserSerializer{c}
 	c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 54f4ab9460419a42b520998c60f9fa0be7b23b8d
