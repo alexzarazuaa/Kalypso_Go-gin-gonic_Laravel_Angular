@@ -105,24 +105,24 @@ func UsersLogin(c *gin.Context) {
 		return
 	}
 
-	if ((userModel.Type)=="client"){
+
+	if ((userModel.Type)=="client"){	//Type client -> Login
 
 		UpdateContextUserModel(c, userModel.ID)
 		serializer := UserSerializer{c}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
-	}else if ((userModel.Type)=="admin"){
+	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
 
 		serializer := AdminSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 		
-	} else{
+	} else{		//No normal type -> show type
 		
 		serializer := NoTypeSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": serializer.Response()})
 
 	}
-
 
 }
 
