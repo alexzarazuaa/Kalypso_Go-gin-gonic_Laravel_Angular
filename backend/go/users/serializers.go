@@ -6,6 +6,8 @@ import (
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 )
 
+//-----------------PROFILE-----------------------------//
+
 type ProfileSerializer struct {
 	C *gin.Context
 	UserModel
@@ -13,7 +15,6 @@ type ProfileSerializer struct {
 
 // Declare your response schema here
 type ProfileResponse struct {
-	ID        uint    `json:"-"`
 	Username  string  `json:"username"`
 	Email     string  `json:"email"`
 	Image     *string `json:"image"`
@@ -23,7 +24,6 @@ type ProfileResponse struct {
 // Put your response logic including wrap the userModel here.
 func (self *ProfileSerializer) Response() ProfileResponse {
 	profile := ProfileResponse{
-		ID:        self.ID,
 		Username:  self.Username,
 		Image:     self.Image,
 		Karma:	   self.Karma,
@@ -31,6 +31,12 @@ func (self *ProfileSerializer) Response() ProfileResponse {
 	}
 	return profile
 }
+
+//----------------END PROFILE-------------------------//
+
+
+
+//-------------------LOGIN---------------------------//
 
 type UserSerializer struct {
 	c *gin.Context
@@ -58,18 +64,33 @@ func (self *UserSerializer) Response() UserResponse {
 	return user
 }
 
-type FindSerializer struct {
+//--------------------END LOGIN------------------------//
+
+
+
+//--------------------ADMIN---------------------------//
+type AdminSerializer struct {
 	C *gin.Context
 	UserModel
 }
 
-type FindResponse struct {
-	Type	  string   `json:"type"`
+type AdminResponse struct {
+	Username string  `json:"username"`
+	Email    string  `json:"email"`
+	Image     *string `json:"image"`
+	Karma 	   int    `json:"karma"`
+	Type	   string  `json:"type"`
 }
 
-func (self *FindSerializer) Response() FindResponse {
-	find := FindResponse{
-		Type:      self.Type,
+func (self *AdminSerializer) Response() AdminResponse {
+	admin := AdminResponse{
+		Username:  self.Username,
+		Image:     self.Image,
+		Karma:	   self.Karma,
+		Email:	   self.Email,
+		Type:	   self.Type,
 	}
-	return find
+	return admin
 }
+
+//------------------------END ADMIN---------------------//
