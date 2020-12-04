@@ -39,7 +39,7 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 	}
 
 	self.userModel.Karma = 0
-	self.userModel.Type = "superadmin"
+	self.userModel.Type = "client"
 
 
 	return nil
