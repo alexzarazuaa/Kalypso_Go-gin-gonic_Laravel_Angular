@@ -1,7 +1,7 @@
 package users
 
 import (
-	"fmt"
+	// "fmt"
 	"errors"
 	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
 	"gopkg.in/gin-gonic/gin.v1"
@@ -11,8 +11,6 @@ import (
 func UsersRegister(router *gin.RouterGroup) {
 	router.POST("/", UsersRegistration)
 	router.POST("/login", UsersLogin)
-	router.GET("/find/:email", UsersFind)
-
 }
 
 func UserRegister(router *gin.RouterGroup) {
@@ -26,31 +24,6 @@ func ProfileRegister(router *gin.RouterGroup) {
 	router.DELETE("/:username/follow", ProfileUnfollow)
 }
 
-func UsersFind(c *gin.Context) {
-	email := c.Param("email")
-	userModel, algo, err := FindUser(&UserModel{Email: email})
-
-	fmt.Println("----------------",err)
-	fmt.Println("----------------",algo)
-
-	if err != nil {
-		c.JSON(http.StatusNotFound, common.NewError("profile", errors.New("Invalid username")))
-		return
-	}
-	fmt.Println("+++++++++++++++++++++++++++++++",userModel)
-
-	serializer := FindSerializer{c, userModel}
-
-	fmt.Println(serializer.Response())
-
-	// if ((serializer.Response())=="client"){
-	// 	fmt.Println("pepep")
-	// }else{
-	// 	fmt.Println("lolololloloolo")
-	// }
-	
-	c.JSON(http.StatusOK, gin.H{"profile": serializer.Response()})
-}
 func ProfileRetrieve(c *gin.Context) {
 	username := c.Param("username")
 	userModel, err := FindOneUser(&UserModel{Username: username})
@@ -114,6 +87,7 @@ func UsersRegistration(c *gin.Context) {
 }
 
 func UsersLogin(c *gin.Context) {
+
 	loginValidator := NewLoginValidator()
 	if err := loginValidator.Bind(c); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
@@ -130,9 +104,26 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusForbidden, common.NewError("login", errors.New("Not Registered email or invalid password")))
 		return
 	}
-	UpdateContextUserModel(c, userModel.ID)
-	serializer := UserSerializer{c}
-	c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+
+
+	if ((userModel.Type)=="client"){	//Type client -> Login
+
+		UpdateContextUserModel(c, userModel.ID)
+		serializer := UserSerializer{c}
+		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+
+	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
+
+		serializer := AdminSerializer{c, userModel}
+		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+		
+	} else{		//No normal type -> show type
+		
+		serializer := NoTypeSerializer{c, userModel}
+		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": serializer.Response()})
+
+	}
+
 }
 
 func UserRetrieve(c *gin.Context) {
