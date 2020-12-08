@@ -51,6 +51,20 @@ LOGIN
 POST PRODUCTS
 ** Authorization Token ... **
 
+--> http://0.0.0.0:3000/api/buy_products/
+
+{
+  "buy_product": {
+    "Name": "rthhjhh",
+    "brand":"jajajajaja",
+    "img":"sdfsfd",
+    "description": "Ever wonder how?",
+    "rating": 40,
+    "category":"jajajjajajaaj"
+  }
+}
+
+
 --> http://0.0.0.0:3000/api/products
 {
   "product": {

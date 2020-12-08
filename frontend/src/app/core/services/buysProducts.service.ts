@@ -14,12 +14,12 @@ export class BuysProductsService {
 
   getAll(): Observable<BuyProduct[]> {
     const params = {};
-    return this.apiService.get('/products/');
+    return this.apiService.get('/buysproducts/');
   }// end_query
   
 
   getOne(id): Observable<BuyProduct> {
-    return this.apiService.get('/products/' + id)
+    return this.apiService.get('/buysproducts/' + id)
       .pipe(map(data => {
         console.log('data in service',data);
         return data;

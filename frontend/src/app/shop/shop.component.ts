@@ -17,7 +17,7 @@ export class ShopComponent implements OnInit {
       ngOnInit() {
  
 
-          console.log('products laravel');
+          console.log('SHOOOOOP');
         
       }
     

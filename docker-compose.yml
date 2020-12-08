@@ -82,4 +82,4 @@ volumes:
   redis:
   mysqlBackup:
 networks:
-   Kalypso_network: {}
+   Kalypso_network: 

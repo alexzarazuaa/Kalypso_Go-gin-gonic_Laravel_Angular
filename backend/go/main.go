@@ -32,12 +32,12 @@ func main() {
 
 
 	v1.Use(users.AuthMiddleware(false))
-	products.ProductsAnonymousRegister(v1.Group("/products"))
 	users.UsersRegister(v1.Group("/users"))
+	products.ProductsAnonymousRegister(v1.Group("/products"))
+
 
 	v1.Use(users.AuthMiddleware(true))
 	buy_products.Buy_ProductsRegister(v1.Group("/buy_products"))
-	users.UserRegister(v1.Group("/user"))
 	users.ProfileRegister(v1.Group("/profiles"))
 
 	// testAuth := r.Group("/api/ping")
