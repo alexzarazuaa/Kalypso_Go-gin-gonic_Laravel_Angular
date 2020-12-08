@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BuyProduct, UserService, User } from '../core';
+import { Products, UserService, User } from '../core';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { BuyProduct, UserService, User } from '../core';
 })
 export class ProductComponent implements OnInit {
 
-  product: BuyProduct;
+  product: Products;
   currentUser: User;
   canModify: boolean;
   isSubmitting = false;
@@ -23,7 +23,7 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     // Retreive the prefetched product
     this.route.data.subscribe(
-      (data: { product: BuyProduct; }) => {
+      (data: { product: Products; }) => {
         console.log(data)
         this.product = data.product;
       }

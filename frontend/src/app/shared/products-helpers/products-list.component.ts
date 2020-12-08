@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BuyProduct, BuysProductsService } from '../../core';
+import { Products, ProductsService } from '../../core';
 
 @Component({
   selector: 'app-products',
@@ -8,16 +8,16 @@ import { BuyProduct, BuysProductsService } from '../../core';
 })
 export class ProductslistComponent implements OnInit {
   constructor(
-    private buysProducts: BuysProductsService) { }
+    private productsService: ProductsService) { }
 
 
-    buyProducts : BuyProduct[];
+    products : Products[];
 
   ngOnInit() {
-     this.buyProducts = [];
-    this.buysProducts.getAll().subscribe(data => {
-      this.buyProducts = data;
-      console.log(this.buyProducts,'products laravel');
+     this.products = [];
+    this.productsService.getAll().subscribe(data => {
+      this.products = data;
+      console.log(this.products,'products laravel');
     })
   }
 

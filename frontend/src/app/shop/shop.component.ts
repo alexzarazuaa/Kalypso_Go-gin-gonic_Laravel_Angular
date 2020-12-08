@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BuyProduct, BuysProductsService } from '../core';
+import { Products, ProductsService } from '../core';
 
 
 @Component({
@@ -9,10 +9,10 @@ import { BuyProduct, BuysProductsService } from '../core';
 export class ShopComponent implements OnInit {
 
     constructor(
-        private buysProducts: BuysProductsService) { }
+        private productsService: ProductsService) { }
     
     
-        buyProducts : BuyProduct[];
+        products : Products[];
     
       ngOnInit() {
  
