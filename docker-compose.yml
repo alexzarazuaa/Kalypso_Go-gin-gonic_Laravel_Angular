@@ -19,7 +19,6 @@ services:
       && php artisan route:list
       && php artisan key:generate
       && php artisan migrate
-      && php artisan migrate:refresh
       && php artisan db:seed
       && php artisan serve --host=0.0.0.0 --port=8001"
   go:

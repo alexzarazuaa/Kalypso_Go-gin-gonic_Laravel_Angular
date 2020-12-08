@@ -20,7 +20,6 @@ export class ProductsResolver implements Resolve<Products> {
   ): Observable<any> {
     return this.productsService.getOne(route.params['id'])
       .pipe(catchError((err) => {
-        console.log('sadjfg');
         return this.router.navigateByUrl('/');
       }));
   }
