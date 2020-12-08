@@ -3,10 +3,10 @@ import { BuyProduct, BuysProductsService } from '../../core';
 
 @Component({
   selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  templateUrl: './products-list.component.html',
+  styleUrls: ['./products-list.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class ProductslistComponent implements OnInit {
   constructor(
     private buysProducts: BuysProductsService) { }
 
