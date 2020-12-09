@@ -1,10 +1,13 @@
 -------------------------------------- ROUTES FOR START GO --------------------------------------------------------------
 
---> export GOROOT=/usr/local/go
---> export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
---> export GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
---> export PATH=$PATH:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/bin
---> START GO:  --> fresh
+export GOROOT=/usr/local/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
+export PATH=$PATH:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/bin
+START GO:  --> fresh
+
+export GOPATH=/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/
+export PATH=$PATH:/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/bin
 
 --------------------------------- POR SI ACASO ----------------------------
 
