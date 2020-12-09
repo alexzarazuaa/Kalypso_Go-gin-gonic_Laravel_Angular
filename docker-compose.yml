@@ -79,7 +79,7 @@ services:
        - Kalypso_network
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock 
-       - ./common/traefik:/etc/traefik
+       - ./backend/go/traefik:/etc/traefik
 volumes:
   redis:
   mysqlBackup:
