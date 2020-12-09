@@ -37,7 +37,6 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
 
-
   web:
     image: golang:1.15
     container_name: go_container
@@ -61,31 +60,6 @@ services:
       - redis
     networks:
       - Kalypso_network
-
-  # go:
-  #   build: ./backend/go
-  #   container_name: Kalypso_GO
-  #   working_dir: /home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
-  #   volumes:
-  #     - ./backend/go:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
-  #   ports:
-  #     - "3000:3000"
-  #   networks:
-  #      - Kalypso_network
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #   labels:
-  #     traefik.backend: "go"
-  #     traefik.frontend.rule: "PathPrefix:/"
-  #   environment:
-  #     - GOROOT=/usr/local/go
-  #     - GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
-  #     - "REDIS_URL= redis:6380"
-  #   command: fresh
-
-
-
   redis:
     container_name: Kalypso_REDIS
     image: redis:alpine
