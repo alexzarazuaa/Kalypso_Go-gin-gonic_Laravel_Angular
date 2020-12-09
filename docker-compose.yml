@@ -1,78 +1,82 @@
 version: "3"
 services:
   laravel:
+    container_name: Kalypso_LARAVEL
     tty: true
     image: bitnami/laravel:7
     depends_on:
       - mysql
-    links:
-      - mysql
+      - redis
+      - go
     ports:
-      - 8003:3001
+      - "8001:8001"
+    networks:
+       - Kalypso_network
     volumes:
       - ./backend/laravel:/app
     command: >
-      bash -c "php artisan route:list
+      bash -c " composer install
+      && php artisan route:list
       && php artisan key:generate
       && php artisan migrate
       && php artisan db:seed
-      && php artisan serve --host=0.0.0.0 --port=3000"
+      && php artisan serve --host=0.0.0.0 --port=8001"
+  go:
+    build: ./backend/go
+    container_name: Kalypso_GO
+    working_dir: /home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
+    volumes:
+      - ./backend/go:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
+    ports:
+      - "3000:3000"
+    networks:
+       - Kalypso_network
+    depends_on:
+      - mysql
+      - redis
+    labels:
+      traefik.backend: "go"
+      traefik.frontend.rule: "PathPrefix:/"
+    environment:
+      - GOROOT=/usr/local/go
+      - GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
+      - "REDIS_URL= redis:6380"
+    command: fresh
   mysql:
+    container_name: Kalypso_MYSQL
     image: mysql:5.7
     ports:
       - "3306:3306"
     restart: on-failure
+    networks:
+       - Kalypso_network
     volumes:
       - mysqlBackup:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: laspalmas12
       MYSQL_DATABASE: Kalypso
       MYSQL_USER: root
-      MYSQL_PASSWORD: laspalmas12
-  go:
-    image: golang:1.15.2-alpine
-    container_name: Kalypso_go
-    working_dir: $home/Documentos/2ºDaw/Servidor/projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular
-    volumes:
-    - ./backend/go:$home/Documentos/2ºDaw/Servidor/projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/
-    ports:
-    - "3000:3000"
-    restart: on-failure
-    links:
-    - mysql
-    depends_on:
-    - mysql
-    # environment:
-    # - GOROOT=/usr/local/go
-    # - PATH=$GOPATH/bin:$GOROOT/bin:$PAT
-    # - GOPATH=/home/viceentcb/Documentos/2ºDaw/Servidor/projects_go/
-    # - PATH=$PATH:/home/viceentcb/Documentos/2ºDaw/Servidor/projects_go/bin
-    command: >
-      bash -c " ENV GOROOT=/usr/local/go
-      && ENV GOPATH=/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/
-      && ENV PATH=$GOPATH/bin:$GOROOT/bin:$PAT
-      && ENV PATH=$PATH/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/bin
-      && govendor sync && fresh"
-  # angular:
-  #   build: ./frontend
-  #   working_dir: /app
-  #   volumes:
-  #   - ./frontend:/app
-  #   ports:
-  #   - "4200:4200"
-  #   restart: on-failure
-  #   links:
-  #   - laravel
-  #   depends_on:
-  #   - laravel
-  #   command: bash -c "npm install && ng serve --host=0.0.0.0 --port=4200"
   redis:
+    container_name: Kalypso_REDIS
     image: redis:alpine
     restart: on-failure
     ports:
-      - "6380:6379"
+      - "6380:6380"
     volumes:
       - "redis:/redis_data"
+  traefik:
+    image:  traefik:1.7.2-alpine
+    container_name: traefik_container
+    ports:
+      - "80:80"
+      - "8080:8080"
+    networks:
+       - Kalypso_network
+    volumes:
+       - /var/run/docker.sock:/var/run/docker.sock 
+       - ./common/traefik:/etc/traefik
 volumes:
   redis:
   mysqlBackup:
+networks:
+   Kalypso_network: 

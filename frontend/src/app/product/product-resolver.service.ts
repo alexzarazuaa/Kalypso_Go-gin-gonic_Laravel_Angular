@@ -3,13 +3,13 @@ import { Injectable, } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { BuyProduct, BuysProductsService, UserService } from '../core';
+import { Products, ProductsService, UserService } from '../core';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
-export class ProductsResolver implements Resolve<BuyProduct> {
+export class ProductsResolver implements Resolve<Products> {
   constructor(
-    private buysProductsService: BuysProductsService,
+    private productsService: ProductsService,
     private router: Router,
     private userService: UserService
   ) {}
@@ -18,9 +18,8 @@ export class ProductsResolver implements Resolve<BuyProduct> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.buysProductsService.getOne(route.params['id'])
+    return this.productsService.getOne(route.params['id'])
       .pipe(catchError((err) => {
-        console.log('sadjfg');
         return this.router.navigateByUrl('/');
       }));
   }

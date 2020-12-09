@@ -22,16 +22,6 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
-  /**
-   * Method go data
-   * @param path 
-   * @param params 
-   */
-
-  get_Go(path: string, params: HttpParams = new HttpParams()): Observable<any> {
-    return this.http.get(`${environment.go}${path}`, { params })
-      .pipe(catchError(this.formatErrors));
-  }
 
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
@@ -52,4 +42,32 @@ export class ApiService {
       `${environment.laravel}${path}`
     ).pipe(catchError(this.formatErrors));
   }
+
+
+  /* ===================  GO METHODS ===================*/
+
+    /**
+   * Method go enviroment GET data
+   * @param path 
+   * @param params 
+   */
+
+  get_Go(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    return this.http.get(`${environment.go}${path}`, { params })
+      .pipe(catchError(this.formatErrors));
+  }
+
+  /**
+   * 
+   * @param path  METHOD POST GO  ENVIROMENT DATA
+   * @param body 
+   */
+
+  post_Go(path: string, body: Object = {}): Observable<any> {
+    return this.http.post(
+      `${environment.go}${path}`,
+      JSON.stringify(body)
+    ).pipe(catchError(this.formatErrors));
+  }
+
 }
