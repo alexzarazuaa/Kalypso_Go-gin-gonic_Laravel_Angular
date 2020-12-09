@@ -25,16 +25,16 @@ services:
     volumes:
       - mysqlBackup:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: kalypso
+      MYSQL_ROOT_PASSWORD: laspalmas12
+      MYSQL_DATABASE: Kalypso
       MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: laspalmas12
   go:
     image: golang:1.15.2-alpine
     container_name: Kalypso_go
-    working_dir: $HOME/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular
+    working_dir: $home/Documentos/2ºDaw/Servidor/projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular
     volumes:
-    - ./backend/go:$HOME/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/
+    - ./backend/go:$home/Documentos/2ºDaw/Servidor/projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/
     ports:
     - "3000:3000"
     restart: on-failure
@@ -42,23 +42,30 @@ services:
     - mysql
     depends_on:
     - mysql
-    environment:
-    - GOROOT=/usr/local/go
-    - GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
-    command: bash -c "govendor sync && fresh"
-  angular:
-    build: ./frontend
-    working_dir: /app
-    volumes:
-    - ./frontend:/app
-    ports:
-    - "4200:4200"
-    restart: on-failure
-    links:
-    - laravel
-    depends_on:
-    - laravel
-    command: bash -c "npm install && ng serve --host=0.0.0.0 --port=4200"
+    # environment:
+    # - GOROOT=/usr/local/go
+    # - PATH=$GOPATH/bin:$GOROOT/bin:$PAT
+    # - GOPATH=/home/viceentcb/Documentos/2ºDaw/Servidor/projects_go/
+    # - PATH=$PATH:/home/viceentcb/Documentos/2ºDaw/Servidor/projects_go/bin
+    command: >
+      bash -c " ENV GOROOT=/usr/local/go
+      && ENV GOPATH=/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/
+      && ENV PATH=$GOPATH/bin:$GOROOT/bin:$PAT
+      && ENV PATH=$PATH/home/viceentcb/Documentos/2ºDAW/Servidor/projects_go/bin
+      && govendor sync && fresh"
+  # angular:
+  #   build: ./frontend
+  #   working_dir: /app
+  #   volumes:
+  #   - ./frontend:/app
+  #   ports:
+  #   - "4200:4200"
+  #   restart: on-failure
+  #   links:
+  #   - laravel
+  #   depends_on:
+  #   - laravel
+  #   command: bash -c "npm install && ng serve --host=0.0.0.0 --port=4200"
   redis:
     image: redis:alpine
     restart: on-failure
