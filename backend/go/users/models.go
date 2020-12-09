@@ -3,7 +3,7 @@ package users
 import (
 	"errors"
 	"github.com/jinzhu/gorm"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"goKa/common"
 	"golang.org/x/crypto/bcrypt"
 )
 

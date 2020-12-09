@@ -4,7 +4,8 @@ import { Products, ProductsService } from '../core';
 
 
 @Component({
-  templateUrl: './shop.component.html'
+  templateUrl: './shop.component.html',
+  styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
 
@@ -15,7 +16,7 @@ export class ShopComponent implements OnInit {
         products : Products[];
     
       ngOnInit() {
- 
+
 
           console.log('SHOOOOOP');
         

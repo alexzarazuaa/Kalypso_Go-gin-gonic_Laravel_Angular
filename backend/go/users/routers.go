@@ -1,10 +1,10 @@
 package users
 
 import (
-	// "fmt"
+	"fmt"
 	"errors"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"gopkg.in/gin-gonic/gin.v1"
+	"goKa/common"
+	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
@@ -113,6 +113,7 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
+		fmt.Println("---------------------------")
 
 		serializer := AdminSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})

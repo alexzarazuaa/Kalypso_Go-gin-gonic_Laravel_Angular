@@ -1,15 +1,15 @@
 package buy_products
 
 import (
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"goKa/common"
+	"goKa/users"
 	"github.com/gosimple/slug"
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 )
 
 type Buy_ProductModelValidator struct {
 	Buy_Product struct {
-		Name       string   `form:"name" json:"name" binding:"exists,min=4"`
+		Name       string   `form:"name" json:"name" binding:"required,min=4"`
 		Description string   `form:"description" json:"description" binding:"max=2048"`
 		Brand        string   `form:"brand" json:"brand" binding:"max=2048"`
 		Category        string   `form:"category" json:"category" binding:"max=2048"`

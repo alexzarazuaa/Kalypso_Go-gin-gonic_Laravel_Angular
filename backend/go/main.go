@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/buy_products"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/products"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"goKa/buy_products"
+	"goKa/products"
+	"goKa/common"
+	"goKa/users"
+	"goKa/redis"
 	"github.com/jinzhu/gorm"
 )
 
@@ -20,6 +21,11 @@ func Migrate(db *gorm.DB) {
 }
 
 func main() {
+
+ 	// creates a client
+	redisClient := redis.NewClient()
+	defer redisClient.Close()
+
 	db := common.Init()
 	Migrate(db)
 	defer db.Close()

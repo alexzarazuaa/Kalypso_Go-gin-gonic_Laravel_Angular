@@ -1,20 +1,7 @@
-.ite{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-   
-}
-.fto {
+.cards{
     display: flex;
-    justify-content: space-around;
-    flex-direction: row;
-}
-.shop-row{
-    display: flex;
-    flex-direction: row;
     justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
-    margin-top: 150px;
+    flex-direction: row;
+    margin: 100px;
+    flex-wrap: wrap;
 }

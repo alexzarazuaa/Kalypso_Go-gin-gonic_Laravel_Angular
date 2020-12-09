@@ -1,9 +1,9 @@
 package users
 
 import (
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"goKa/common"
 )
 
 //-----------------PROFILE-----------------------------//

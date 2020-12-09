@@ -1,6 +1,7 @@
 FROM node:10.15-alpine
 WORKDIR /app
-COPY . .
+
+COPY ./ /app/
 RUN npm install -g @angular/cli
 RUN npm install
 

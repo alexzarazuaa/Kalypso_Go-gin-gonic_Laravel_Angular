@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"github.com/jinzhu/gorm"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"goKa/common"
+	"goKa/users"
 )
 
 type ProductModel struct {

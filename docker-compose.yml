@@ -7,7 +7,7 @@ services:
     depends_on:
       - mysql
       - redis
-      - go
+      - web
     ports:
       - "8001:8001"
     networks:
@@ -21,27 +21,6 @@ services:
       && php artisan migrate
       && php artisan db:seed
       && php artisan serve --host=0.0.0.0 --port=8001"
-  go:
-    build: ./backend/go
-    container_name: Kalypso_GO
-    working_dir: /home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
-    volumes:
-      - ./backend/go:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
-    ports:
-      - "3000:3000"
-    networks:
-       - Kalypso_network
-    depends_on:
-      - mysql
-      - redis
-    labels:
-      traefik.backend: "go"
-      traefik.frontend.rule: "PathPrefix:/"
-    environment:
-      - GOROOT=/usr/local/go
-      - GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
-      - "REDIS_URL= redis:6380"
-    command: fresh
   mysql:
     container_name: Kalypso_MYSQL
     image: mysql:5.7
@@ -57,15 +36,65 @@ services:
       MYSQL_DATABASE: kalypso
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-  
+
+
+  web:
+    image: golang:1.15
+    container_name: go_container
+    working_dir: /go/src/goKa 
+    volumes:
+      - ./backend/go:/go/src/goKa
+    command: >
+      bash -c " rm -f go.mod || true
+      && rm -f go.sum || true
+      && go mod init goKa
+      && go mod tidy
+      && go get github.com/pilu/fresh
+      && fresh "
+    ports:
+      - "8090:3000"
+    labels:
+      traefik.backend: "web"
+      traefik.frontend.rule: "PathPrefix:/"
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - Kalypso_network
+
+  # go:
+  #   build: ./backend/go
+  #   container_name: Kalypso_GO
+  #   working_dir: /home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
+  #   volumes:
+  #     - ./backend/go:/home/usuario/Documentos/2nDaw/Servidor/Projects_go/src/github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #      - Kalypso_network
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   labels:
+  #     traefik.backend: "go"
+  #     traefik.frontend.rule: "PathPrefix:/"
+  #   environment:
+  #     - GOROOT=/usr/local/go
+  #     - GOPATH=/home/usuario/Documentos/2nDaw/Servidor/Projects_go/
+  #     - "REDIS_URL= redis:6380"
+  #   command: fresh
+
+
+
   redis:
     container_name: Kalypso_REDIS
     image: redis:alpine
     restart: on-failure
     ports:
-      - "6380:6380"
+      - "6380:6379"
     volumes:
       - "redis:/redis_data"
+    
   traefik:
     image:  traefik:1.7.2-alpine
     container_name: traefik_container
