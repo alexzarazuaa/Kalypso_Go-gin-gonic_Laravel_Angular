@@ -38,3 +38,23 @@ class CreateUsersTable extends Migration
         Schema::dropIfExists('users');
     }
 }
+
+
+
+// if (Schema::hasTable('user_model'))
+// {
+//         Schema::create('user_model', function (Blueprint $table) {
+//             $table->increments('id');
+//             $table->string('username');
+//             $table->string('email');
+//             $table->string('password');
+//             $table->string('bio')->nullable();
+//             $table->string('image', 2048)->nullable();
+//             $table->string('type');
+//             $table->rememberToken();
+//             $table->timestamps();
+
+//             $table->unique(['username', 'email']);
+//         });
+//     }
+// }

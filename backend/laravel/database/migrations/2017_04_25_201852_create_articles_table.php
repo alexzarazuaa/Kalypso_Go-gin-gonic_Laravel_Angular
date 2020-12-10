@@ -12,6 +12,8 @@ class CreateArticlesTable extends Migration
      * @return void
      */
     public function up()
+
+    
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');

@@ -34,7 +34,7 @@ $factory->define(App\Article::class, function (\Faker\Generator $faker) {
         'created_at' => \Carbon\Carbon::now()->subSeconds($reduce--),
     ];
 });
-$factory->define(App\Model_buysProducts::class , function(\Faker\Generator $faker){
+$factory->define(App\Model_buys_products::class , function(\Faker\Generator $faker){
 
     static $reduce = 999;
     return[
