@@ -1,7 +1,7 @@
 package users
 
 import (
-	"fmt"
+	// "fmt"
 	"errors"
 	"goKa/common"
 	"github.com/gin-gonic/gin"
@@ -113,10 +113,18 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
-		fmt.Println("---------------------------")
+		client := common.NewClient()
 
-		serializer := AdminSerializer{c, userModel}
-		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+		user:="{`data`:{`username`:"+userModel.Username+",`email`:"+userModel.Email+", `type`:"+userModel.Type+"}}"
+
+
+		err := common.SetUser("user", user, client)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		//si se guardan los datos correctamente
+		c.JSON(200, gin.H{"result": "ok"})
 		
 	} else{		//No normal type -> show type
 		

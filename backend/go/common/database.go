@@ -34,8 +34,8 @@ type DBConfig struct {
 // 		Host:     "localhost",
 // 		Port:     3306,
 // 		User:     "root",
-// 		Password: "laspalmas12",
-// 		DBName:   "Kalypso",
+// 		Password: "root",
+// 		DBName:   "kalypso",
 // 	}
 // 	// fmt.Println(&dbConfig)
 // 	return &dbConfig

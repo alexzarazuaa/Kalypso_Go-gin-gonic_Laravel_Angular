@@ -47,6 +47,7 @@ services:
       bash -c " rm -f go.mod || true
       && rm -f go.sum || true
       && go mod init goKa
+      && go get github.com/go-redis/redis/v8
       && go mod tidy
       && go get github.com/pilu/fresh
       && fresh "
@@ -65,9 +66,11 @@ services:
     image: redis:alpine
     restart: on-failure
     ports:
-      - "6380:6379"
+      - "6379:6379"
     volumes:
       - "redis:/redis_data"
+    networks:
+      - Kalypso_network
     
   traefik:
     image:  traefik:1.7.2-alpine

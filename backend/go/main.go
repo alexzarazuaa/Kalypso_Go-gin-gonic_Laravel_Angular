@@ -9,7 +9,6 @@ import (
 	"goKa/products"
 	"goKa/common"
 	"goKa/users"
-	"goKa/redis"
 	"github.com/jinzhu/gorm"
 )
 
@@ -22,9 +21,6 @@ func Migrate(db *gorm.DB) {
 
 func main() {
 
- 	// creates a client
-	redisClient := redis.NewClient()
-	defer redisClient.Close()
 
 	db := common.Init()
 	Migrate(db)
