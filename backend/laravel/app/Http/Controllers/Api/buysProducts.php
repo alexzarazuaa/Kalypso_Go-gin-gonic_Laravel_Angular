@@ -10,7 +10,7 @@ use App\Model_buys_products;
 use App\Http\Requests\Api\CreateBuyProduct;
 
 
-class buys_products extends ApiController
+class buysProducts extends ApiController
 {
 
     /**
