@@ -1,7 +1,7 @@
 version: "3"
 services:
   laravel:
-    container_name: Kalypso_LARAVEL
+    container_name: Kalypso_LARAVEL 
     tty: true
     image: bitnami/laravel:7
     depends_on:
