@@ -1,8 +1,0 @@
-"api/*":
-Todas las solicitudes realizadas /api/desde dentro de su aplicación se enviarán a target": "https://localhost:8000/api
-"secure": false,:
- De forma predeterminada, no se aceptará un servidor backend que se ejecute en HTTPS con un certificado no válido. Si lo desea, debe configurar secure: false.
-
-"logLevel": "debug"
-Para ayudar a depurar si su proxy está funcionando correctamente, también se puede añadir la opción logLevel de la siguiente manera: Las posibles opciones para logLevel incluyen debug, info, warn, error, y silent(por defecto es información).
-
