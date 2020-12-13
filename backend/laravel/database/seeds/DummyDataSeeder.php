@@ -46,7 +46,7 @@ class DummyDataSeeder extends Seeder
      * @var int
      */
 
-    protected $maxProducts_Faker = 5;
+    protected $maxProducts_Faker = 2;
     
 
     /**

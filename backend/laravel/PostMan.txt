@@ -1,4 +1,4 @@
--------------------------------------------------------    REGISTER AND LOGIN ----------------------
+-------------------------------------------------------    REGISTER AND LOGIN  LOCAL  ----------------------
 
 REGISTER 
 
@@ -13,6 +13,8 @@ REGISTER
             }
         }
 
+
+
 LOGIN
 
 --> http://127.0.0.1:8000/api/users/login
@@ -24,6 +26,41 @@ LOGIN
             "password": "Yomogan1"
         }
     }
+
+
+------------------------------------------------------------ RESGISTER AND LOGIN USING DOCKER -------------------------------------------
+
+
+REGISTER 
+
+
+    --> http://0.0.0.0:8001/api/users
+
+    -->   {
+            "user": {
+                "username": "yomogana",
+                "email": "yomogana@gmail.com",
+                "password": "Yomogan1"
+            }
+        }
+
+
+
+LOGIN
+
+--> http://0.0.0.0:8001/api/users/login
+
+
+-->   {
+        "user": {
+            "email": "yomogana@gmail.com",
+            "password": "Yomogan1"
+        }
+    }
+
+
+
+
 
 
 ---------------------------------------------------------------- PRODUCTS ------------------------------------------------

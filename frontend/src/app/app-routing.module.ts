@@ -24,9 +24,13 @@ const routes: Routes = [
 
   },
   {
-    path:'products',
-    loadChildren : './products/products.module#ProductModule'
+    path:'shop',
+    loadChildren : './shop/shop.module#ShopModule'
 
+  },
+  {
+    path:'admin',
+    loadChildren : './admin/admin.module#AdminModule'
   }
 ];
 

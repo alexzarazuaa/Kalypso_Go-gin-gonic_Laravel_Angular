@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Model_buysProducts extends Model
 {
-    protected $table = 'BuysProducts';
-    protected $fillable = ['id_user','slug','name','brand','image','desc','rating','category'];
+    protected $table = 'buy_product_models';
+    protected $fillable = ['slug','name','brand','img','description','rating','category'];
 
 
     /**

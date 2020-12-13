@@ -25,7 +25,6 @@ class UpdateUser extends ApiRequest
             'username' => 'sometimes|max:50|alpha_num|unique:users,username,' . $this->user()->id,
             'email' => 'sometimes|email|max:255|unique:users,email,' . $this->user()->id,
             'password' => 'sometimes|min:6',
-            'bio' => 'sometimes|nullable|max:255',
             'image' => 'sometimes|nullable|url',
         ];
     }

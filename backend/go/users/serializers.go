@@ -1,16 +1,16 @@
 package users
 
 import (
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
+	"goKa/common"
 )
 
 //-----------------PROFILE-----------------------------//
 
 type ProfileSerializer struct {
 	C *gin.Context
-	UserModel
+	Users
 }
 
 // Declare your response schema here
@@ -52,14 +52,14 @@ type UserResponse struct {
 }
 
 func (self *UserSerializer) Response() UserResponse {
-	myUserModel := self.c.MustGet("my_user_model").(UserModel)
+	myUsers := self.c.MustGet("my_user_model").(Users)
 	user := UserResponse{
-		Username: myUserModel.Username,
-		Email:    myUserModel.Email,
-		Image:    myUserModel.Image,
-		Karma: 	   myUserModel.Karma,
-		Type:	  myUserModel.Type,
-		Token:    common.GenToken(myUserModel.ID),
+		Username: myUsers.Username,
+		Email:    myUsers.Email,
+		Image:    myUsers.Image,
+		Karma: 	   myUsers.Karma,
+		Type:	  myUsers.Type,
+		Token:    common.GenToken(myUsers.ID),
 	}
 	return user
 }
@@ -72,7 +72,7 @@ func (self *UserSerializer) Response() UserResponse {
 
 type AdminSerializer struct {
 	C *gin.Context
-	UserModel
+	Users
 }
 
 type AdminResponse struct {
@@ -96,24 +96,3 @@ func (self *AdminSerializer) Response() AdminResponse {
 
 //------------------------END ADMIN---------------------//
 
-
-
-//--------------------NO NORMAL TYPE---------------------------//
-
-type NoTypeSerializer struct {
-	C *gin.Context
-	UserModel
-}
-
-type NoTypeResponse struct {
-	Type	   string  `json:"type"`
-}
-
-func (self *NoTypeSerializer) Response() NoTypeResponse {
-	user := NoTypeResponse{
-		Type:	   self.Type,
-	}
-	return user
-}
-
-//------------------------END NO NORMAL TYPE---------------------//

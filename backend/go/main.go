@@ -3,12 +3,12 @@ package main
 import (
 	"fmt"
 
-	"gopkg.in/gin-gonic/gin.v1"
+	"github.com/gin-gonic/gin"
 
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/buy_products"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/products"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common"
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
+	"goKa/buy_products"
+	"goKa/products"
+	"goKa/common"
+	"goKa/users"
 	"github.com/jinzhu/gorm"
 )
 
@@ -16,10 +16,12 @@ func Migrate(db *gorm.DB) {
 	users.AutoMigrate()
 	db.AutoMigrate(&buy_products.Buy_ProductModel{})
 	db.AutoMigrate(&products.ProductModel{})
-	db.AutoMigrate(&buy_products.Buy_ProductUserModel{})
+	db.AutoMigrate(&buy_products.Buy_ProductUsers{})
 }
 
 func main() {
+
+
 	db := common.Init()
 	Migrate(db)
 	defer db.Close()
@@ -30,14 +32,14 @@ func main() {
 
 	v1 := r.Group("/api")
 
-	users.UsersRegister(v1.Group("/users"))
+
 	v1.Use(users.AuthMiddleware(false))
+	users.UsersRegister(v1.Group("/users"))
 	products.ProductsAnonymousRegister(v1.Group("/products"))
 
 
 	v1.Use(users.AuthMiddleware(true))
 	buy_products.Buy_ProductsRegister(v1.Group("/buy_products"))
-	users.UserRegister(v1.Group("/user"))
 	users.ProfileRegister(v1.Group("/profiles"))
 
 	// testAuth := r.Group("/api/ping")
@@ -49,7 +51,7 @@ func main() {
 
 	// test 1 to 1
 	// tx1 := db.Begin()
-	// userA := users.UserModel{
+	// userA := users.Users{
 	// 	Username: "AAAAAAAAAAAAAAAA",
 	// 	Email:    "aaaa@g.cn",
 	// 	Bio:      "hehddeda",
@@ -59,12 +61,12 @@ func main() {
 	// tx1.Commit()
 	// fmt.Println(userA)
 
-	//db.Save(&Buy_ProductUserModel{
-	//    UserModelID:userA.ID,
+	//db.Save(&Buy_ProductUsers{
+	//    UsersID:userA.ID,
 	//})
-	//var userAA Buy_ProductUserModel
-	//db.Where(&Buy_ProductUserModel{
-	//    UserModelID:userA.ID,
+	//var userAA Buy_ProductUsers
+	//db.Where(&Buy_ProductUsers{
+	//    UsersID:userA.ID,
 	//}).First(&userAA)
 	//fmt.Println(userAA)
 

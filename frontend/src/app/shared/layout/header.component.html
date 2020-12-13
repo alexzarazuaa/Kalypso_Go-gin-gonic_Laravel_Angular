@@ -14,7 +14,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link"
-          routerLink="/products">
+          routerLink="/shop">
           Shop
         </a>
       </li>
@@ -52,7 +52,7 @@
 
       <li class="nav-item">
         <a class="nav-link"
-          routerLink="/products">
+          routerLink="/shop">
           Shop
         </a>
       </li>
@@ -64,6 +64,17 @@
           <i class="ion-compose"></i>&nbsp;New Article
         </a>
       </li>
+
+      <li 
+      *ngIf="currentUser.type == 'admin'" 
+      class="nav-item">
+        <a class="nav-link"
+          routerLink="/admin"
+          routerLinkActive="active">
+          Admin
+        </a>
+      </li>
+
 
       <li class="nav-item">
         <a class="nav-link"

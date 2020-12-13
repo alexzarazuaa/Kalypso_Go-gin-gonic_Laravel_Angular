@@ -1,10 +1,24 @@
-<div class="article-page">
+<main class="container">
+ 
 
-    <div class="banner">
-      <div class="container">
-        <h1>{{product.brand}}</h1>
+ 
+  <!-- Right Column -->
+  <div class="right-column">
+ 
+    <!-- Product Description -->
+    <div class="product-description">
+      <span>CLOTH</span>
+      <h1>{{product.name}}</h1>
+      <h4>{{product.brand}}</h4>
+      <span>{{product.desc}}</span>
     </div>
-
+ 
+   
+ 
+    <!-- Product Pricing -->
+    <div class="product-price">
+      <span>{{product.rating}}</span> <br>
+      <a href="#" class="cart-btn">Add to cart</a>
     </div>
   </div>
- 
+</main>

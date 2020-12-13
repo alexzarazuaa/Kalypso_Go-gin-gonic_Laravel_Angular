@@ -1,33 +1,13 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
-
+    font-weight: bold;
   }
-  
 
-  .cards{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
-  
-  }
   .flip-card {
     background-color: transparent;
     width: 300px;
     height: 300px;
-    perspective: 1000px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
-    margin: 20px;
+    margin: 10px; 
 
   }
   
@@ -39,11 +19,7 @@ body {
     transition: transform 0.6s;
     transform-style: preserve-3d;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
+  
   }
   
   .flip-card:hover .flip-card-inner {
@@ -62,11 +38,8 @@ body {
   .flip-card-front {
     background-color: #bbb;
     color: black;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-around;
-    flex-wrap: 1 1 wrap;
+    
+
   }
   
   .flip-card-back {

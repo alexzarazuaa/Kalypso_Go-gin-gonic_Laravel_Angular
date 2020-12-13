@@ -7,3 +7,4 @@ export * from './user.model';
 export * from './buysProducts.model';
 export * from './buysProducts-list-config.model';
 export * from './panel.model';
+export * from './products.model';

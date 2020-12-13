@@ -1,16 +1,16 @@
 package buy_products
 
 import (
-	"github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/users"
-	"gopkg.in/gin-gonic/gin.v1"
+	"goKa/users"
+	"github.com/gin-gonic/gin"
 )
 type Buy_ProductUserSerializer struct {
 	C *gin.Context
-	Buy_ProductUserModel
+	Buy_ProductUsers
 }
 
 func (s *Buy_ProductUserSerializer) Response() users.ProfileResponse {
-	response := users.ProfileSerializer{s.C, s.Buy_ProductUserModel.UserModel}
+	response := users.ProfileSerializer{s.C, s.Buy_ProductUsers.Users}
 	return response.Response()
 }
 
@@ -39,7 +39,7 @@ type Buy_ProductsSerializer struct {
 }
 
 func (s *Buy_ProductSerializer) Response() Buy_ProductResponse {
-	// myUserModel := s.C.MustGet("my_user_model").(users.UserModel)
+	// myUsers := s.C.MustGet("my_user_model").(users.Users)
 	authorSerializer := Buy_ProductUserSerializer{s.C, s.Author}
 	response := Buy_ProductResponse{
 		ID:          s.ID,

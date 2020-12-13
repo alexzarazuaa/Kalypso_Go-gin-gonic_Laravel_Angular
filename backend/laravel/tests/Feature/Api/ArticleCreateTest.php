@@ -34,7 +34,6 @@ class ArticleCreateTest extends TestCase
                     'favoritesCount' => 0,
                     'author' => [
                         'username' => $this->loggedInUser->username,
-                        'bio' => $this->loggedInUser->bio,
                         'image' => $this->loggedInUser->image,
                         'following' => false,
                     ]

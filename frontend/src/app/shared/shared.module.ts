@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { ProductsComponent , ProductsPreviewComponent } from './products-helpers';
+import { ProductslistComponent , ProductsPreviewComponent } from './products-helpers';
 import { ArticleListComponent, ArticleMetaComponent, ArticlePreviewComponent } from './article-helpers';
 import { FavoriteButtonComponent, FollowButtonComponent } from './buttons';
 import { ListErrorsComponent } from './list-errors.component';
@@ -25,7 +25,7 @@ import { ShowAuthedDirective } from './show-authed.directive';
     FollowButtonComponent,
     ListErrorsComponent,
     ShowAuthedDirective,
-    ProductsComponent,
+    ProductslistComponent,
     ProductsPreviewComponent
 
   ],
@@ -42,7 +42,7 @@ import { ShowAuthedDirective } from './show-authed.directive';
     ListErrorsComponent,
     RouterModule,
     ShowAuthedDirective,
-    ProductsComponent,
+    ProductslistComponent,
     ProductsPreviewComponent
 
   ]
