@@ -28,13 +28,13 @@ func ProductList(c *gin.Context) {
 func ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")
-	myUserModel := c.MustGet("my_user_model").(users.UserModel)
-	if myUserModel.ID == 0 {
+	myUsers := c.MustGet("my_user_model").(users.Users)
+	if myUsers.ID == 0 {
 		c.AbortWithError(http.StatusUnauthorized, errors.New("{error : \"Require auth!\"}"))
 		return
 	}
-	productUserModel := GetProductUserModel(myUserModel)
-	productModels, modelCount, err := productUserModel.GetProductFeed(limit, offset)
+	productUsers := GetProductUsers(myUsers)
+	productModels, modelCount, err := productUsers.GetProductFeed(limit, offset)
 	if err != nil {
 		c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
 		return

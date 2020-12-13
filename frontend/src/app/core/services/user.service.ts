@@ -27,7 +27,7 @@ export class UserService {
   populate() {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
-      this.apiService.get('/user/')
+      this.apiService.get_Go('/user/')
       .subscribe(
         data => this.setAuth(data.user),
         err => this.purgeAuth()
@@ -64,7 +64,7 @@ export class UserService {
 
   attemptAuth(type, credentials): Observable<User> {
     const route = (type === 'login') ? 'login' : '';
-    return this.apiService.post('/users/' + route, {user: credentials})
+    return this.apiService.post_Go('/users/' + route, {user: credentials})
       .pipe(map(
       data => {
         this.setAuth(data.user);

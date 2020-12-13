@@ -16,7 +16,7 @@ type S_Users struct{
 //NewClient :  Creates a new client to use Redis
 func NewClient() *redis.Client {
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "redis:6379",
+		Addr:     "redis:6380",
 		Password: "",
 		DB:       0,
 	})

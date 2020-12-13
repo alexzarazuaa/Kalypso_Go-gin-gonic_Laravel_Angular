@@ -46,7 +46,7 @@ class DummyDataSeeder extends Seeder
      * @var int
      */
 
-    protected $maxProducts_Faker = 5;
+    protected $maxProducts_Faker = 2;
     
 
     /**
@@ -89,7 +89,7 @@ class DummyDataSeeder extends Seeder
         $users = factory(\App\User::class)->times($this->totalUsers)->create();
 
         //$tags = factory(\App\Tag::class)->times($this->totalTags)->create();
-        $buyProducts = factory(\App\Model_buys_products::class)->times($this->maxBuyProductsByUser)->create();
+        $buyProducts = factory(\App\Model_buysProducts::class)->times($this->maxBuyProductsByUser)->create();
         $products = factory(\App\Product::class)->times($this->maxProducts_Faker)->create();
 
         $users->random((int) $this->totalUsers * $this->userWithArticleRatio)

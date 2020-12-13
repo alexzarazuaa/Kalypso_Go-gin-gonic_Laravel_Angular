@@ -9,7 +9,7 @@ import (
 // - Validator: write the form/json checking rule according to the doc https://github.com/go-playground/validator
 // - DataModel: fill with data from Validator after invoking common.Bind(c, self)
 // Then, you can just call model.save() after the data is ready in DataModel.
-type UserModelValidator struct {
+type UsersValidator struct {
 	User struct {
 		Username string `form:"username" json:"username" binding:"alphanum,min=4,max=255"`
 		Email    string `form:"email" json:"email" binding:"email"`
@@ -17,13 +17,13 @@ type UserModelValidator struct {
 		Bio      string `form:"bio" json:"bio" binding:"max=1024"`
 		Image    string `form:"image" json:"image" binding:"omitempty,url"`
 	} `json:"user"`
-	userModel UserModel `json:"-"`
+	userModel Users `json:"-"`
 }
 
 // There are some difference when you create or update a model, you need to fill the DataModel before
 // update so that you can use your origin data to cheat the validator.
 // BTW, you can put your general binding logic here such as setting password.
-func (self *UserModelValidator) Bind(c *gin.Context) error {
+func (self *UsersValidator) Bind(c *gin.Context) error {
 	err := common.Bind(c, self)
 	if err != nil {
 		return err
@@ -46,14 +46,14 @@ func (self *UserModelValidator) Bind(c *gin.Context) error {
 }
 
 // You can put the default value of a Validator here
-func NewUserModelValidator() UserModelValidator {
-	userModelValidator := UserModelValidator{}
+func NewUsersValidator() UsersValidator {
+	userModelValidator := UsersValidator{}
 	//userModelValidator.User.Email ="w@g.cn"
 	return userModelValidator
 }
 
-func NewUserModelValidatorFillWith(userModel UserModel) UserModelValidator {
-	userModelValidator := NewUserModelValidator()
+func NewUsersValidatorFillWith(userModel Users) UsersValidator {
+	userModelValidator := NewUsersValidator()
 	userModelValidator.User.Username = userModel.Username
 	userModelValidator.User.Email = userModel.Email
 	userModelValidator.User.Password = common.NBRandomPassword
@@ -69,7 +69,7 @@ type LoginValidator struct {
 		Email    string `form:"email" json:"email" binding:"email"`
 		Password string `form:"password"json:"password" binding:"min=8,max=255"`
 	} `json:"user"`
-	userModel UserModel `json:"-"`
+	userModel Users `json:"-"`
 }
 
 func (self *LoginValidator) Bind(c *gin.Context) error {

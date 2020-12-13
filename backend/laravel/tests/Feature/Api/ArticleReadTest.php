@@ -43,7 +43,6 @@ class ArticleReadTest extends TestCase
                         'favoritesCount' => 0,
                         'author' => [
                             'username' => $this->user->username,
-                            'bio' => $this->user->bio,
                             'image' => $this->user->image,
                             'following' => false,
                         ]
@@ -78,7 +77,7 @@ class ArticleReadTest extends TestCase
                     'favoritesCount' => 0,
                     'author' => [
                         'username' => $this->user->username,
-                        'bio' => $this->user->bio,
+
                         'image' => $this->user->image,
                         'following' => false,
                     ]

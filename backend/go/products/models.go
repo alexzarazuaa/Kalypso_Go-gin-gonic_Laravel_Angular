@@ -17,29 +17,29 @@ type ProductModel struct {
 	Description  string  `gorm:"column:description"`
 	Rating 		 int     `gorm:"column:rating"`
 	Category 	 string  `gorm:"column:category"`
-	Author      ProductUserModel
+	Author      ProductUsers
 	AuthorID    uint
 }
 
-type ProductUserModel struct {
+type ProductUsers struct {
 	gorm.Model
-	UserModel      users.UserModel
-	UserModelID    uint
+	Users      users.Users
+	UsersID    uint
 	ProductModels  []ProductModel  `gorm:"ForeignKey:AuthorID"`
 }
 
 
-func GetProductUserModel(userModel users.UserModel) ProductUserModel {
-	var productUserModel ProductUserModel
+func GetProductUsers(userModel users.Users) ProductUsers {
+	var productUsers ProductUsers
 	if userModel.ID == 0 {
-		return productUserModel
+		return productUsers
 	}
 	db := common.GetDB()
-	db.Where(&ProductUserModel{
-		UserModelID: userModel.ID,
-	}).FirstOrCreate(&productUserModel)
-	productUserModel.UserModel = userModel
-	return productUserModel
+	db.Where(&ProductUsers{
+		UsersID: userModel.ID,
+	}).FirstOrCreate(&productUsers)
+	productUsers.Users = userModel
+	return productUsers
 }
 
 func FindManyProducts() ([]ProductModel, int, error) {
@@ -64,7 +64,7 @@ func FindOneProduct(condition interface{}) (ProductModel, error) {
 	return model, err
 }
 
-func (self *ProductUserModel) GetProductFeed(limit, offset string) ([]ProductModel, int, error) {
+func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, int, error) {
 	db := common.GetDB()
 	var models []ProductModel
 	var count int
@@ -79,18 +79,18 @@ func (self *ProductUserModel) GetProductFeed(limit, offset string) ([]ProductMod
 	}
 
 	tx := db.Begin()
-	followings := self.UserModel.GetFollowings()
-	var productUserModels []uint
+	followings := self.Users.GetFollowings()
+	var productUserss []uint
 	for _, following := range followings {
-		productUserModel := GetProductUserModel(following)
-		productUserModels = append(productUserModels, productUserModel.ID)
+		productUsers := GetProductUsers(following)
+		productUserss = append(productUserss, productUsers.ID)
 	}
 
-	tx.Where("author_id in (?)", productUserModels).Order("updated_at desc").Offset(offset_int).Limit(limit_int).Find(&models)
+	tx.Where("author_id in (?)", productUserss).Offset(offset_int).Limit(limit_int).Find(&models)
 
 	for i, _ := range models {
 		tx.Model(&models[i]).Related(&models[i].Author, "Author")
-		tx.Model(&models[i].Author).Related(&models[i].Author.UserModel)
+		tx.Model(&models[i].Author).Related(&models[i].Author.Users)
 	}
 	err = tx.Commit().Error
 	return models, count, err

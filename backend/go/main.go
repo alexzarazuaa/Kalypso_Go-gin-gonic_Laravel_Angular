@@ -16,7 +16,7 @@ func Migrate(db *gorm.DB) {
 	users.AutoMigrate()
 	db.AutoMigrate(&buy_products.Buy_ProductModel{})
 	db.AutoMigrate(&products.ProductModel{})
-	db.AutoMigrate(&buy_products.Buy_ProductUserModel{})
+	db.AutoMigrate(&buy_products.Buy_ProductUsers{})
 }
 
 func main() {
@@ -51,7 +51,7 @@ func main() {
 
 	// test 1 to 1
 	// tx1 := db.Begin()
-	// userA := users.UserModel{
+	// userA := users.Users{
 	// 	Username: "AAAAAAAAAAAAAAAA",
 	// 	Email:    "aaaa@g.cn",
 	// 	Bio:      "hehddeda",
@@ -61,12 +61,12 @@ func main() {
 	// tx1.Commit()
 	// fmt.Println(userA)
 
-	//db.Save(&Buy_ProductUserModel{
-	//    UserModelID:userA.ID,
+	//db.Save(&Buy_ProductUsers{
+	//    UsersID:userA.ID,
 	//})
-	//var userAA Buy_ProductUserModel
-	//db.Where(&Buy_ProductUserModel{
-	//    UserModelID:userA.ID,
+	//var userAA Buy_ProductUsers
+	//db.Where(&Buy_ProductUsers{
+	//    UsersID:userA.ID,
 	//}).First(&userAA)
 	//fmt.Println(userAA)
 

@@ -20,7 +20,6 @@ class ArticleTransformer extends Transformer
             'favoritesCount'    => $data['favoritesCount'],
             'author' => [
                 'username'  => $data['user']['username'],
-                'bio'       => $data['user']['bio'],
                 'image'     => $data['user']['image'],
                 'following' => $data['user']['following'],
             ]

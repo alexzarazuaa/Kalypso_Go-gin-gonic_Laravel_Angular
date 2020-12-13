@@ -66,7 +66,7 @@ services:
     image: redis:alpine
     restart: on-failure
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - "redis:/redis_data"
     networks:

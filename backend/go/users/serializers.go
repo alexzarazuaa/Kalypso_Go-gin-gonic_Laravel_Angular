@@ -10,7 +10,7 @@ import (
 
 type ProfileSerializer struct {
 	C *gin.Context
-	UserModel
+	Users
 }
 
 // Declare your response schema here
@@ -52,14 +52,14 @@ type UserResponse struct {
 }
 
 func (self *UserSerializer) Response() UserResponse {
-	myUserModel := self.c.MustGet("my_user_model").(UserModel)
+	myUsers := self.c.MustGet("my_user_model").(Users)
 	user := UserResponse{
-		Username: myUserModel.Username,
-		Email:    myUserModel.Email,
-		Image:    myUserModel.Image,
-		Karma: 	   myUserModel.Karma,
-		Type:	  myUserModel.Type,
-		Token:    common.GenToken(myUserModel.ID),
+		Username: myUsers.Username,
+		Email:    myUsers.Email,
+		Image:    myUsers.Image,
+		Karma: 	   myUsers.Karma,
+		Type:	  myUsers.Type,
+		Token:    common.GenToken(myUsers.ID),
 	}
 	return user
 }
@@ -72,7 +72,7 @@ func (self *UserSerializer) Response() UserResponse {
 
 type AdminSerializer struct {
 	C *gin.Context
-	UserModel
+	Users
 }
 
 type AdminResponse struct {

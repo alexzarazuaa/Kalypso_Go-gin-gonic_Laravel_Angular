@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\RealWorld\Transformers\BuyProductTransformer;
-use App\Model_buys_products;
+use App\Model_buysProducts;
 use App\Http\Requests\Api\CreateBuyProduct;
 
 
@@ -14,7 +14,7 @@ class buysProducts extends ApiController
 {
 
     /**
-     * buys_products constructor.
+     * buysProducts constructor.
      *
      * @param BuyProductTransformer $transformer
      */
@@ -28,12 +28,12 @@ class buysProducts extends ApiController
 
 
     /**
-     * INDEX FOR GET ALL BUYS_pRODUCTS
+     * INDEX FOR GET ALL BUYSPRODUCTS
      */
 
     public function index()
     {
-        $buyProduct = Model_buys_products::all();
+        $buyProduct = Model_buysProducts::all();
     
         return response() -> json($buyProduct);
     }
@@ -43,8 +43,8 @@ class buysProducts extends ApiController
      */
     public function show($id) {
 
-        $model_buys_products = Model_buys_products::find($id);
-        return response() -> json($model_buys_products);
+        $model_buysProducts = Model_buysProducts::find($id);
+        return response() -> json($model_buysProducts);
 
     }// end_product
 

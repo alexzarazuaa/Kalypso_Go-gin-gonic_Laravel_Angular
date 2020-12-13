@@ -21,7 +21,7 @@ func Buy_ProductCreate(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}
-	//fmt.Println(buy_productModelValidator.buy_productModel.Author.UserModel)
+	//fmt.Println(buy_productModelValidator.buy_productModel.Author.Users)
 
 	if err := SaveOne(&buy_productModelValidator.buy_productModel); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))
@@ -43,13 +43,13 @@ func Buy_ProductList(c *gin.Context) {
 func Buy_ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")
-	myUserModel := c.MustGet("my_user_model").(users.UserModel)
-	if myUserModel.ID == 0 {
+	myUsers := c.MustGet("my_user_model").(users.Users)
+	if myUsers.ID == 0 {
 		c.AbortWithError(http.StatusUnauthorized, errors.New("{error : \"Require auth!\"}"))
 		return
 	}
-	buy_productUserModel := GetBuy_ProductUserModel(myUserModel)
-	buy_productModels, modelCount, err := buy_productUserModel.GetBuy_ProductFeed(limit, offset)
+	buy_productUsers := GetBuy_ProductUsers(myUsers)
+	buy_productModels, modelCount, err := buy_productUsers.GetBuy_ProductFeed(limit, offset)
 	if err != nil {
 		c.JSON(http.StatusNotFound, common.NewError("buy_products", errors.New("Invalid param")))
 		return

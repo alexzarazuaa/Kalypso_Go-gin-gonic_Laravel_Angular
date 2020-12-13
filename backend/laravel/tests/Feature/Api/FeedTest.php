@@ -45,7 +45,6 @@ class FeedTest extends TestCase
                         'favoritesCount' => 0,
                         'author' => [
                             'username' => $this->user->username,
-                            'bio' => $this->user->bio,
                             'image' => $this->user->image,
                             'following' => true,
                         ]

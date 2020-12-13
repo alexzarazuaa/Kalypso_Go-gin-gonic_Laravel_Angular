@@ -15,7 +15,6 @@ class CommentTransformer extends Transformer
             'updatedAt' => $data['updated_at']->toAtomString(),
             'author' => [
                 'username'  => $data['user']['username'],
-                'bio'       => $data['user']['bio'],
                 'image'     => $data['user']['image'],
                 'following' => $data['user']['following'],
             ]

@@ -23,7 +23,7 @@ func NewBuy_ProductModelValidator() Buy_ProductModelValidator {
 }
 
 func (s *Buy_ProductModelValidator) Bind(c *gin.Context) error {
-	myUserModel := c.MustGet("my_user_model").(users.UserModel)
+	myUsers := c.MustGet("my_user_model").(users.Users)
 
 	err := common.Bind(c, s)
 	if err != nil {
@@ -36,7 +36,7 @@ func (s *Buy_ProductModelValidator) Bind(c *gin.Context) error {
 	s.buy_productModel.Description = s.Buy_Product.Description
 	s.buy_productModel.Rating=0
 	s.buy_productModel.Description = s.Buy_Product.Category
-	s.buy_productModel.Author = GetBuy_ProductUserModel(myUserModel)
+	s.buy_productModel.Author = GetBuy_ProductUsers(myUsers)
 
 	return nil
 }

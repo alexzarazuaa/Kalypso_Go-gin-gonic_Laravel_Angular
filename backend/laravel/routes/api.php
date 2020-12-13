@@ -15,14 +15,14 @@ Route::group(['namespace' => 'Api'], function () {
 
 
         
-    // Route::post('products', 'buys_products@create');
-    // Route::get('products', 'buys_products@show');
-    // Route::get('products/{id}', 'buys_products@showBuyProduct');
-    // Route::put('products/{id}', 'buys_products@update');
-    // Route::delete('products/{id}', 'buys_products@delete');
+    // Route::post('products', 'buysProducts@create');
+    // Route::get('products', 'buysProducts@show');
+    // Route::get('products/{id}', 'buysProducts@showBuyProduct');
+    // Route::put('products/{id}', 'buysProducts@update');
+    // Route::delete('products/{id}', 'buysProducts@delete');
 
-     Route::resource('buys_product', 'buys_product');
-     Route::resource('product', 'Product');
+     Route::resource('buysproducts', 'buysProducts');
+     Route::resource('products', 'Products');
 
     Route::post('users/login', 'AuthController@login');
     Route::post('users', 'AuthController@register');
