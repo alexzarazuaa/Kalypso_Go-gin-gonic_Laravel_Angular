@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 	"goKa/common"
 	"golang.org/x/crypto/bcrypt"
+	"time"
 )
 
 // Models should only be concerned with database schema, more strict checking should be put in validator.
@@ -20,6 +21,8 @@ type Users struct {
 	PasswordHash string  `gorm:"column:password;not null"`
 	Karma 		 int  `gorm:"column:karma"`
 	Type 		 string  `gorm:"column:type"`
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 // A hack way to save ManyToMany relationship,
