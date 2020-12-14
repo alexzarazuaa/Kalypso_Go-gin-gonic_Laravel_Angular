@@ -10,7 +10,7 @@ import (
 
 type Buy_ProductModel struct {
 	gorm.Model
-	Slug         string `gorm:"unique_index"`
+	Slug         string  `gorm:"unique_index"`
 	Name     	 string  `gorm:"column:name"`
 	Brand        string  `gorm:"column:brand"`
 	Img        	 string  `gorm:"column:img"`
