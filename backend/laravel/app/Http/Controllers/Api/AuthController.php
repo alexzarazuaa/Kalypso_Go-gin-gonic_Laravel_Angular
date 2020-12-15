@@ -31,11 +31,34 @@ class AuthController extends ApiController
         $credentials = $request->only('user.email', 'user.password');
         $credentials = $credentials['user'];
 
-        if (! Auth::once($credentials)) {
+
+        // echo ("oooooooooooooo");
+
+
+        if (!Auth::once($credentials)) {
+
             return $this->respondFailedLogin();
         }
 
+        // echo ("HOLAGHOLAHOLAGOLAAASASA");
+
         return $this->respondWithTransformer(auth()->user());
+    }
+
+
+    public function login_admin_go(LoginUser $request)
+    {
+        $credentials = $request->only('user.email');
+        $credentials = $credentials['user'];
+
+        $user_id = User::all()->where('email', $credentials['email'])->first();
+
+        // print_r($user_id['password']);
+
+        $password=$user_id['password'];
+
+        print_r($password);
+
     }
 
     /**

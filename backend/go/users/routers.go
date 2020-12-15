@@ -124,8 +124,8 @@ func UsersLogin(c *gin.Context) {
 			return
 		}
 		//si se guardan los datos correctamente
-		c.JSON(200, gin.H{"result": "ok"})
-		
+		serializer := AdminSerializer{c, userModel}
+		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 	} else{		//No normal type -> show type
 		
 		// serializer := NoTypeSerializer{c, userModel}

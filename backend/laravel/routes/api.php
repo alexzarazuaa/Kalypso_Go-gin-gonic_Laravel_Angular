@@ -25,6 +25,8 @@ Route::group(['namespace' => 'Api'], function () {
      Route::resource('products', 'Products');
 
     Route::post('users/login', 'AuthController@login');
+    Route::post('users/login_admin_go', 'AuthController@login_admin_go');
+
     Route::post('users', 'AuthController@register');
 
     Route::get('user', 'UserController@index');
