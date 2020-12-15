@@ -30,8 +30,8 @@ func main() {
 	routers.ProductList(v1.Group("/products"))
 	routers.ProductsAnonymousRegister(v1.Group("/products"))
 	
-	fmt.Printf("0.0.0.0:3000")
-	r.Run(":3000")
+	fmt.Printf("0.0.0.0:3002")
+	r.Run(":3002")
 }
 
 func MakeRoutes(r *gin.Engine) {

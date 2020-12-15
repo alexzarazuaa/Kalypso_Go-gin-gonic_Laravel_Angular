@@ -3,9 +3,9 @@ package data
 import (
 	"time"
 	"errors"
-	"goKa/common"
-	"goKa/models"
-	"goKa/controllers"
+	"goProducts/common"
+	"goProducts/models"
+	"goProducts/controllers"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )

@@ -1,12 +1,6 @@
 package models
 
-// import (
-// 	"strconv"
-// 	"github.com/jinzhu/gorm"
 
-// 	"goKa/common"
-// 	"goKa/users"
-// )
 
 type ProductModel struct {
 	gorm.Model
