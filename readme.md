@@ -123,3 +123,6 @@ y sobre todo sin refrescar la página en ningún momento.
 *   *También recalcar que está escrito en Go.*
 
 
+# Proceso de Desarrollo
+
+La primera parte del proyecto fue refactorizar el backend de Go para que esta pase a utilizar módulos go.
