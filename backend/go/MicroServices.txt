@@ -1,0 +1,15 @@
+-------------------------------------------------- GO MICROSERVICIOS --------------------------------------------
+
+
+Common: con aspectos de configuración globales al microservicio así como
+utilidades para la creación de sesiones de base de datos
+- Models: en donde se definirán los modelos utilizados por el microservicio
+- Routers: Para la definición de las rutas o endpoints que publicará el
+microservicio
+- Data: En donde se incluyen las funciones que son ejecutadas para obtener la
+información de respuesta de los endpoints del microservicio
+- Controllers: Que incluirá todo lo necesario para que, partiendo de la
+información de respuesta de las utilidades de la carpeta Data, construirá las
+respuestas finales de los endpoints del microservicio.
+
+

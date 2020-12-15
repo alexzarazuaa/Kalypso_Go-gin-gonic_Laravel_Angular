@@ -1,4 +1,4 @@
-package products
+package models
 
 // import (
 // 	"strconv"
