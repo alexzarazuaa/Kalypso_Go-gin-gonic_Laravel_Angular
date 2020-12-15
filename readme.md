@@ -6,6 +6,7 @@
     * GO
     * LARAVEL
     * REDIS 
+    * TRAEFIK
     * ANGULAR 
     * PROMETHEUS
     * GRAFANA
@@ -48,20 +49,77 @@ Así como lo era y es para PHP, el principal target de Laravel son las páginas 
 
 ### Puntos fuertes de hacer un backend con Laravel
 
-    Documentación --> Si es verdad que para un programador junior o principiante la palabra framework asusta, en Laravel no. Su documentación oficial es de las más completas, de las más simples y de las mejor explicadas --> https://laravel.com .
+    Documentación --> Si es verdad que para un programador junior o 
+     principiante la palabra framework asusta, en Laravel no.
+     Su documentación oficial es de las más completas, de las más simples y de las mejor explicadas --> https://laravel.com .
 
-    Eloquent ORM --> Cómo ha sido nombrado anteriormente, este súper-paquete de Laravel nos permite sustituir las consultas SQL y de MongoDB por una simple Programación Orientada a Objetos. De este modo, Eloquent se encarga de convertir nuestros objectos a queries para cualquiera de las bases de datos que acepta.
+    Eloquent ORM --> Cómo ha sido nombrado anteriormente, este súper-paquete de Laravel
+     nos permite sustituir las consultas SQL y de MongoDB por una simple Programación Orientada a Objetos.
+     De este modo, Eloquent se encarga de convertir nuestros objectos a queries para cualquiera de las bases de datos que acepta.
 
-    Routing o rutas -->  Si bien en Node.js, por convención, las rutas se definen por entidades o modelos en ficheros separados, en Laravel los endpoints se agrupan por funcionalidades de la aplicación (web.php si es en un entorno web o api.php si es para una API), para poder organizar mejor las rutas de nuestra aplicación.
+    Routing o rutas -->  Si bien en Node.js, por convención, las rutas se definen por entidades o modelos 
+    en ficheros separados, en Laravel los endpoints se agrupan por funcionalidades
+     de la aplicación (web.php si es en un entorno web o api.php si es para una API),
+     para poder organizar mejor las rutas de nuestra aplicación.
     Además, nos da la posibilidad de agrupar las rutas, permitiéndonos así asignarles prefijos, sufijos y middlewares.
 
-    Middlewares más sencillos --> Son controladores que se ejecutan antes o después de una petición para evitar repetirlos en nuestras funciones sistemáticamente. Laravel nos da ejemplos y una estructura para aprender como usarlos. Los más comunes son las autenticaciones de tokens de sesión, los permisos de un usuario, etc.
+    Middlewares más sencillos --> Son controladores que se ejecutan antes o después de una petición 
+    para evitar repetirlos en nuestras funciones sistemáticamente.
+    Laravel nos da ejemplos y una estructura para aprender como usarlos. 
+    Los más comunes son las autenticaciones de tokens de sesión, los permisos de un usuario, etc.
 
-    La consola artisan -->  Laravel incorpora el cli artisan, que nos permite en comandos muy lógicos y sencillos realizar acciones que otros frameworks no nos permiten, como crear ficheros (modelos, controladores, providers …), limpiar la cache, etc. En definitiva, una maravilla, no tenemos que tenerle miedo a la terminal, es nuestra amiga --> https://laravel.com/docs/7.x/artisan 
+    La consola artisan -->  Laravel incorpora el cli artisan, que nos permite en comandos muy lógicos
+    y sencillos realizar acciones que otros frameworks no nos permiten, 
+    como crear ficheros (modelos, controladores, providers …), limpiar la cache, etc. 
+    En definitiva, una maravilla, 
+    no tenemos que tenerle miedo a la terminal, es nuestra amiga --> https://laravel.com/docs/7.x/artisan 
 
+## Redis
 
+**Redis** es un rápido almacén de datos clave-valor en memoria de código abierto que se puede utilizar como base de datos, caché, agente de mensajes y cola.
 
+### ¿Cómo funciona Redis?
 
+Todos los datos de Redis residen en la memoria, a diferencia de las bases de datos que almacenan datos en discos o SSD. 
+Como no hay ninguna necesidad de obtener acceso al disco, los almacenes de datos en memoria, como Redis, evitan los retrasos y pueden obtener acceso a los datos en cuestión de milisegundos.Lo que simplifica la creación de aplicaciones a escala de Internet en tiempo real.
 
+## Traefik
+
+**Traefik** es un proxy inverso y un balanceador HTTP y TCP escrito en GO , compatible con Docker y Kubernetes,
+que ofrece un conjunto de características muy interesantes:
+
+  *  Auto-descubrimiento de servicios
+
+  *  Tracing
+
+  *  Métricas
+
+## Angular 
+
+**Angular** es un framework de desarrollo para JavaScript creado por Google. 
+La finalidad de Angular es facilitarnos el desarrollo de aplicaciones web SPA (Single Page Aplication)
+y además darnos herramientas para trabajar con los elementos de una web de una manera más sencilla y optima.
+
+Otro propósito que tiene Angular es la separación completa entre el front-end y el back-end en una aplicación web.
+
+Una _SPA_ es una web de una sola página, 
+en la cual la navegación entre secciones y páginas de la aplicación, 
+así como la carga de datos, se realiza de manera dinámica, 
+casi instantánea, asincronamente haciendo llamadas al servidor (backend con un API REST)
+y sobre todo sin refrescar la página en ningún momento.
+
+## Prometheus
+
+**Prometheus** es una aplicación que nos permite recoger métricas de una aplicación en tiempo real. Como veréis en el ejemplo de app.js, se incluye una dependencia en el código ( prom-client) que permite crear contadores de peticiones que podemos asociar fácilmente a nuestros endpoints de manera que podemos saber cuántas veces se ha llamado a una función de nuestra api.
+
+## Grafana
+
+ * **Grafana** es un software libre basado en licencia de Apache 2.0, ​ que permite la visualización y el formato de datos métricos. Permite crear cuadros de mando y gráficos a partir de múltiples fuentes, incluidas bases de datos de series de tiempo como Graphite, InfluxDB y OpenTSDB.
+
+ * Además de las utilidades mencionadas con anterioridad, recalcar que la herramienta también nos permite consultar información de negocio, como es el gasto en infraestructura en tiempo real, e incluso integrar gráficas de negocio del propio cliente.
+
+* Todo ello posiciona al cliente ante una situación muy favorable de cara a poder gestionar de forma eficiente su infraestructura y servicios, permitiéndole anticipar posibles incidencias y reducir costes.
+
+*   *También recalcar que está escrito en Go.*
 
 
