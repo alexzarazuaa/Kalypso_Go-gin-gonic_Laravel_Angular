@@ -64,11 +64,16 @@ export class UserService {
 
   attemptAuth(type, credentials): Observable<User> {
     const route = (type === 'login') ? 'login' : '';
+    console.log('=>>>>>>>>>>>>>>>>>>>',credentials);
+    // AQUI COMPRONAT EL TYPE DEL USER Y EN CASO DE QUE SEA ADMIN HACER 
+    //EL POST A LARAVEL 
+    // Y SI ES CLIENT IR A GO 
+    
     return this.apiService.post_Go('/users/' + route, {user: credentials})
       .pipe(map(
       data => {
         this.setAuth(data.user);
-        console.log(data);
+        console.log(data.user.type);
         return data;
       }
     ));

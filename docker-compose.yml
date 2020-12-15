@@ -61,12 +61,26 @@ services:
       - redis
     networks:
       - Kalypso_network
+
+  # angular:
+  #   container_name: Kalypso_Angular
+  #   build: ./frontend
+  #   restart: on-failure
+  #   ports:
+  #     - "4200:4200"
+  #   volumes:
+  #     - ./frontend:/app
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #     - web
+
   redis:
     container_name: Kalypso_REDIS
     image: redis:alpine
     restart: on-failure
     ports:
-      - "6380:6379"
+      - "6379:6379"
     volumes:
       - "redis:/redis_data"
     networks:

@@ -80,3 +80,8 @@ POST PRODUCTS
 
   }
 }
+
+
+-----------------------------------------------------  REDIS SERVER STOP -------------------------------------------
+
+sudo service redis-server stop

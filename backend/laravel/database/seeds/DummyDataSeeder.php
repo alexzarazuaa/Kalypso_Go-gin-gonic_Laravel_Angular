@@ -92,41 +92,41 @@ class DummyDataSeeder extends Seeder
         $buyProducts = factory(\App\Model_buysProducts::class)->times($this->maxBuyProductsByUser)->create();
         $products = factory(\App\Product::class)->times($this->maxProducts_Faker)->create();
 
-        $users->random((int) $this->totalUsers * $this->userWithArticleRatio)
-            ->each(function ($user) use ($faker) {
-                $user->articles()
-                    ->saveMany(
-                        factory(\App\Article::class)
-                        ->times($faker->numberBetween(1, $this->maxArticlesByUser))
-                        ->make()
-                    )
-                    ->each(function ($article) use ($faker) {
-                        $article->comments()
-                            ->saveMany(
-                                factory(\App\Comment::class)
-                                ->times($faker->numberBetween(1, $this->maxCommentsInArticle))
-                                ->make()
-                            );
-                    });
-            });
+        // $users->random((int) $this->totalUsers * $this->userWithArticleRatio)
+        //     ->each(function ($user) use ($faker) {
+        //         $user->articles()
+        //             ->saveMany(
+        //                 factory(\App\Article::class)
+        //                 ->times($faker->numberBetween(1, $this->maxArticlesByUser))
+        //                 ->make()
+        //             )
+        //             ->each(function ($article) use ($faker) {
+        //                 $article->comments()
+        //                     ->saveMany(
+        //                         factory(\App\Comment::class)
+        //                         ->times($faker->numberBetween(1, $this->maxCommentsInArticle))
+        //                         ->make()
+        //                     );
+        //             });
+        //     });
 
-        $articles = \App\Article::all();
+        // $articles = \App\Article::all();
 
-        $users->random((int) $users->count() * $this->usersWithFavoritesRatio)
-            ->each(function ($user) use($faker, $articles) {
-                $articles->random($faker->numberBetween(1, (int) $articles->count() * 0.5))
-                    ->each(function ($article) use ($user) {
-                        $user->favorite($article);
-                    });
-            });
+        // $users->random((int) $users->count() * $this->usersWithFavoritesRatio)
+        //     ->each(function ($user) use($faker, $articles) {
+        //         $articles->random($faker->numberBetween(1, (int) $articles->count() * 0.5))
+        //             ->each(function ($article) use ($user) {
+        //                 $user->favorite($article);
+        //             });
+        //     });
 
-        $users->random((int) $users->count() * $this->usersWithFollowingRatio)
-            ->each(function ($user) use($faker, $users) {
-                $users->except($user->id)
-                    ->random($faker->numberBetween(1, (int) ($users->count() - 1) * 0.2))
-                    ->each(function ($userToFollow) use ($user) {
-                        $user->follow($userToFollow);
-                    });
-            });
+        // $users->random((int) $users->count() * $this->usersWithFollowingRatio)
+        //     ->each(function ($user) use($faker, $users) {
+        //         $users->except($user->id)
+        //             ->random($faker->numberBetween(1, (int) ($users->count() - 1) * 0.2))
+        //             ->each(function ($userToFollow) use ($user) {
+        //                 $user->follow($userToFollow);
+        //             });
+        //     });
     }
 }
