@@ -67,65 +67,29 @@ export class UserService {
 
   attemptAuth(type, credentials): Observable<User> {
     const route = (type === 'login') ? 'login' : '';
-    console.log('=>>>>>>>>>>>>>>>>>>>', credentials);
 
+    let log_go = this.apiService.post_Go('/users/' + route, { user: credentials })
 
-
-    let algo = this.apiService.post_Go('/users/' + route, { user: credentials })
-
-    algo.subscribe(
+    log_go.subscribe(
       data => {
-        console.log(data)
 
         if (data.user.type == "client") {
           this.setAuth(data.user);
-          return data
-        } else {
-          console.log("--------------------")
-          let algo1 = this.apiService.post('/users/' + route, { user: credentials })
 
-          algo1.subscribe(
-            data => {
-              if (Object.keys(data.user).length !== 0) {
-                this.setAuth(data.user);
-              }
-            }
-          )
+        } else {
+
+          let log_lvl = this.apiService.post('/users/' + route, { user: credentials })
+          log_lvl.subscribe(
+            data_lvl => {
+              Object.keys(data.user).length !== 0 ? this.setAuth(data_lvl.user) : false
+            });
 
         }
-      }
-    );
-    return algo
-    // return credentials;
 
-
-    // return this.apiService.post('/users/' + route, { user: credentials })
-    //           .pipe(map(
-    //             data => {
-    //               console.log("---------------")
-
-    //               this.setAuth(data.user);
-    //               console.log(data.user.type);
-    //               return data;
-    //             }
-    //           ));
-
-
-
+      });
+    return log_go
   }
 
-  login_admin() {
-
-    if ((Object.keys(this.getCurrentUser()).length === 0) && (this.userCredentials !== undefined)) {
-
-      console.log("********************************************")
-      console.log(this.userCredentials)
-
-    } else {
-      console.log(this.getCurrentUser())
-    }
-
-  }
   getCurrentUser(): User {
     return this.currentUserSubject.value
   }

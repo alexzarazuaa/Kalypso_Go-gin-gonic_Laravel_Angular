@@ -31,16 +31,10 @@ class AuthController extends ApiController
         $credentials = $request->only('user.email', 'user.password');
         $credentials = $credentials['user'];
 
-
-        // echo ("oooooooooooooo");
-
-
         if (!Auth::once($credentials)) {
 
             return $this->respondFailedLogin();
         }
-
-        // echo ("HOLAGHOLAHOLAGOLAAASASA");
 
         return $this->respondWithTransformer(auth()->user());
     }

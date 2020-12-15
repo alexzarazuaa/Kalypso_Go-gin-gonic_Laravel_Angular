@@ -30,9 +30,6 @@ export class ApiService {
   }
 
   post(path: string, body: Object = {}): Observable<any> {
-    console.log("??????????????????")
-    console.log(path)
-    console.log(body)
     return this.http.post(
       `${environment.laravel}${path}`,
       JSON.stringify(body)
