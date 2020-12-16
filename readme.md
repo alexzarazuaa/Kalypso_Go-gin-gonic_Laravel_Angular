@@ -151,8 +151,21 @@ Y las modificaciones que hicimos fueron :
 Seguidamente, dentro del servidor Go, en todos los imports utilizados las rutas las cambiamos 
 de 
   * --> ` "github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common" `  
+
+  <img src="./Capturas/imports_Route.png">
+
 a la siguiente : 
 
   * -->  ` "goKa/common" `
+
+  <img src="./Capturas/imports_Goka.png">
+
+Como muestro anteriormente en el docker-compose que nuestro directorio del servicio de go lo llamamos goKa, podemos utilizar
+las rutas de los archivos como goKa en lugar de la ruta de los directorios del proyecto.
+
+
+**_Sin olvidar que hemos tenido que cambiar la version del frammework de gingonic ya que la anterior que estabamos utilizando estaba deprecated , pasando de ` gopkg.in/gin-gonic/gin.v1 ` a  ` github.com/gin-gonic/gin ` _**
+
+
 
 
