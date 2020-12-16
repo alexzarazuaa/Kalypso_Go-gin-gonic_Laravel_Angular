@@ -1,6 +1,7 @@
 package users
 
 import (
+	// "fmt"
 	"errors"
 	"github.com/jinzhu/gorm"
 	"goKa/common"
@@ -19,6 +20,7 @@ type Users struct {
 	Email        string  `gorm:"column:email;unique_index"`
 	Image        *string `gorm:"column:image"`
 	PasswordHash string  `gorm:"column:password;not null"`
+	Bearer     	 string  `gorm:"column:bearer"`
 	Karma 		 int  `gorm:"column:karma"`
 	Type 		 string  `gorm:"column:type"`
 	CreatedAt    time.Time
@@ -108,6 +110,14 @@ func (model *Users) Update(data interface{}) error {
 	err := db.Model(model).Update(data).Error
 	return err
 }
+
+
+func (model *Users) InsertToken(data interface{}) error {
+	db := common.GetDB()
+	err :=db.Model(&model).Update(data).Error
+	return err
+}
+
 
 // You could add a following relationship as userModel1 following userModel2
 // 	err = userModel1.following(userModel2)

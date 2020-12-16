@@ -13,14 +13,6 @@
 
 Route::group(['namespace' => 'Api'], function () {
 
-
-        
-    // Route::post('products', 'buysProducts@create');
-    // Route::get('products', 'buysProducts@show');
-    // Route::get('products/{id}', 'buysProducts@showBuyProduct');
-    // Route::put('products/{id}', 'buysProducts@update');
-    // Route::delete('products/{id}', 'buysProducts@delete');
-
      Route::resource('buysproducts', 'buysProducts');
      Route::resource('products', 'Products');
 
