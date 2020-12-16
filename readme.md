@@ -126,3 +126,33 @@ y sobre todo sin refrescar la página en ningún momento.
 # Proceso de Desarrollo
 
 La primera parte del proyecto fue refactorizar el backend de Go para que esta pase a utilizar módulos go.
+
+Para ello lo que hicimos fue modificar el servicio de go del docker-compose que teniamos.
+
+El que teniamos era el siguiente :
+
+<img src="./Capturas/ServicioGo_1.png">
+
+Y las modificaciones que hicimos fueron : 
+
+  * Cambiamos el nombre de go a web 
+  * Eliminamos el dockerfile que teniamos en el servidor de go,
+    de manera que el pull de la imagen de go , más las sentecias de comandos las pasamos
+    al docker-compose.
+  * Además el nombre del working_dir paso a llamarse -> /go/src/goKa ya que
+    es el nombre que le pusimos a los modulos de go.
+  * Y por último eliminamos los enviroments de redis ya que no eran de utilidad.
+ 
+ De tal manera que el servicio web en el docker-compose quedaría asi : 
+
+  <img src="./Capturas/ServicioGo_2.png">
+
+
+Seguidamente, dentro del servidor Go, en todos los imports utilizados las rutas las cambiamos 
+de 
+  * --> ` "github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common" `  
+a la siguiente : 
+
+  * -->  ` "goKa/common" `
+
+
