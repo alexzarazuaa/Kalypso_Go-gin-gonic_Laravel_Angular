@@ -1,8 +1,8 @@
 package buy_products
 
 import (
-	"goKa/common"
-	"goKa/users"
+	"gobuys_products/common"
+	"gobuys_products/users"
 	"github.com/gosimple/slug"
 	"github.com/gin-gonic/gin"
 )

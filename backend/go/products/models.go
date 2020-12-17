@@ -4,8 +4,8 @@ import (
 	"strconv"
 	"github.com/jinzhu/gorm"
 
-	"goKa/common"
-	"goKa/users"
+	"goProducts/common"
+	"goUsers/users"
 )
 
 type ProductModel struct {

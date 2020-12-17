@@ -1,7 +1,7 @@
 package products
 
 import (
-	"goKa/users"
+	"goProducts/users"
 	"github.com/gin-gonic/gin"
 )
 type ProductUserSerializer struct {

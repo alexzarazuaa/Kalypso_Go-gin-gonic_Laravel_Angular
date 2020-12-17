@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 
-	"goKa/common"
-	"goKa/users"
+	"goProducts/common"
+	"goUsers/users"
 	"github.com/gin-gonic/gin"
 )
 

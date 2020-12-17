@@ -7,7 +7,9 @@ services:
     depends_on:
       - mysql
       - redis
-      - web
+      - products
+      - buys_products
+      - users_Kalypso
     ports:
       - "8001:8001"
     networks:
@@ -37,30 +39,103 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
 
-  web:
+  # web:
+  #   image: golang:1.15
+  #   container_name: go_container
+  #   working_dir: /go/src/goKa 
+  #   volumes:
+  #     - ./backend/go:/go/src/goKa
+  #   command: >
+  #     bash -c " rm -f go.mod || true
+  #     && rm -f go.sum || true
+  #     && go mod init goKa
+  #     && go get github.com/go-redis/redis/v8
+  #     && go mod tidy
+  #     && go get github.com/pilu/fresh
+  #     && fresh "
+  #   ports:
+  #     - "8090:3000"
+  #   labels:
+  #     traefik.backend: "web"
+  #     traefik.frontend.rule: "PathPrefix:/"
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   networks:
+  #     - Kalypso_network
+
+  products:
     image: golang:1.15
-    container_name: go_container
-    working_dir: /go/src/goKa 
+    container_name: Kalypso_Go_ProductsMicro
+    working_dir: /go/src/goProducts
     volumes:
-      - ./backend/go:/go/src/goKa
+      - ./backend/go/products:/go/src/goProducts
+    ports:
+      - "3001:3001"
     command: >
       bash -c " rm -f go.mod || true
       && rm -f go.sum || true
-      && go mod init goKa
-      && go get github.com/go-redis/redis/v8
+      && go mod init goProducts
       && go mod tidy
       && go get github.com/pilu/fresh
       && fresh "
-    ports:
-      - "8090:3000"
     labels:
-      traefik.backend: "web"
+      traefik.backend: "products"
       traefik.frontend.rule: "PathPrefix:/"
     depends_on:
       - mysql
       - redis
     networks:
       - Kalypso_network
+
+
+  buys_products:
+    image: golang:1.15
+    container_name: Kalypso_Go_buys_productsMicro
+    working_dir: /go/src/gobuys_products
+    volumes:
+      - ./backend/go/products:/go/src/gobuys_products
+    ports:
+      - "3002:3002"
+    command: >
+      bash -c " rm -f go.mod || true
+      && rm -f go.sum || true
+      && go mod init gobuys_products
+      && go mod tidy
+      && go get github.com/pilu/fresh
+      && fresh "
+    labels:
+      traefik.backend: "buys_products"
+      traefik.frontend.rule: "PathPrefix:/"
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - Kalypso_network
+
+  users_Kalypso:
+      image: golang:1.15
+      container_name: Kalypso_Go_usersMicro
+      working_dir: /go/src/goUsers
+      volumes:
+        - ./backend/go/products:/go/src/goUsers
+      ports:
+        - "3003:3003"
+      command: >
+        bash -c " rm -f go.mod || true
+        && rm -f go.sum || true
+        && go mod init goUsers
+        && go mod tidy
+        && go get github.com/pilu/fresh
+        && fresh "
+      labels:
+        traefik.backend: "Users"
+        traefik.frontend.rule: "PathPrefix:/"
+      depends_on:
+        - mysql
+        - redis
+      networks:
+        - Kalypso_network
 
   # angular:
   #   container_name: Kalypso_Angular
@@ -107,7 +182,9 @@ services:
     depends_on:
       - mysql
       - redis
-      - web
+      - products
+      - buys_products
+      - users_Kalypso
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
     networks:
      - Kalypso_network

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"goKa/common"
-	"goKa/users"
+	"gobuys_products/common"
+	"gobuys_products/users"
 	"github.com/gin-gonic/gin"
 )
 

@@ -5,10 +5,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"goKa/buy_products"
-	"goKa/products"
+	"gobuys_products/buy_products"
+	"goProducts/products"
 	"goKa/common"
-	"goKa/users"
+	"goUsers/users"
 	"github.com/jinzhu/gorm"
 )
 

@@ -3,7 +3,7 @@ package users
 import (
 	"github.com/gin-gonic/gin"
 
-	"goKa/common"
+	"goUsers/common"
 )
 
 //-----------------PROFILE-----------------------------//

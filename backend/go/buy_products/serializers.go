@@ -1,7 +1,7 @@
 package buy_products
 
 import (
-	"goKa/users"
+	"gobuys_products/users"
 	"github.com/gin-gonic/gin"
 )
 type Buy_ProductUserSerializer struct {

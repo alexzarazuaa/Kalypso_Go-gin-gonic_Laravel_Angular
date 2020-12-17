@@ -4,7 +4,7 @@ import (
 	// "fmt"
 	"errors"
 	"github.com/jinzhu/gorm"
-	"goKa/common"
+	"goUsers/common"
 	"golang.org/x/crypto/bcrypt"
 	"time"
 )
