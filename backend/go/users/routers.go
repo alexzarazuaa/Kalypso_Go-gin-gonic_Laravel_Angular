@@ -1,7 +1,8 @@
 package users
 
 import (
-	// "fmt"
+	"fmt"
+	"strings"
 	"errors"
 	"goKa/common"
 	"github.com/gin-gonic/gin"
@@ -113,22 +114,40 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
-		client := common.NewClient()
+		// create bearer
+		serializer1 := UserSerializer{c}
+		bearer:=serializer1.Response().Token
 
-		user:="{`data`:{`username`:"+userModel.Username+",`email`:"+userModel.Email+", `type`:"+userModel.Type+"}}"
-
-
-		err := common.SetUser("user", user, client)
+		// insert bearer in DB
+		err := userModel.InsertToken(&Users{Bearer:bearer})
 		if err != nil {
+			c.JSON(http.StatusNotFound, common.NewError("DB", errors.New("Error Update Login Admin")))
+			return
+		}
+		
+		//create code to save in json redis
+		s := strings.Split(userModel.Email, "@") 
+		code:= fmt.Sprint(userModel.ID) + userModel.Username[0:3] + s[0][len(s[0])-3:] + userModel.Username[len(userModel.Username)-2:] + bearer[0:5]
+		
+		//Create json to save in redis
+		client := common.NewClient()
+		user:=`{"username":"`+userModel.Username+`", "email":"`+userModel.Email+`", "type": "`+userModel.Type+`", "bearer":"`+bearer+`", "code":"`+code+`"}`
+
+		// fmt.Println(code)
+			// user:=`{"hola":"adios"}`
+		//save json in redis
+		err_redis := common.SetUser(userModel.Email, user, client)
+		if err_redis != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		//si se guardan los datos correctamente
-		c.JSON(200, gin.H{"result": "ok"})
-		
+
+		 //all right
+		serializer := AdminSerializer{c, userModel}
+		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+
 	} else{		//No normal type -> show type
 		
-		// serializer := NoTypeSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": userModel.Type })
 
 	}

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\UpdateUser;
 use App\RealWorld\Transformers\UserTransformer;
-use Illuminate\Support\Facades\Redis;
+use App\User;
 
 class UserController extends ApiController
 {
@@ -30,11 +30,10 @@ class UserController extends ApiController
         return $this->respondWithTransformer(auth()->user());
     }
 
-    public function show($id)
+    public static function show($email)
     {
-        return view('user', [
-            'user' => Redis::get('user:'.$id)
-        ]);
+        $user = User::where('email',$email)->first();
+        return ($user);
     }
 
     /**

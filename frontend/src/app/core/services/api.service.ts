@@ -22,7 +22,6 @@ export class ApiService {
       .pipe(catchError(this.formatErrors));
   }
 
-
   put(path: string, body: Object = {}): Observable<any> {
     return this.http.put(
       `${environment.laravel}${path}`,
@@ -66,7 +65,7 @@ export class ApiService {
   post_Go(path: string, body: Object = {}): Observable<any> {
     return this.http.post(
       `${environment.go}${path}`,
-      JSON.stringify(body)
+      JSON.stringify(body),
     ).pipe(catchError(this.formatErrors));
   }
 

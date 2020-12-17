@@ -13,18 +13,12 @@
 
 Route::group(['namespace' => 'Api'], function () {
 
-
-        
-    // Route::post('products', 'buysProducts@create');
-    // Route::get('products', 'buysProducts@show');
-    // Route::get('products/{id}', 'buysProducts@showBuyProduct');
-    // Route::put('products/{id}', 'buysProducts@update');
-    // Route::delete('products/{id}', 'buysProducts@delete');
-
      Route::resource('buysproducts', 'buysProducts');
      Route::resource('products', 'Products');
 
     Route::post('users/login', 'AuthController@login');
+    Route::post('users/login_admin_go', 'AuthController@login_admin_go');
+
     Route::post('users', 'AuthController@register');
 
     Route::get('user', 'UserController@index');

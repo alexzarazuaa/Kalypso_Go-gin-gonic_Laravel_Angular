@@ -22,6 +22,7 @@ class UserModel extends Migration
                     $table->string('image', 2048)->nullable();
                     $table->string('karma');
                     $table->string('password');
+                    $table->string('bearer');
                     $table->string('type');
                     $table->rememberToken();
 

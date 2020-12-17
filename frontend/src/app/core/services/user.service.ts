@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable ,  BehaviorSubject ,  ReplaySubject } from 'rxjs';
+import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 
 import { ApiService } from './api.service';
 import { JwtService } from './jwt.service';
 import { User } from '../models';
-import { map ,  distinctUntilChanged } from 'rxjs/operators';
+import { map, distinctUntilChanged } from 'rxjs/operators';
+import { Certificate } from 'crypto';
 
 
 @Injectable()
@@ -13,14 +14,16 @@ export class UserService {
   private currentUserSubject = new BehaviorSubject<User>({} as User);
   public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
 
+  private userCredentials;
+
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
-  constructor (
+  constructor(
     private apiService: ApiService,
     private http: HttpClient,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   // Verify JWT in localstorage with server & load user's info.
   // This runs once on application startup.
@@ -28,10 +31,10 @@ export class UserService {
     // If JWT detected, attempt to get & store user's info
     if (this.jwtService.getToken()) {
       this.apiService.get_Go('/user/')
-      .subscribe(
-        data => this.setAuth(data.user),
-        err => this.purgeAuth()
-      );
+        .subscribe(
+          data => this.setAuth(data.user),
+          err => this.purgeAuth()
+        );
     } else {
       // Remove any potential remnants of previous auth states
       this.purgeAuth();
@@ -64,34 +67,42 @@ export class UserService {
 
   attemptAuth(type, credentials): Observable<User> {
     const route = (type === 'login') ? 'login' : '';
-    console.log('=>>>>>>>>>>>>>>>>>>>',credentials);
-    // AQUI COMPRONAT EL TYPE DEL USER Y EN CASO DE QUE SEA ADMIN HACER 
-    //EL POST A LARAVEL 
-    // Y SI ES CLIENT IR A GO 
-    
-    return this.apiService.post_Go('/users/' + route, {user: credentials})
-      .pipe(map(
+
+    let log_go = this.apiService.post_Go('/users/' + route, { user: credentials })
+
+    log_go.subscribe(
       data => {
-        this.setAuth(data.user);
-        console.log(data.user.type);
-        return data;
-      }
-    ));
+
+        if (data.user.type == "client") {
+          this.setAuth(data.user);
+
+        } else {
+
+          let log_lvl = this.apiService.post('/users/' + route, { user: credentials })
+          log_lvl.subscribe(
+            data_lvl => {
+              Object.keys(data.user).length !== 0 ? this.setAuth(data_lvl.user) : false
+            });
+
+        }
+
+      });
+    return log_go
   }
 
   getCurrentUser(): User {
-    return this.currentUserSubject.value;
+    return this.currentUserSubject.value
   }
 
   // Update the user on the server (email, pass, etc)
   update(user): Observable<User> {
     return this.apiService
-    .put('/user/', { user })
-    .pipe(map(data => {
-      // Update the currentUser observable
-      this.currentUserSubject.next(data.user);
-      return data.user;
-    }));
+      .put('/user/', { user })
+      .pipe(map(data => {
+        // Update the currentUser observable
+        this.currentUserSubject.next(data.user);
+        return data.user;
+      }));
   }
 
 }

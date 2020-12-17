@@ -6,3 +6,4 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ["myapp_practica:3000"]
+

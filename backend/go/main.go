@@ -39,6 +39,7 @@ func main() {
 
 
 	v1.Use(users.AuthMiddleware(true))
+	users.UserRegister(v1.Group("/users"))
 	buy_products.Buy_ProductsRegister(v1.Group("/buy_products"))
 	users.ProfileRegister(v1.Group("/profiles"))
 
