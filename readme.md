@@ -2,7 +2,8 @@
 
 **INDEX**
 
-  * Tecnologías Implicadas
+  * Tecnologías Implicadas :
+
     * GO
     * LARAVEL
     * REDIS 
@@ -10,6 +11,7 @@
     * ANGULAR 
     * PROMETHEUS
     * GRAFANA
+
   * Proceso de Desarrollo
 
 # Tecnologías Implicadas 
@@ -21,6 +23,7 @@
 _A pesar de ser un lenguaje muy joven tiene un rendimiento similar a C pero con la sintaxis amigable parecida a Python, actualmente es utilizado en aquellos programas que requieran alto rendimiento y un ejemplo de ello es Docker_
 
 * VENTAJAS DE GO
+
     * Velocidad similar a C pero con una sintaxis amigable como Python.
     * Facilita el uso de buenas prácticas en el código.
     * Mantiene su rendimiento con grandes volúmenes de información.
