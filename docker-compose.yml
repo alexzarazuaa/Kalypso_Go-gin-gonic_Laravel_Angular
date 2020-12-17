@@ -87,7 +87,8 @@ services:
       - Kalypso_network
     
   traefik:
-    image:  traefik:1.7.2-alpine
+    #image: traefik:1.7.2-alpine
+    image: traefik:2.3
     container_name: traefik_container
     ports:
       - "80:80"
@@ -96,7 +97,7 @@ services:
        - Kalypso_network
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock 
-       - ./backend/go/traefik:/etc/traefik
+       - ./backend/go/traefik/traefik.yml:/etc/traefik/traefik.yml
   prometheus:
     image: prom/prometheus:v2.20.1
     container_name: prometheus_practica
