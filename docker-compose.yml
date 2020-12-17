@@ -75,31 +75,6 @@ services:
   #     - redis
   #     - web
 
-
-  products:
-    image: golang:1.15
-    container_name: Kalypso_Go_Products
-    working_dir: /go/src/goKa_Products
-    volumes:
-      - ./backend/go/products:/go/src/goKa_Products
-    ports:
-      - "3002:3002"
-    command: >
-      bash -c " rm -f go.mod || true
-      && rm -f go.sum || true
-      && go mod init goProducts
-      && go mod tidy
-      && go get github.com/pilu/fresh
-      && fresh "
-    labels:
-      traefik.backend: "products"
-      traefik.frontend.rule: "PathPrefix:/"
-    depends_on:
-      - mysql
-      - redis
-    networks:
-      - Kalypso_network
-
   redis:
     container_name: Kalypso_REDIS
     image: redis:alpine

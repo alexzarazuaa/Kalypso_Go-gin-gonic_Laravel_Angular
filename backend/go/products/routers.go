@@ -1,12 +1,12 @@
-package routes	
+package products
 
 import (
 	"errors"
 	"net/http"
 
 
-	"goProducts/data"
-	"goProducts/users"
+	"goKa/common"
+	"goKa/users"
 	"github.com/gin-gonic/gin"
 )
 
