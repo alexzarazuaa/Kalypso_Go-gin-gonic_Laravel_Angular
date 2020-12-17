@@ -68,31 +68,3 @@ func (self *UserSerializer) Response() UserResponse {
 
 
 
-//--------------------ADMIN---------------------------//
-
-type AdminSerializer struct {
-	C *gin.Context
-	Users
-}
-
-type AdminResponse struct {
-	Username string  `json:"username"`
-	Email    string  `json:"email"`
-	Image     *string `json:"image"`
-	Karma 	   int    `json:"karma"`
-	Type	   string  `json:"type"`
-}
-
-func (self *AdminSerializer) Response() AdminResponse {
-	admin := AdminResponse{
-		Username:  self.Username,
-		Image:     self.Image,
-		Karma:	   self.Karma,
-		Email:	   self.Email,
-		Type:	   self.Type,
-	}
-	return admin
-}
-
-//------------------------END ADMIN---------------------//
-

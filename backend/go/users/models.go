@@ -112,7 +112,7 @@ func (model *Users) Update(data interface{}) error {
 }
 
 
-func (model *Users) InsertToken(data interface{}) error {
+func (model *Users) InsertBearer(data interface{}) error {
 	db := common.GetDB()
 	err :=db.Model(&model).Update(data).Error
 	return err

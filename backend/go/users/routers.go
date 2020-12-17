@@ -106,20 +106,19 @@ func UsersLogin(c *gin.Context) {
 		return
 	}
 
+	UpdateContextUsers(c, userModel.ID)
+	serializer := UserSerializer{c}
 
 	if ((userModel.Type)=="client"){	//Type client -> Login
 
-		UpdateContextUsers(c, userModel.ID)
-		serializer := UserSerializer{c}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
 		// create bearer
-		serializer1 := UserSerializer{c}
-		bearer:=serializer1.Response().Token
+		bearer:=serializer.Response().Token
 
 		// insert bearer in DB
-		err := userModel.InsertToken(&Users{Bearer:bearer})
+		err := userModel.InsertBearer(&Users{Bearer:bearer})
 		if err != nil {
 			c.JSON(http.StatusNotFound, common.NewError("DB", errors.New("Error Update Login Admin")))
 			return
@@ -143,7 +142,6 @@ func UsersLogin(c *gin.Context) {
 		}
 
 		 //all right
-		serializer := AdminSerializer{c, userModel}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	} else{		//No normal type -> show type
