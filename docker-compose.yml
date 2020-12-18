@@ -1,28 +1,28 @@
 version: "3"
 services:
-  laravel:
-    container_name: Kalypso_LARAVEL 
-    tty: true
-    image: bitnami/laravel:7
-    depends_on:
-      - mysql
-      - redis
-      - products
-      - buys_products
-      - users_Kalypso
-    ports:
-      - "8001:8001"
-    networks:
-       - Kalypso_network
-    volumes:
-      - ./backend/laravel:/app
-    command: >
-      bash -c " composer install
-      && php artisan route:list
-      && php artisan key:generate
-      && php artisan migrate
-      && php artisan db:seed
-      && php artisan serve --host=0.0.0.0 --port=8001"
+  # laravel:
+  #   container_name: Kalypso_LARAVEL 
+  #   tty: true
+  #   image: bitnami/laravel:7
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #     - products
+  #     - buys_products
+  #     - users_Kalypso
+  #   ports:
+  #     - "8001:8001"
+  #   networks:
+  #      - Kalypso_network
+  #   volumes:
+  #     - ./backend/laravel:/app
+  #   command: >
+  #     bash -c " composer install
+  #     && php artisan route:list
+  #     && php artisan key:generate
+  #     && php artisan migrate
+  #     && php artisan db:seed
+  #     && php artisan serve --host=0.0.0.0 --port=8001"
   mysql:
     container_name: Kalypso_MYSQL
     image: mysql:5.7
@@ -64,6 +64,31 @@ services:
   #   networks:
   #     - Kalypso_network
 
+
+  users_Kalypso:
+      image: golang:1.15
+      container_name: Kalypso_Go_usersMicro
+      working_dir: /go/src/goUsers
+      volumes:
+        - ./backend/go/users:/go/src/goUsers
+      ports:
+        - "3002:3002"
+      command: >
+        bash -c " rm -f go.mod || true
+        && rm -f go.sum || true
+        && go mod init goUsers
+        && go mod tidy
+        && go get github.com/pilu/fresh
+        && fresh "
+      labels:
+        traefik.backend: "users_Kalypso"
+        traefik.frontend.rule: "PathPrefix:/"
+      depends_on:
+        - mysql
+        - redis
+      networks:
+        - Kalypso_network
+
   products:
     image: golang:1.15
     container_name: Kalypso_Go_ProductsMicro
@@ -71,7 +96,7 @@ services:
     volumes:
       - ./backend/go/products:/go/src/goProducts
     ports:
-      - "3001:3001"
+      - "3000:3000"
     command: >
       bash -c " rm -f go.mod || true
       && rm -f go.sum || true
@@ -85,57 +110,38 @@ services:
     depends_on:
       - mysql
       - redis
+      - users_Kalypso
     networks:
       - Kalypso_network
 
 
-  buys_products:
-    image: golang:1.15
-    container_name: Kalypso_Go_buys_productsMicro
-    working_dir: /go/src/gobuys_products
-    volumes:
-      - ./backend/go/products:/go/src/gobuys_products
-    ports:
-      - "3002:3002"
-    command: >
-      bash -c " rm -f go.mod || true
-      && rm -f go.sum || true
-      && go mod init gobuys_products
-      && go mod tidy
-      && go get github.com/pilu/fresh
-      && fresh "
-    labels:
-      traefik.backend: "buys_products"
-      traefik.frontend.rule: "PathPrefix:/"
-    depends_on:
-      - mysql
-      - redis
-    networks:
-      - Kalypso_network
+  # buys_products:
+  #   image: golang:1.15
+  #   container_name: Kalypso_Go_buys_productsMicro
+  #   working_dir: /go/src/gobuys_products
+  #   volumes:
+  #     - ./backend/go/buy_products:/go/src/gobuys_products
+  #   ports:
+  #     - "3001:3001"
+  #   command: >
+  #     bash -c " rm -f go.mod || true
+  #     && rm -f go.sum || true
+  #     && go mod init gobuys_products
+  #     && go mod tidy
+  #     && go get github.com/pilu/fresh
+  #     && fresh "
+  #   labels:
+  #     traefik.backend: "buys_products"
+  #     traefik.frontend.rule: "PathPrefix:/"
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #     - users_Kalypso
+  #     - products
+  #   networks:
+  #     - Kalypso_network
 
-  users_Kalypso:
-      image: golang:1.15
-      container_name: Kalypso_Go_usersMicro
-      working_dir: /go/src/goUsers
-      volumes:
-        - ./backend/go/products:/go/src/goUsers
-      ports:
-        - "3003:3003"
-      command: >
-        bash -c " rm -f go.mod || true
-        && rm -f go.sum || true
-        && go mod init goUsers
-        && go mod tidy
-        && go get github.com/pilu/fresh
-        && fresh "
-      labels:
-        traefik.backend: "Users"
-        traefik.frontend.rule: "PathPrefix:/"
-      depends_on:
-        - mysql
-        - redis
-      networks:
-        - Kalypso_network
+
 
   # angular:
   #   container_name: Kalypso_Angular
@@ -161,52 +167,52 @@ services:
     networks:
       - Kalypso_network
     
-  traefik:
-    image:  traefik:1.7.2-alpine
-    container_name: traefik_container
-    ports:
-      - "80:80"
-      - "8080:8080"
-    networks:
-       - Kalypso_network
-    volumes:
-       - /var/run/docker.sock:/var/run/docker.sock 
-       - ./backend/go/traefik:/etc/traefik
-  prometheus:
-    image: prom/prometheus:v2.20.1
-    container_name: prometheus_practica
-    volumes:
-      - ./prometheus/:/etc/prometheus
-    ports:
-      - "9090:9090"
-    depends_on:
-      - mysql
-      - redis
-      - products
-      - buys_products
-      - users_Kalypso
-    command: ["--config.file=/etc/prometheus/prometheus.yml"]
-    networks:
-     - Kalypso_network
-  grafana:
-    image: grafana/grafana:7.1.5
-    container_name: grafana_practica
-    environment:
-      - GF_DISABLE_LOGIN_FORM=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_INSTALL_PLUGINS=grafana-clock-panel 1.0.1
-    volumes:
-      - myGrafanaVol:/var/lib/grafana
-      - ./grafana/:/etc/grafana/provisioning/datasources/
-    ports:
-      - "3500:3000"
-    depends_on:
-     - prometheus
-    links:
-     - prometheus   
-    networks:
-     - Kalypso_network
+  # traefik:
+  #   image:  traefik:1.7.2-alpine
+  #   container_name: traefik_container
+  #   ports:
+  #     - "80:80"
+  #     - "8080:8080"
+  #   networks:
+  #      - Kalypso_network
+  #   volumes:
+  #      - /var/run/docker.sock:/var/run/docker.sock 
+  #      - ./backend/go/traefik:/etc/traefik/traefik
+  # prometheus:
+  #   image: prom/prometheus:v2.20.1
+  #   container_name: prometheus_practica
+  #   volumes:
+  #     - ./prometheus/:/etc/prometheus
+  #   ports:
+  #     - "9090:9090"
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #     - products
+  #     - buys_products
+  #     - users_Kalypso
+  #   command: ["--config.file=/etc/prometheus/prometheus.yml"]
+  #   networks:
+  #    - Kalypso_network
+  # grafana:
+  #   image: grafana/grafana:7.1.5
+  #   container_name: grafana_practica
+  #   environment:
+  #     - GF_DISABLE_LOGIN_FORM=true
+  #     - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #     - GF_AUTH_ANONYMOUS_ENABLED=true
+  #     - GF_INSTALL_PLUGINS=grafana-clock-panel 1.0.1
+  #   volumes:
+  #     - myGrafanaVol:/var/lib/grafana
+  #     - ./grafana/:/etc/grafana/provisioning/datasources/
+  #   ports:
+  #     - "3500:3000"
+  #   depends_on:
+  #    - prometheus
+  #   links:
+  #    - prometheus   
+  #   networks:
+  #    - Kalypso_network
 
 volumes:
   redis:
