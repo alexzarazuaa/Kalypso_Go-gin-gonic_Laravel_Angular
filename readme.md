@@ -170,5 +170,9 @@ las rutas de los archivos como goKa en lugar de la ruta de los directorios del p
 **_Sin olvidar que hemos tenido que cambiar la version del frammework de gingonic ya que la anterior que estabamos utilizando estaba deprecated , pasando de ` gopkg.in/gin-gonic/gin.v1 ` a  ` github.com/gin-gonic/gin ` _**
 
 
+## MICROSERVICIOS EN EL BACKEND DE GO
+
+El siguiente ejercico fue el de refactorizar el backend de **Go** para que de esta manera los modulos pasen a ser microservicios , cada uno independiente.
+
 
 
