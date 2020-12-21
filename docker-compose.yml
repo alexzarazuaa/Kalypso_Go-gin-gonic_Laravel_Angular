@@ -115,31 +115,31 @@ services:
       - Kalypso_network
 
 
-  # buys_products:
-  #   image: golang:1.15
-  #   container_name: Kalypso_Go_buys_productsMicro
-  #   working_dir: /go/src/gobuys_products
-  #   volumes:
-  #     - ./backend/go/buy_products:/go/src/gobuys_products
-  #   ports:
-  #     - "3001:3001"
-  #   command: >
-  #     bash -c " rm -f go.mod || true
-  #     && rm -f go.sum || true
-  #     && go mod init gobuys_products
-  #     && go mod tidy
-  #     && go get github.com/pilu/fresh
-  #     && fresh "
-  #   labels:
-  #     traefik.backend: "buys_products"
-  #     traefik.frontend.rule: "PathPrefix:/"
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #     - users_Kalypso
-  #     - products
-  #   networks:
-  #     - Kalypso_network
+  buys_products:
+    image: golang:1.15
+    container_name: Kalypso_Go_buys_productsMicro
+    working_dir: /go/src/gobuys_products
+    volumes:
+      - ./backend/go/buy_products:/go/src/gobuys_products
+    ports:
+      - "3001:3001"
+    command: >
+      bash -c " rm -f go.mod || true
+      && rm -f go.sum || true
+      && go mod init gobuys_products
+      && go mod tidy
+      && go get github.com/pilu/fresh
+      && fresh "
+    labels:
+      traefik.backend: "buys_products"
+      traefik.frontend.rule: "PathPrefix:/"
+    depends_on:
+      - mysql
+      - redis
+      - users_Kalypso
+      - products
+    networks:
+      - Kalypso_network
 
 
 

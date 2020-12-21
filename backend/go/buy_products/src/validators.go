@@ -22,7 +22,7 @@ func NewBuy_ProductModelValidator() Buy_ProductModelValidator {
 }
 
 func (s *Buy_ProductModelValidator) Bind(c *gin.Context) error {
-	myUsers := c.MustGet("my_user_model").(users.Users)
+	myUsers := c.MustGet("my_user_model").(Users)
 
 	err := common.Bind(c, s)
 	if err != nil {

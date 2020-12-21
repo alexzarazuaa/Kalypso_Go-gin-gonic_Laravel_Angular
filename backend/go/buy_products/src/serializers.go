@@ -8,8 +8,8 @@ type Buy_ProductUserSerializer struct {
 	Buy_ProductUsers
 }
 
-func (s *Buy_ProductUserSerializer) Response() users.ProfileResponse {
-	response := users.ProfileSerializer{s.C, s.Buy_ProductUsers.Users}
+func (s *Buy_ProductUserSerializer) Response() ProfileResponse {
+	response := ProfileSerializer{s.C, s.Buy_ProductUsers.Users}
 	return response.Response()
 }
 
@@ -29,7 +29,7 @@ type Buy_ProductResponse struct {
 	Category       string                `json:"category"`
 	CreatedAt      string                `json:"createdAt"`
 	UpdatedAt      string                `json:"updatedAt"`
-	Author         users.ProfileResponse `json:"author"`
+	Author         ProfileResponse `json:"author"`
 }
 
 type Buy_ProductsSerializer struct {
@@ -62,3 +62,32 @@ func (s *Buy_ProductsSerializer) Response() []Buy_ProductResponse {
 	}
 	return response
 }
+
+
+//-----------------PROFILE-----------------------------//
+
+type ProfileSerializer struct {
+	C *gin.Context
+	Users
+}
+
+// Declare your response schema here
+type ProfileResponse struct {
+	Username  string  `json:"username"`
+	Email     string  `json:"email"`
+	Image     *string `json:"image"`
+	Karma 	   int    `json:"karma"`
+}
+
+// Put your response logic including wrap the userModel here.
+func (self *ProfileSerializer) Response() ProfileResponse {
+	profile := ProfileResponse{
+		Username:  self.Username,
+		Image:     self.Image,
+		Karma:	   self.Karma,
+		Email:	   self.Email,
+	}
+	return profile
+}
+
+//----------------END PROFILE-------------------------//

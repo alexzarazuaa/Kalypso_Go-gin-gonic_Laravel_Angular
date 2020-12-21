@@ -26,7 +26,7 @@ func main() {
 
 	v1 := r.Group("/api")
 
-	v1.Use(users.AuthMiddleware(true))
+	v1.Use(buy_products.AuthMiddleware(true))
 	buy_products.Buy_ProductsRegister(v1.Group("/buy_products"))
 
 	// testAuth := r.Group("/api/ping")
@@ -38,7 +38,7 @@ func main() {
 
 	// test 1 to 1
 	// tx1 := db.Begin()
-	// userA := users.Users{
+	// userA := buysPro.Users{
 	// 	Username: "AAAAAAAAAAAAAAAA",
 	// 	Email:    "aaaa@g.cn",
 	// 	Bio:      "hehddeda",
@@ -57,9 +57,9 @@ func main() {
 	//}).First(&userAA)
 	//fmt.Println(userAA)
 
-	//r.Run() // listen and serve on 0.0.0.0:8080
-	fmt.Printf("0.0.0.0:3000")
-	r.Run(":3000")
+	//r.Run() // listen and serve on 0.0.0.0:3001
+	fmt.Printf("0.0.0.0:3001")
+	r.Run(":3001")
 }
 
 func MakeRoutes(r *gin.Engine) {

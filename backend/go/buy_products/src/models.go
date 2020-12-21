@@ -1,6 +1,7 @@
 package buy_products
 
 import (
+	"time"
 	"strconv"
 	"github.com/jinzhu/gorm"
 	"gobuys_products/common"
@@ -36,13 +37,13 @@ type Users struct {
 
 type Buy_ProductUsers struct {
 	gorm.Model
-	Users      users.Users
+	Users      Users
 	UsersID    uint
 	Buy_ProductModels  []Buy_ProductModel  `gorm:"ForeignKey:AuthorID"`
 }
 
 
-func GetBuy_ProductUsers(userModel users.Users) Buy_ProductUsers {
+func GetBuy_ProductUsers(userModel Users) Buy_ProductUsers {
 	var buy_productUsers Buy_ProductUsers
 	if userModel.ID == 0 {
 		return buy_productUsers
@@ -93,7 +94,7 @@ func (self *Buy_ProductUsers) GetBuy_ProductFeed(limit, offset string) ([]Buy_Pr
 
 	tx := db.Begin()
 	//followings := self.Users.GetFollowings()
-	// var buy_productUserss []uint
+	 var buy_productUserss []uint
 	// for _, following := range followings {
 	// 	buy_productUsers := GetBuy_ProductUsers(following)
 	// 	buy_productUserss = append(buy_productUserss, buy_productUsers.ID)

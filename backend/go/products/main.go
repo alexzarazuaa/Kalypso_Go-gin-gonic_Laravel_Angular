@@ -27,7 +27,7 @@ func main() {
 	v1 := r.Group("/api")
 
 
-	v1.Use(users.AuthMiddleware(false))
+	v1.Use(products.AuthMiddleware(false))
 	products.ProductsAnonymousRegister(v1.Group("/products"))
 
 	// testAuth := r.Group("/api/ping")

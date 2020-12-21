@@ -41,7 +41,7 @@ func Buy_ProductList(c *gin.Context) {
 func Buy_ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")
-	myUsers := c.MustGet("my_user_model").(users.Users)
+	myUsers := c.MustGet("my_user_model").(Users)
 	if myUsers.ID == 0 {
 		c.AbortWithError(http.StatusUnauthorized, errors.New("{error : \"Require auth!\"}"))
 		return
