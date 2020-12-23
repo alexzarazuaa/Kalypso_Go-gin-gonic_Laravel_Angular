@@ -69,4 +69,20 @@ export class ApiService {
     ).pipe(catchError(this.formatErrors));
   }
 
+
+
+
+    /* ===================  GO PRODUCTS METHODS ===================*/
+
+    /**
+   * Method PRODUCTS Go enviroment GET data
+   * @param path 
+   * @param params 
+   */
+
+  get_goProd(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+    return this.http.get(`${environment.go_prods}${path}`, { params })
+      .pipe(catchError(this.formatErrors));
+  }
+
 }

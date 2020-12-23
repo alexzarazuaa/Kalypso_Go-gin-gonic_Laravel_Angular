@@ -71,7 +71,7 @@ class Products extends Controller
      */
     public function show($id)
     {
-        echo("holagola");
+        // echo("holagola");
         $product = Product::find($id);
         return response() -> json($product);
     }

@@ -25,6 +25,7 @@ As you make purchases, your karma points will increase, with which you will be a
 
 
 ## Getting Started
+
 To get the repo running locally:
 
  * Clone this repo
@@ -33,6 +34,22 @@ To get the repo running locally:
 
 
 ## Preview
+
+  * **Products Shop List**
+
+    <img src="./frontend/src/img/Preview_List.png">
+
+  * **List Product Description**
+
+      <img src="./frontend/src/img/preview2.png">
+
+  * **Register**
+
+     <img src="./frontend/src/img/Register_Preview.png">
+
+  * **Login**
+
+    <img src="./frontend/src/img/Login_Preview.png">
 
 
 
