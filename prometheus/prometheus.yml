@@ -6,3 +6,9 @@ scrape_configs:
     honor_labels: true
     static_configs:
       - targets: ["myapp_practica:3000"] 
+
+    
+  - job_name : "Traefik"
+    honor_labels: true
+    static_configs:
+      - targets: ["Kalypso_LARAVEL:8001"]

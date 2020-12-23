@@ -35,6 +35,17 @@
 [entryPoints]
     [entryPoints.http]
     address = ":80"
+[entryPoints]
+    [entryPoints.api]
+    address = ":80"
+#Enable prometheus Metrics
+[metrics]
+  [metrics.prometheus]
+    addEntryPointsLabels = true 
+    addServicesLabels = true
+    entryPoints = "http"
+
+
 
 ################################################################
 # Traefik logs configuration
