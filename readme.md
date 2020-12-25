@@ -188,4 +188,3 @@ De tal manera que la estructura de cada microservicio nos quedo asi :
 | common | Donde se encuentran los archivos de configuración de cada microservicio.|
 | common/database.go | Con las funciones de la creación de la bases de datos y sus sesiones. |
 | common/utils.go |  |
-| Profile | User info, favourited Garment |
