@@ -155,13 +155,13 @@ Seguidamente, dentro del servidor Go, en todos los imports utilizados las rutas 
 de 
   * --> ` "github.com/canaz/Kalypso_Go-gin-gonic_Laravel_Angular/backend/go/common" `  
 
-  <img src="./Capturas/imports_Route.png">
+    <img src="./Capturas/imports_Route.png">
 
 a la siguiente : 
 
   * -->  ` "goKa/common" `
 
-  <img src="./Capturas/imports_Goka.png">
+    <img src="./Capturas/imports_Goka.png">
 
 Como muestro anteriormente en el docker-compose que nuestro directorio del servicio de go lo llamamos goKa, podemos utilizar
 las rutas de los archivos como goKa en lugar de la ruta de los directorios del proyecto.
@@ -169,10 +169,23 @@ las rutas de los archivos como goKa en lugar de la ruta de los directorios del p
 
 **_Sin olvidar que hemos tenido que cambiar la version del frammework de gingonic ya que la anterior que estabamos utilizando estaba deprecated , pasando de ` gopkg.in/gin-gonic/gin.v1 ` a  ` github.com/gin-gonic/gin ` _**
 
+ * <img src="./Capturas/imports_GinVN.png">
+
 
 ## MICROSERVICIOS EN EL BACKEND DE GO
 
-El siguiente ejercico fue el de refactorizar el backend de **Go** para que de esta manera los modulos pasen a ser microservicios , cada uno independiente.
+El siguiente ejercico fue el de refactorizar el backend de **Go** para que de esta manera los modulos pasen a ser **microservicios** , cada uno independiente.
+
+Para ello, en primer lugar, lo que hicimos fue una restructuración de los directorios de cada microservicio , además de añadir por cada microservicio su correspondiente servicio en el docker-compose, en nuestro caso no hicimos un dockerfile por cada microservicio, sino que todos los comandos necesarios los añadimos al docker-compose, como teniamos anteriormente con el Backend de Go.
+
+De tal manera que la estructura de cada microservicio nos quedo asi : 
+
+  ### Microservicios de Products
 
 
-
+| Nombre | Descripción |
+| - | - |
+| common | Donde se encuentran los archivos de configuración de cada microservicio.|
+| common/database.go | Con las funciones de la creación de la bases de datos y sus sesiones. |
+| common/utils.go |  |
+| Profile | User info, favourited Garment |
