@@ -210,4 +210,37 @@ De tal manera que la estructura de cada microservicio nos quedo asi :
 
   <img src="./Capturas/Estructura_3_Src.png">
 
-  
+
+
+_**Sin olvidar que a la hora de reorganizar las carpetas e archivos deberás cambiar los imports en los ficheros , ya que ahora cada uno será independiente con sun main.go, por lo tanto el package y los imports cambiaran**_
+
+
+_El directorio de common no sufrirá ningún cambio en sus imports, quitando la nuevas versiones mencionadas anteriormente en el apartado 
+  de la refactorización a modulos Go_
+
+
+### Ejemplo con el microservicio de BuysProducts
+
+  * src/middlewares.go 
+
+      <img src="./Capturas/imports_midd.png">
+  * src/models.go 
+
+      <img src="./Capturas/imports_model.png">
+
+  * src/routers.go 
+
+      <img src="./Capturas/imports_routers.png">
+
+  * src/serializers.go 
+
+      <img src="./Capturas/imports_seri.png">
+
+  * src/validators.go 
+
+      <img src="./Capturas/imports_vali.png">
+
+  * main.go 
+
+      <img src="./Capturas/imports_main.png">
+      
