@@ -43,15 +43,17 @@ class Products extends Controller
     public function store(Request $request)
     {
     
+        // echo($request);
+        // echo("-----------------");
+        // print_r($request->product['name']);
+
         $product = new Product();
-        $product -> id_user = $request -> id_user;
-        $product -> slug = $request -> slug;
-        $product -> name = $request -> name;
-        $product -> brand = $request -> brand;
-        $product -> image = $request -> image;
-        $product -> desc = $request -> desc;
-        $product -> rating = $request -> rating;
-        $product -> category = $request -> category;
+        $product -> name = $request -> product['name'];
+        $product -> brand = $request -> product['brand'];
+        // $product -> img = $request -> product['img'];
+        $product -> description = $request -> product['description'];
+        $product -> rating = $request -> product['rating'];
+        $product -> category = $request -> product['category'];
 
     
         $product -> save();
@@ -69,7 +71,7 @@ class Products extends Controller
      */
     public function show($id)
     {
-        echo("holagola");
+        // echo("holagola");
         $product = Product::find($id);
         return response() -> json($product);
     }

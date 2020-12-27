@@ -83,3 +83,11 @@ html, body {
     top: -85px;
   }
 }
+
+.cart-btn{
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: coral;
+  color: black;
+}

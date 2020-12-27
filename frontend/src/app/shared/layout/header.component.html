@@ -1,99 +1,81 @@
-<nav class="navbar navbar-light">
+<nav class="header">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">KALYPSO</a>
+    <a class="logo" routerLink="/">KALYPSO</a>
+    <section class="header-right">
+      <!-- Show this for logged out users -->
+      <ul *appShowAuthed="false" class="nav navbar-nav pull-xs-right">
 
-    <!-- Show this for logged out users -->
-    <ul *appShowAuthed="false"
-      class="nav navbar-nav pull-xs-right">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/shop">
+            Shop
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/">
-          Home
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/shop">
-          Shop
-        </a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">
+            Sign in
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/login"
-          routerLinkActive="active">
-          Sign in
-        </a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">
+            Sign up
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/register"
-          routerLinkActive="active">
-          Sign up
-        </a>
-      </li>
+      </ul>
 
-    </ul>
+      <!-- Show this for logged in users -->
+      <ul *appShowAuthed="true" class="nav navbar-nav pull-xs-right">
 
-    <!-- Show this for logged in users -->
-    <ul *appShowAuthed="true"
-      class="nav navbar-nav pull-xs-right">
+        <li *ngIf="currentUser.type == 'client'" class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            Home
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }">
-          Home
-        </a>
-      </li>
+        <li *ngIf="currentUser.type == 'client'" class="nav-item">
+          <a class="nav-link" routerLink="/shop">
+            Shop
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/shop">
-          Shop
-        </a>
-      </li>
+        <li *ngIf="currentUser.type == 'admin'" class="nav-item">
+          <a class="nav-link" routerLink="/editor" routerLinkActive="active">
+            <i class="ion-compose"></i>&nbsp;New Article
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/editor"
-          routerLinkActive="active">
-          <i class="ion-compose"></i>&nbsp;New Article
-        </a>
-      </li>
-
-      <li 
-      *ngIf="currentUser.type == 'admin'" 
-      class="nav-item">
-        <a class="nav-link"
-          routerLink="/admin"
-          routerLinkActive="active">
-          Admin
-        </a>
-      </li>
+        <li *ngIf="currentUser.type == 'admin'" class="nav-item">
+          <a class="nav-link" routerLink="/admin" routerLinkActive="active">
+            Admin
+          </a>
+        </li>
 
 
-      <li class="nav-item">
-        <a class="nav-link"
-          routerLink="/settings"
-          routerLinkActive="active">
-          <i class="ion-gear-a"></i>&nbsp;Settings
-        </a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings" routerLinkActive="active">
+            <i class="ion-gear-a"></i>&nbsp;Settings
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link"
-          [routerLink]="['/profile', currentUser.username]"
-          routerLinkActive="active">
-          <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
-          {{ currentUser.username }}
-        </a>
-      </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/profile', currentUser.username]" routerLinkActive="active">
+            <img [src]="currentUser.image" *ngIf="currentUser.image" class="user-pic" />
+            {{ currentUser.username }}
+          </a>
+        </li>
 
-    </ul>
+      </ul>
+
+
+    </section>
+
 
   </div>
 </nav>
