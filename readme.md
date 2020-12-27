@@ -193,3 +193,21 @@ De tal manera que la estructura de cada microservicio nos quedo asi :
 | src/routers.go | Una vez comprobado el models mediante los serializers y validators lo enviamos a la parte cliente |
 | src/serializers.go | Donde transformarmos los  datos de formatos más propios  de Model  como puedan ser JSON  o XML |
 | src/vallidators.go | Implementa validaciones de valor para estructuras y campos individuales  |
+
+
+
+
+
+### Estructura general 
+
+  <img src="./Capturas/Estructura_1.png">
+
+### Estructura De Commmon 
+
+  <img src="./Capturas/Estructura_2_Common.png">
+
+### Estructura De src 
+
+  <img src="./Capturas/Estructura_3_Src.png">
+
+  
