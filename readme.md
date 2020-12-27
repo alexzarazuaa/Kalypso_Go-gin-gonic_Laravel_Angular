@@ -187,4 +187,9 @@ De tal manera que la estructura de cada microservicio nos quedo asi :
 | - | - |
 | common | Donde se encuentran los archivos de configuración de cada microservicio.|
 | common/database.go | Con las funciones de la creación de la bases de datos y sus sesiones. |
-| common/utils.go |  |
+| common/utils.go | Otras funciones comunes como es el la generación del token JWT |
+| src/middlewares.go | Funciones que utilizan el token JWT, como es la de extraerlo y darle autorización al usuario |
+| src/models.go | Estructura de modelos utilizados en la App, Usuarios, Products y Buys_Products  |
+| src/routers.go | Una vez comprobado el models mediante los serializers y validators lo enviamos a la parte cliente |
+| src/serializers.go | Donde transformarmos los  datos de formatos más propios  de Model  como puedan ser JSON  o XML |
+| src/vallidators.go | Implementa validaciones de valor para estructuras y campos individuales  |
