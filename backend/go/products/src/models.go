@@ -1,6 +1,7 @@
 package products
 
 import (
+	// "fmt"
 	"time"
 	"strconv"
 	"github.com/jinzhu/gorm"
@@ -21,6 +22,11 @@ type ProductModel struct {
 	AuthorID    uint
 }
 
+type Brands struct {
+	gorm.Model
+	Name         string `gorm:"unique_index"`
+	Karma     	 int  `gorm:"column:Karma"`
+}
 
 type Users struct {
 	ID           uint    `gorm:"primary_key"`
@@ -109,4 +115,10 @@ func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, 
 	}
 	err = tx.Commit().Error
 	return models, count, err
+}
+
+func UpdateBrands(name string, karma int) (error) {
+	db := common.GetDB()
+	err:= db.Model(Brands{}).Where("name = ?", name).Updates(Brands{Karma: karma}).Error
+	return err
 }

@@ -138,7 +138,7 @@ func UsersLogin(c *gin.Context) {
 		//save json in redis
 		err_redis := common.SetUser(userModel.Email, user, client)
 		if err_redis != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_redis.Error()})
 			return
 		}
 

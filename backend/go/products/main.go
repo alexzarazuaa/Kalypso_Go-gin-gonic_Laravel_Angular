@@ -11,6 +11,8 @@ import (
 
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&products.ProductModel{})
+	db.AutoMigrate(&products.Brands{})
+
 }
 
 func main() {
