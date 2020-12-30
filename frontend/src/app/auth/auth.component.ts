@@ -58,3 +58,11 @@ export class AuthComponent implements OnInit {
     );
   }
 }
+
+// data => {
+//   let route = (data['user'].type === 'admin') ? '/admin' : '/';
+//   this.router.navigateByUrl(route)},   
+// err => {
+//   this.errors = err;
+//   this.isSubmitting = false;
+// }
