@@ -36,6 +36,14 @@
     [entryPoints.http]
     address = ":80"
 
+#Enable prometheus metrics
+[metrics]
+      [metrics.prometheus]
+          addEntryPointsLabels = true
+          addServicesLabels = true
+          entryPoints = "http"
+
+
 ################################################################
 # Traefik logs configuration
 ################################################################
@@ -152,3 +160,4 @@ domain = "docker.localhost"
 # Default: true
 #
 # exposedByDefault = true
+

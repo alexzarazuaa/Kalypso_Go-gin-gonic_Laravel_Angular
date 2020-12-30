@@ -39,32 +39,6 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
 
-  # web:
-  #   image: golang:1.15
-  #   container_name: go_container
-  #   working_dir: /go/src/goKa 
-  #   volumes:
-  #     - ./backend/go:/go/src/goKa
-  #   command: >
-  #     bash -c " rm -f go.mod || true
-  #     && rm -f go.sum || true
-  #     && go mod init goKa
-  #     && go get github.com/go-redis/redis/v8
-  #     && go mod tidy
-  #     && go get github.com/pilu/fresh
-  #     && fresh "
-  #   ports:
-  #     - "8090:3000"
-  #   labels:
-  #     traefik.backend: "web"
-  #     traefik.frontend.rule: "PathPrefix:/"
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #   networks:
-  #     - Kalypso_network
-
-
   users_Kalypso:
       image: golang:1.15
       container_name: Kalypso_Go_usersMicro
@@ -140,21 +114,6 @@ services:
       - products
     networks:
       - Kalypso_network
-
-
-
-  # angular:
-  #   container_name: Kalypso_Angular
-  #   build: ./frontend
-  #   restart: on-failure
-  #   ports:
-  #     - "4200:4200"
-  #   volumes:
-  #     - ./frontend:/app
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #     - web
 
   redis:
     container_name: Kalypso_REDIS
