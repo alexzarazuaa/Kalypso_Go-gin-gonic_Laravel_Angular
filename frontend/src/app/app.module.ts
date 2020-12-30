@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ToastrModule } from 'ngx-toastr';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -10,12 +12,13 @@ import {
   HeaderComponent,
   SharedModule
 } from './shared';
+import { SliderComponent } from './shared/slider-helpers/slider.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { from } from 'rxjs';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, HeaderComponent],
+  declarations: [AppComponent, FooterComponent, HeaderComponent,SliderComponent],
   imports: [
     BrowserModule,
     CoreModule,
@@ -24,6 +27,7 @@ import { from } from 'rxjs';
     AuthModule,
     AppRoutingModule,
     ProductModule,
+    CarouselModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
