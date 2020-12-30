@@ -244,3 +244,16 @@ _El directorio de common no sufrirá ningún cambio en sus imports, quitando la 
 
       <img src="./Capturas/imports_main.png">
       
+
+## Creación del servicio base para todos los microservicios
+
+En este apartado lo que se nos plantea es que de alguna manera utilizando la extesión de servicios en docker, crear un servicio base para todos los microservicios que luego será extendido por cada uno de ellos para aplicar configuraciones específica.
+
+En nuestro caso, en lugar de tener un dockerfile por cada Microservicio, tenemos una serie de comando necesarios para iniciar cada Microservicio en Go.
+Además como menciono en el apartado anterior, tenemos un servicio en el docker-compose por cada uno de los Microservicios, dichos servicio son prácticamente idénticos a excepción del puerto al que está expuesto y nombrel del módule o microservicio correspondiente.
+
+Por ello creamos una extesión que es digamos como una variable que utilizamos en cada microservicio.
+Se compone de  : 
+
+
+## Grafana y prometheus utilizando traefik
