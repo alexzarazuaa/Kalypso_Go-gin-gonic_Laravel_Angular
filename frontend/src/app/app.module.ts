@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
@@ -26,7 +26,8 @@ import { from } from 'rxjs';
     AuthModule,
     AppRoutingModule,
     ProductModule,
-    CarouselModule    
+    CarouselModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

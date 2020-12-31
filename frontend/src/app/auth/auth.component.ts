@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 import { Errors, UserService } from '../core';
 
 @Component({
@@ -20,7 +20,8 @@ export class AuthComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     // use FormBuilder to create a form group
     this.authForm = this.fb.group({
@@ -50,10 +51,10 @@ export class AuthComponent implements OnInit {
     this.userService
     .attemptAuth(this.authType, credentials)
     .subscribe(
-      data => this.router.navigateByUrl('/'),
-      err => {
-        this.errors = err;
-        this.isSubmitting = false;
+      response => {
+        console.log(response)
+        this.toastr.success('Logged in');
+        setTimeout(() => {this.router.navigateByUrl('/')}, 1000);
       }
     );
   }
