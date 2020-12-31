@@ -30,6 +30,8 @@ import { from } from 'rxjs';
     ToastrModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent,
+  ]
 })
 export class AppModule {}

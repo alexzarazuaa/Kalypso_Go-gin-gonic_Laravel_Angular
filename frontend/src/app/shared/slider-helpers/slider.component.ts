@@ -9,7 +9,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 
 export class SliderComponent {
 
-  dynamicSlides = [
+  slide = [
      {
        id: 1,
        src:'https://via.placeholder.com/600/92c952',
@@ -51,7 +51,7 @@ export class SliderComponent {
     pullDrag: false,
     dots: false,
     navSpeed: 600,
-    navText: ['&#8249', '&#8250;'],
+    navText: ['·', '·'],
     responsive: {
       0: {
         items: 1 

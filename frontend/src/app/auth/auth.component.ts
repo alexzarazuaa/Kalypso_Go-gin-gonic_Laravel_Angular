@@ -12,7 +12,7 @@ import { Errors, UserService } from '../core';
 export class AuthComponent implements OnInit {
   authType: String = '';
   title: String = '';
-  errors: Errors = {errors: {}};
+  errors: Errors = { errors: {} };
   isSubmitting = false;
   authForm: FormGroup;
 
@@ -45,25 +45,22 @@ export class AuthComponent implements OnInit {
 
   submitForm() {
     this.isSubmitting = true;
-    this.errors = {errors: {}};
+    this.errors = { errors: {} };
 
     const credentials = this.authForm.value;
     this.userService
-    .attemptAuth(this.authType, credentials)
-    .subscribe(
-      response => {
-        console.log(response)
-        this.toastr.success('Logged in');
-        setTimeout(() => {this.router.navigateByUrl('/')}, 1000);
-      }
-    );
+      .attemptAuth(this.authType, credentials)
+      .subscribe(
+        data => {
+          console.log(data)
+          this.toastr.success('Logged in');
+          setTimeout(() => { this.router.navigateByUrl('/') }, 1000);
+        },
+        err => {
+          this.toastr.error(err.error, 'Invalid credentials')
+          this.isSubmitting = false;
+        }
+      );
   }
 }
 
-// data => {
-//   let route = (data['user'].type === 'admin') ? '/admin' : '/';
-//   this.router.navigateByUrl(route)},   
-// err => {
-//   this.errors = err;
-//   this.isSubmitting = false;
-// }
