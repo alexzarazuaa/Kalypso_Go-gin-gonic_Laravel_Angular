@@ -252,8 +252,39 @@ En este apartado lo que se nos plantea es que de alguna manera utilizando la ext
 En nuestro caso, en lugar de tener un dockerfile por cada Microservicio, tenemos una serie de comando necesarios para iniciar cada Microservicio en Go.
 Además como menciono en el apartado anterior, tenemos un servicio en el docker-compose por cada uno de los Microservicios, dichos servicio son prácticamente idénticos a excepción del puerto al que está expuesto y nombrel del módule o microservicio correspondiente.
 
-Por ello creamos una extesión que es digamos como una variable que utilizamos en cada microservicio.
-Se compone de  : 
+Por ello hemos utilizado la opción que nos da docker-compose llamada _**extends**_.
+
+En primer lugar lo que hicimos fue crear un archivo .yml , concretamente llamado ` microservices_common.yml `, el cual contiene el servicio que ejecutara el extends, es decir , la serie de comandos que necesita **Go** para arrancar y como comentaba anteriormente teníamos repetida varias veces en el docker-compose.
+
+Por lo tanto, dicho fichero contiene ; la imagen de goland , en este caso la version 1.15, los labels necesarios para traefik, la network que tenemos creada en el docker-compose para esta practica, el directori de trabajo y por último los commands .
+
+   <img src="./Capturas/microservices_yml.png">
+
+
+De tal manera que ahora los services en el docker-compose quedarían así : 
+
+### Users
+
+  <img src="./Capturas/micro_Users.png">
+
+### Products 
+
+  <img src="./Capturas/micro_prod.png">
+
+
+### Buys_Products
+
+  <img src="./Capturas/micro_buys.png">
+
+
+ Asi queda el compose funcionando : 
+
+   <img src="./Capturas/allRunningMicroservices.png">
+
+
+ _ATENCIÓN_
+
+* _PARA PODER UTILIZAR LA PROPIEDAD EXTENDS EN EL DOCKER-COMPOSE TUVE QUE ACTUALIZAR LA VERSIÓN DE DOCKER-COMPOSE A LA 1.27 YA QUE CON LA QUE TENÍA (LA 1.25) NO FUNCIONABA_
 
 
 ## Grafana y prometheus utilizando traefik
