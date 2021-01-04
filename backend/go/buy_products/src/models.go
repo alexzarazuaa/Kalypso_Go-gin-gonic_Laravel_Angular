@@ -4,7 +4,7 @@ import (
 	"time"
 	"strconv"
 	"github.com/jinzhu/gorm"
-	"gobuys_products/common"
+	"goApp/common"
 )
 
 type Buy_ProductModel struct {

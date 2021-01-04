@@ -3,7 +3,7 @@ package buy_products
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
-	"gobuys_products/common"
+	"goApp/common"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"

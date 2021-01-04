@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gobuys_products/common"
-	"gobuys_products/src"
+	"goApp/common"
+	"goApp/src"
 	"github.com/jinzhu/gorm"
 )
 

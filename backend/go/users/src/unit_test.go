@@ -7,7 +7,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"goUsers/common"
+	"goApp/common"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"

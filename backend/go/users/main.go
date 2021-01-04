@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"goUsers/common"
-	"goUsers/src"
+	"goApp/common"
+	"goApp/src"
 	"github.com/jinzhu/gorm"
 )
 

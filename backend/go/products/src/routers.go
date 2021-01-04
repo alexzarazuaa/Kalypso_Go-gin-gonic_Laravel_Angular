@@ -3,7 +3,7 @@ package products
 import (
 	"errors"
 	"net/http"
-	"goProducts/common"
+	"goApp/common"
 	"github.com/gin-gonic/gin"
 )
 

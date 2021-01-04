@@ -1,7 +1,7 @@
 package buy_products
 
 import (
-	"gobuys_products/common"
+	"goApp/common"
 	"github.com/gosimple/slug"
 	"github.com/gin-gonic/gin"
 )

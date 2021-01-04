@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"errors"
-	"goUsers/common"
+	"goApp/common"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

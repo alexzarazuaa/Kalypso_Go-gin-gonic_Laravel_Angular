@@ -1,4 +1,4 @@
-module goUsers
+module goApp
 
 go 1.15
 

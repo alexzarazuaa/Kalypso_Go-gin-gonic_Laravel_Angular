@@ -40,23 +40,18 @@ services:
       MYSQL_PASSWORD: root
 
   users_Kalypso:
-      image: golang:1.15
+      extends:
+          file: microservices_common.yml
+          service: all_microservicesGo
       container_name: Kalypso_Go_usersMicro
-      working_dir: /go/src/goUsers
       volumes:
-        - ./backend/go/users:/go/src/goUsers
+        - ./backend/go/users:/go/src/goApp
       ports:
         - "3002:3002"
-      command: >
-        bash -c " rm -f go.mod || true
-        && rm -f go.sum || true
-        && go mod init goUsers
-        && go mod tidy
-        && go get github.com/pilu/fresh
-        && fresh "
       labels:
         traefik.backend: "users_Kalypso"
         traefik.frontend.rule: "PathPrefix:/"
+        traefik.port: "3002"
       depends_on:
         - mysql
         - redis
@@ -64,23 +59,18 @@ services:
         - Kalypso_network
 
   products:
-    image: golang:1.15
+    extends:
+          file: microservices_common.yml
+          service: all_microservicesGo
     container_name: Kalypso_Go_ProductsMicro
-    working_dir: /go/src/goProducts
     volumes:
-      - ./backend/go/products:/go/src/goProducts
+      - ./backend/go/products:/go/src/goApp
     ports:
       - "3000:3000"
-    command: >
-      bash -c " rm -f go.mod || true
-      && rm -f go.sum || true
-      && go mod init goProducts
-      && go mod tidy
-      && go get github.com/pilu/fresh
-      && fresh "
     labels:
       traefik.backend: "products"
       traefik.frontend.rule: "PathPrefix:/"
+      traefik.port: "3000"
     depends_on:
       - mysql
       - redis
@@ -90,23 +80,18 @@ services:
 
 
   buys_products:
-    image: golang:1.15
+    extends:
+          file: microservices_common.yml
+          service: all_microservicesGo
     container_name: Kalypso_Go_buys_productsMicro
-    working_dir: /go/src/gobuys_products
     volumes:
-      - ./backend/go/buy_products:/go/src/gobuys_products
+      - ./backend/go/buy_products:/go/src/goApp
     ports:
       - "3001:3001"
-    command: >
-      bash -c " rm -f go.mod || true
-      && rm -f go.sum || true
-      && go mod init gobuys_products
-      && go mod tidy
-      && go get github.com/pilu/fresh
-      && fresh "
     labels:
       traefik.backend: "buys_products"
       traefik.frontend.rule: "PathPrefix:/"
+      traefik.port: "3001"
     depends_on:
       - mysql
       - redis

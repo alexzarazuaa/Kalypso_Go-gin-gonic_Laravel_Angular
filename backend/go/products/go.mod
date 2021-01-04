@@ -1,4 +1,4 @@
-module goProducts
+module goApp
 
 go 1.15
 

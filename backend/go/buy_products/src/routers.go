@@ -3,7 +3,7 @@ package buy_products
 import (
 	"errors"
 	"net/http"
-	"gobuys_products/common"
+	"goApp/common"
 	"github.com/gin-gonic/gin"
 )
 
