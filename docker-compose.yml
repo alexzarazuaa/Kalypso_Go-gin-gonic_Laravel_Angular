@@ -110,7 +110,7 @@ services:
        - Kalypso_network
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock 
-       - ./backend/go/traefik/traefik.yml:/etc/traefik/traefik.yml 
+       - ./utils/traefik/traefik.yml:/etc/traefik/traefik.yml 
     command: 
         - "--api.dashboard=true"
         - "--api.insecure=true"
@@ -125,7 +125,7 @@ services:
     image: prom/prometheus:v2.20.1
     container_name: prometheus_Kalypso
     volumes:
-      - ./prometheus/:/etc/prometheus/
+      - ./utils/prometheus/:/etc/prometheus/
     ports:
       - "9090:9090"
     depends_on:
@@ -154,7 +154,7 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel 1.0.1
     volumes:
       - myGrafanaVol:/var/lib/grafana
-      - ./grafana/:/etc/grafana/provisioning/datasources/
+      - ./utils/grafana/:/etc/grafana/provisioning/datasources/
     ports:
       - "3500:3000"
     depends_on:
