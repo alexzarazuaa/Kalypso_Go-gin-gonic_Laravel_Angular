@@ -48,10 +48,6 @@ services:
         - ./backend/go/users:/go/src/goApp
       ports:
         - "3002:3002"
-      labels:
-        traefik.backend: "users_Kalypso"
-        traefik.frontend.rule: "PathPrefix:/"
-        traefik.port: "3002"
       depends_on:
         - mysql
         - redis
@@ -67,10 +63,6 @@ services:
       - ./backend/go/products:/go/src/goApp
     ports:
       - "3000:3000"
-    labels:
-      traefik.backend: "products"
-      traefik.frontend.rule: "PathPrefix:/"
-      traefik.port: "3000"
     depends_on:
       - mysql
       - redis
@@ -88,10 +80,6 @@ services:
       - ./backend/go/buy_products:/go/src/goApp
     ports:
       - "3001:3001"
-    labels:
-      traefik.backend: "buys_products"
-      traefik.frontend.rule: "PathPrefix:/"
-      traefik.port: "3001"
     depends_on:
       - mysql
       - redis

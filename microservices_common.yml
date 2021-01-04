@@ -5,8 +5,8 @@ services:
   all_microservicesGo:
     image: golang:1.15
     labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=Kalypso_network"
+        traefik.backend: "users_Kalypso"
+        traefik.frontend.rule: "PathPrefix:/"
     networks:
       - Kalypso_network 
     working_dir: /go/src/goApp
