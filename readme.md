@@ -321,7 +321,35 @@ Por último dentro del directorio de _Traefik_ tendremos dos archivos ; el traef
 
   <img src="./Capturas/traefik_yml.png">
 
-  
+Además también importe el dashboard de traefik en grafana de la siguiente manera:
+
+  * Lo primero nos dirigimos a grafana
 
 
- FALTA  FER EL RECUADRO EN LA ESTRUCTURA DE LES CARPETES , EXPLICAR EL IMPORT DEL DASHBORAD DE TRAEFIL I LO DE PROMETHEUS EL TARGETS
+
+## De la siguiente manera quedaría toda la estructura de directorios y ficheros del proyecto : 
+
+### Proyecto 
+   <img src="./Capturas/org_1.png">
+
+### Backend
+   <img src="./Capturas/org_2.png">
+
+### GO
+
+   <img src="./Capturas/org_3.png">
+
+### Laravel
+   <img src="./Capturas/org_4.png">
+
+### Angular
+
+   <img src="./Capturas/org_5.png">
+
+### Utils
+   <img src="./Capturas/org_6.png">
+
+### Grafana, Prometheus y Traefik
+
+   <img src="./Capturas/org_7.png">
+
