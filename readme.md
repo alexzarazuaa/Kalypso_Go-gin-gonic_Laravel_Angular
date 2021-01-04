@@ -323,7 +323,21 @@ Por último dentro del directorio de _Traefik_ tendremos dos archivos ; el traef
 
 Además también importe el dashboard de traefik en grafana de la siguiente manera:
 
-  * Lo primero nos dirigimos a grafana
+  * Lo primero nos dirigimos a --> https://grafana.com/grafana/dashboards/ y buscamos el de traefik y copiamos su ID para
+    posteriormente importalo en grafana.
+
+    <img src="./Capturas/traefik_dashboad_1.png">
+
+    <img src="./Capturas/traefik_copyId.png">
+
+  * Luego vamos a localhost:3500 donde tenemos alojado grafana
+    y lo importamos
+
+    <img src="./Capturas/import_grafana_1.png">
+
+    <img src="./Capturas/import_grafana.png">
+
+    <img src="./Capturas/grafana_dash_traefik.png">
 
 
 
