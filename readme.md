@@ -305,4 +305,23 @@ Para este paso lo primero que hicimos fue añadir los servicios de grafana, prom
 
 Cada uno con sus correspodientes puertos donde serán expuestos, sus contenedores,sus commands y labels  , sus dependencias y la network que tenemos en todo el compose.
 
-Además
+Seguidamente creamos la carpeta utils la cual estará compuesta por los directorios de grafana,prometehus y traefik.
+
+Por parte de _Grafana_ , su directorio abarcar un único archivo el ` datasource.yml ` , que incluye lo siguiente : 
+
+  <img src="./Capturas/datasource.png">
+
+En referencia a el directorio _Prometheus_ también incluye un único fichero con este codigo : 
+
+  <img src="./Capturas/prometheus_yml.png">
+
+Por último dentro del directorio de _Traefik_ tendremos dos archivos ; el traefik.toml y el traefik.yml
+
+  <img src="./Capturas/traefik_toml.png">
+
+  <img src="./Capturas/traefik_yml.png">
+
+  
+
+
+ FALTA  FER EL RECUADRO EN LA ESTRUCTURA DE LES CARPETES , EXPLICAR EL IMPORT DEL DASHBORAD DE TRAEFIL I LO DE PROMETHEUS EL TARGETS
