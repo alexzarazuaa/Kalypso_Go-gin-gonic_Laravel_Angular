@@ -367,3 +367,7 @@ Además también importe el dashboard de traefik en grafana de la siguiente mane
 
    <img src="./Capturas/org_7.png">
 
+
+
+
+Alex Zarauza y Vicent Coll.
