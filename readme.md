@@ -288,3 +288,21 @@ De tal manera que ahora los services en el docker-compose quedarían así :
 
 
 ## Grafana y prometheus utilizando traefik
+
+Para este paso lo primero que hicimos fue añadir los servicios de grafana, prometheus y como no de traefik a nuestro docker-compose.
+
+### Grafana
+
+  <img src="./Capturas/grafana.png">
+
+### Prometheus
+
+  <img src="./Capturas/prome.png">
+
+### Traefik
+
+  <img src="./Capturas/traefik.png">
+
+Cada uno con sus correspodientes puertos donde serán expuestos, sus contenedores,sus commands y labels  , sus dependencias y la network que tenemos en todo el compose.
+
+Además
