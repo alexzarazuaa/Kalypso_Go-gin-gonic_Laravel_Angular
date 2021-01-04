@@ -4,7 +4,7 @@ datasources:
     type: prometheus
     access: proxy
     orgId: 1
-    url: prometheus_practica:9090
+    url: prometheus_Kalypso:9090
     basicAuth: false
     isDefault: true
     editable: true

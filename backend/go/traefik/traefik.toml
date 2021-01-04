@@ -38,10 +38,8 @@
 
 #Enable prometheus metrics
 [metrics]
-      [metrics.prometheus]
-          addEntryPointsLabels = true
-          addServicesLabels = true
-          entryPoints = "http"
+  [metrics.prometheus]
+    entryPoint = "metrics"
 
 
 ################################################################

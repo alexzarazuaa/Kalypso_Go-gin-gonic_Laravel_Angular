@@ -111,25 +111,42 @@ services:
     volumes:
        - /var/run/docker.sock:/var/run/docker.sock 
        - ./backend/go/traefik/traefik.yml:/etc/traefik/traefik.yml 
+    command: 
+        - "--api.dashboard=true"
+        - "--api.insecure=true"
+        - "--providers.docker"
+        - "--entrypoints.web.address=:80"
+        - "--metrics.prometheus=true"
+        - "--metrics.prometheus.buckets=0.1, 0.3, 1.2, 5.0"
+    depends_on:
+      - products
+
   prometheus:
     image: prom/prometheus:v2.20.1
-    container_name: prometheus_practica
+    container_name: prometheus_Kalypso
     volumes:
-      - ./prometheus/:/etc/prometheus
+      - ./prometheus/:/etc/prometheus/
     ports:
       - "9090:9090"
     depends_on:
       - mysql
+      - traefik
       - redis
       - products
       - buys_products
       - users_Kalypso
     command: ["--config.file=/etc/prometheus/prometheus.yml"]
+    labels:
+      - "traefik.docker.network=traefik"
+      - "traefik.backend=prometheus"
+      - "traefik.frontend.rule=Host:prometheus.localhost"
+      - "traefik.port=9090"
     networks:
      - Kalypso_network
+
   grafana:
     image: grafana/grafana:7.1.5
-    container_name: grafana_practica
+    container_name: grafana_Kalypso
     environment:
       - GF_DISABLE_LOGIN_FORM=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -142,8 +159,7 @@ services:
       - "3500:3000"
     depends_on:
      - prometheus
-    links:
-     - prometheus   
+     - products
     networks:
      - Kalypso_network
 

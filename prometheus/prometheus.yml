@@ -1,19 +1,8 @@
 global:
   scrape_interval: 5s
-  evaluation_interval: 30s
+  evaluation_interval: 10s
 
-rule_files:
-  - "prometheus.rules"
-
-  
 scrape_configs:
-  - job_name: "Kalypso-app"
-    honor_labels: true
+  - job_name: Kalypso
     static_configs:
-      - targets: ["myapp_practica:3000"] 
-
-    
-  - job_name : "Traefik"
-    honor_labels: true
-    static_configs:
-      - targets: ["Kalypso_LARAVEL:8001"]
+      - targets: ['traefik:8080'] 
