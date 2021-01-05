@@ -66,30 +66,30 @@ func Karma_redis(c *gin.Context){
 	}
 
 	//At 10 minutes
-	timeDelay := 600000 * time.Millisecond
+	// timeDelay := 600000 * time.Millisecond
 
-	var endTime <-chan time.Time
+	// var endTime <-chan time.Time
 	
-	endTime = time.After(timeDelay)
+	// endTime = time.After(timeDelay)
 
-    for {
-        select {
-        case <-endTime:
+    // for {
+    //     select {
+    //     case <-endTime:
 		
-			//We pass redis(products & brands) in database
-			for key, element := range objects {
-				err_update := UpdateBrands(key, element)
+	// 		//We pass redis(products & brands) in database
+	// 		for key, element := range objects {
+	// 			err_update := UpdateBrands(key, element)
 
-				if (err_update!=nil){
-					c.JSON(http.StatusBadRequest, gin.H{"error": err_update.Error()})
-					return
-				}
-			}
-			c.JSON(http.StatusOK, gin.H{"result": objects})
+	// 			if (err_update!=nil){
+	// 				c.JSON(http.StatusBadRequest, gin.H{"error": err_update.Error()})
+	// 				return
+	// 			}
+	// 		}
+		
+    //     }
+	// }
+	c.JSON(http.StatusOK, gin.H{"result": objects})
 			return
-        }
-	}
-
 }
 
 func Proof(c *gin.Context){
