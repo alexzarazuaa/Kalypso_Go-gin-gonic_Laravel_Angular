@@ -1,11 +1,16 @@
 <div class="home-page">
 
+
+  <app-slider></app-slider>
+  
   <div class="banner" *appShowAuthed="false">
     <div class="container">
       <h1 class="logo-font">KALYPSO</h1>
       <p>A place to shop your <i>QUALITY</i> CLOTH.</p>
     </div>
   </div>
+
+
 
   <div class="container page">
     <div class="row">
@@ -14,17 +19,14 @@
         <div class="feed-toggle">
           <ul class="nav nav-pills outline-active">
             <li class="nav-item">
-              <a class="nav-link"
-                 [ngClass]="{'active': listConfig.type === 'feed'}"
-                 (click)="setListTo('feed')">
-                 Your Feed
+              <a class="nav-link" [ngClass]="{'active': listConfig.type === 'feed'}" (click)="setListTo('feed')">
+                Your Feed
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link"
-                 [ngClass]="{'active': listConfig.type === 'all' && !listConfig.filters.tag}"
-                 (click)="setListTo('all')">
-                 Global Feed
+              <a class="nav-link" [ngClass]="{'active': listConfig.type === 'all' && !listConfig.filters.tag}"
+                (click)="setListTo('all')">
+                Global Feed
               </a>
             </li>
             <li class="nav-item" [hidden]="!listConfig.filters.tag">
@@ -36,12 +38,39 @@
         </div>
 
         <!-- <app-product-list [config]="listConfig"></app-product-list>  -->
-         <!-- <app-products></app-products> -->
-         
-        
+        <!-- <app-products></app-products> -->
+
+        <br>
+        <br>
+        <br>
+        <a class="brands"> NUESTRAS MARCAS</a>
+
+        <br>
+        <br>
+        <div class="scrollmenu">
+          <a href="#home">Home</a>
+          <a href="#news">News</a>
+          <a href="#contact">Contact</a>
+          <a href="#about">About</a>
+          <a href="#support">Support</a>
+          <a href="#blog">Blog</a>
+          <a href="#tools">Tools</a>
+          <a href="#base">Base</a>
+          <a href="#custom">Custom</a>
+          <a href="#more">More</a>
+          <a href="#logo">Logo</a>
+          <a href="#friends">Friends</a>
+          <a href="#partners">Partners</a>
+          <a href="#people">People</a>
+          <a href="#work">Work</a>
+        </div>
+
+
+
+
       </div>
 
-  
+
 
     </div>
   </div>

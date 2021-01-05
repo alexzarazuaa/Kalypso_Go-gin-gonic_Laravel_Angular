@@ -70,6 +70,12 @@ export class ApiService {
   }
 
 
+  delete_go(path): Observable<any> {
+    return this.http.delete(
+      `${environment.go}${path}`
+    ).pipe(catchError(this.formatErrors));
+  }
+
 
 
     /* ===================  GO PRODUCTS METHODS ===================*/
@@ -83,6 +89,19 @@ export class ApiService {
   get_goProd(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.go_prods}${path}`, { params })
       .pipe(catchError(this.formatErrors));
+  }
+
+  post_goProd(path: string, body: Object = {}): Observable<any> {
+    return this.http.post(
+      `${environment.go_prods}${path}`,
+      JSON.stringify(body),
+    ).pipe(catchError(this.formatErrors));
+  }
+
+  delete_goProd(path): Observable<any> {
+    return this.http.delete(
+      `${environment.go_prods}${path}`
+    ).pipe(catchError(this.formatErrors));
   }
 
 }

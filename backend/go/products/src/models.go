@@ -50,6 +50,15 @@ type ProductUsers struct {
 }
 
 
+// type FavoriteModel struct {
+// 	gorm.Model
+// 	Favorite     ArticleModel
+// 	FavoriteID   uint
+// 	FavoriteBy   ArticleUserModel
+// 	FavoriteByID uint
+// }
+
+
 func GetProductUsers(userModel Users) ProductUsers {
 	var productUsers ProductUsers
 	if userModel.ID == 0 {
@@ -71,6 +80,36 @@ func FindManyProducts() ([]ProductModel, int, error) {
 	err :=db.Find(&models).Error
 	return models,count, err
 }
+
+func (article ArticleModel) isFavoriteBy(user ArticleUserModel) bool {
+	db := common.GetDB()
+	var favorite FavoriteModel
+	db.Where(FavoriteModel{
+		FavoriteID:   article.ID,
+		FavoriteByID: user.ID,
+	}).First(&favorite)
+	return favorite.ID != 0
+}
+
+// func (article ArticleModel) favoriteBy(user ArticleUserModel) error {
+// 	db := common.GetDB()
+// 	var favorite FavoriteModel
+// 	err := db.FirstOrCreate(&favorite, &FavoriteModel{
+// 		FavoriteID:   article.ID,
+// 		FavoriteByID: user.ID,
+// 	}).Error
+// 	return err
+// }
+
+// func (article ArticleModel) unFavoriteBy(user ArticleUserModel) error {
+// 	db := common.GetDB()
+// 	err := db.Where(FavoriteModel{
+// 		FavoriteID:   article.ID,
+// 		FavoriteByID: user.ID,
+// 	}).Delete(FavoriteModel{}).Error
+// 	return err
+// }
+
 
 func SaveOne(data interface{}) error {
 	db := common.GetDB()

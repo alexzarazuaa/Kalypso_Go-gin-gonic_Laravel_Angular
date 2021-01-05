@@ -1,0 +1,8 @@
+------------------------------------------------- LINKS ---------------------------------------------------
+
+
+--> ASSOCIATIONS  : https://gorm.io/es_ES/docs/associations.html , https://doc.xuwenliang.com/docs/gorm/associations
+
+--> PRELOAD : https://gorm.io/docs/preload.html , https://doc.xuwenliang.com/docs/gorm/associations
+
+--> RELATED : https://doc.xuwenliang.com/docs/gorm/associations

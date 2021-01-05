@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 import { User, UserService } from '../core';
 
@@ -17,7 +18,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     // create form group using the form builder
     this.settingsForm = this.fb.group({
@@ -39,6 +41,7 @@ export class SettingsComponent implements OnInit {
   }
 
   logout() {
+    this.toastr.error('LogOut Succesfully');
     this.userService.purgeAuth();
     this.router.navigateByUrl('/');
   }

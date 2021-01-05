@@ -11,11 +11,40 @@
 }
 
 .home-page{
-  background-image: url(//d17ol771963kd3.cloudfront.net/assets/bg/1-59b00d663c47e1d9275ef49b685893a4.gif);
+  /* background-image: url(//d17ol771963kd3.cloudfront.net/assets/bg/1-59b00d663c47e1d9275ef49b685893a4.gif); */
+   background-color: #f1f1f1;
 }
 .banner{
   background-color: black;
 }
 
+div.scrollmenu {
+  background-color: #333;
+  overflow: auto;
+  white-space: nowrap;
+}
 
+div.scrollmenu a {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
 
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+.brands{
+
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+  font-size: 25px;
+  font-weight: bold;
+}

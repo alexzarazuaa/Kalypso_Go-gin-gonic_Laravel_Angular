@@ -17,6 +17,11 @@ export class ProductsService {
     return this.apiService.get('/products/');
   }// end_query
   
+  getAll_goProd(): Observable<Products[]> {
+    const params = {};
+    return this.apiService.get_goProd('/products/');
+  }// end_query
+  
 
   getOne(id): Observable<Products> {
     return this.apiService.get('/products/' + id)
@@ -29,6 +34,15 @@ export class ProductsService {
 
   destroy(slug) {
     return this.apiService.delete('/product/' + slug);
+  }
+
+
+  favorite(slug): Observable<Products> {
+    return this.apiService.post('/products/' + slug + '/favorite');
+  }
+
+  unfavorite(slug): Observable<Products> {
+    return this.apiService.delete('/products/' + slug + '/favorite');
   }
 
 }

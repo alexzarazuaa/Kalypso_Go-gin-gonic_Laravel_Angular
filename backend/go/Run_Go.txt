@@ -85,3 +85,11 @@ POST PRODUCTS
 -----------------------------------------------------  REDIS SERVER STOP -------------------------------------------
 
 sudo service redis-server stop
+
+
+
+------------------------------------------------- FIND ONE DEBUG QUERY -------------------------------------------------------
+
+--> https://gorm.io/docs/logger.html
+
+    db.Debug().Where(Condition).First(Model)

@@ -1,0 +1,9 @@
+<owl-carousel-o [options]="customOptions" (translated)="getPassedData($event)">
+
+    <ng-container *ngFor="let slide of dynamicSlides">
+      <ng-template carouselSlide [id]="slide.id">
+        <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title">
+      </ng-template>
+    </ng-container>
+  
+  </owl-carousel-o>
