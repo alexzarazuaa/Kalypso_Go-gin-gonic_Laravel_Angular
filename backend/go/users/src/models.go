@@ -85,16 +85,6 @@ func FindOneUser(condition interface{}) (Users, error) {
 	return model, err
 }
 
-
-
-func FindUser(condition interface{}) (Users, []string, error) {
-	db := common.GetDB()
-	var model Users
-	var algo []string
- 	err := db.Where(condition).First(&model).Error
-	return model, algo, err
-}
-
 // You could input an Users which will be saved in database returning with error info
 // 	if err := SaveOne(&userModel); err != nil { ... }
 func SaveOne(data interface{}) error {
@@ -117,7 +107,6 @@ func (model *Users) InsertToken(data interface{}) error {
 	err :=db.Model(&model).Update(data).Error
 	return err
 }
-
 
 // You could add a following relationship as userModel1 following userModel2
 // 	err = userModel1.following(userModel2)

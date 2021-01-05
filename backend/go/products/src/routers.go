@@ -2,8 +2,10 @@ package products
 
 import (
 	"fmt"
-	"time"
-	"strconv"
+	"sort"
+	// "reflect"
+	// "time"
+	// "strconv"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -12,90 +14,86 @@ import (
 )
 
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
-	router.GET("/", ProductList)
-	router.GET("/:slug", ProductRetrieve)
-	router.POST("/object/:key/:object/:point", Karma_redis)
-	router.PUT("/", Proof)
+	router.GET("/:slug", ProductList)
+	// router.PUT("/:types", Proof)
+
 }
 
 
+func ProductsRegister(router *gin.RouterGroup) {
+	router.POST("/:slug/favorite", ProductFavorite)
+	router.DELETE("/:slug/favorite", ProductUnfavorite)
+}
+
+// func Proof(c *gin.Context){
+// 	client := common.NewClient()
+// 	types := c.Param("types")
+// 	err_get, val := common.Get(types, client)
+// 	fmt.Println(err_get)
+// 	fmt.Println(val)
+// }
+
 //General function to karma in products and brands
-func Karma_redis(c *gin.Context){
+func Karma_redis( types string, id string, karma int) error{
 	client := common.NewClient()
-	key := c.Param("key")
-	object := c.Param("object")
-	point_str:=c.Param("point")
-	point, err_int:=strconv.Atoi(point_str)//string to int
-	 
-	if(err_int!=nil){
-		c.JSON(http.StatusBadRequest, gin.H{"error": err_int.Error()})
-		return
-	}
 
 	//obtain data(brands or products) from redis 
-	err_get, val := common.Get(key, client)
+	err_get, val := common.Get(types, client)
 	if err_get != nil {//If not exist data in redis we storege first brand or product
 
-		objects := map[string]int{ object: point }
-		err_SetMarshal:= SetMarshal(objects,key)//Object -> Byte and storage in redis
-		if(err_SetMarshal!= nil){//Any mistakes
-			c.JSON(http.StatusBadRequest, gin.H{"error": err_SetMarshal.Error()})
-			return
+		objects := map[string]int{ id: karma }
+		err_SetMarshal:= SetMarshal(objects,types)//Object -> Byte and storage in redis
+
+		if (err_SetMarshal!= nil){//Any mistakes
+			return err_SetMarshal
 		}
 
-	c.JSON(http.StatusOK, gin.H{"result": "okey_first_store_object_redis"})
-	return
+	return nil
 	}
 
 	//If exists data in redis 
 	objects := map[string]int{}
 	json.Unmarshal([]byte(val), &objects)
 
-	if((objects[object])==0){//If This brand or product not stored in redis
-		objects[object]=point
+	if ((objects[id])==0){//If This brand or product not stored in redis
+		objects[id]=karma
 	
 	}else{//If this brand or product is stored in redis
-		objects[object]+=point
+		objects[id]+=karma
 	}
 
 	//Then stored data in redis
-	err_SetMarshal:= SetMarshal(objects,key)
+	err_SetMarshal:= SetMarshal(objects,types)
 	if(err_SetMarshal!= nil){
-		c.JSON(http.StatusBadRequest, gin.H{"error": err_SetMarshal.Error()})
-		return
+		return err_SetMarshal
 	}
 
-	//At 10 minutes
-	// timeDelay := 600000 * time.Millisecond
+	// //At 10 minutes
+	// // timeDelay := 60000typytypess0 * time.Millisecond
 
-	// var endTime <-chan time.Time
+	// // var endTime <-chan time.Time
 	
-	// endTime = time.After(timeDelay)
+	// // endTime = time.After(timeDelay)
 
-    // for {
-    //     select {
-    //     case <-endTime:
+    // // for {
+    // //     select {
+    // //     case <-endTime:
 		
-	// 		//We pass redis(products & brands) in database
-	// 		for key, element := range objects {
-	// 			err_update := UpdateBrands(key, element)
+	// // 		//We pass redis(products & brands) in database
+	// // 		for key, element := range objects {
+	// // 			err_update := UpdateBrands(key, element)
 
-	// 			if (err_update!=nil){
-	// 				c.JSON(http.StatusBadRequest, gin.H{"error": err_update.Error()})
-	// 				return
-	// 			}
-	// 		}
+	// // 			if (err_update!=nil){
+	// // 				c.JSON(http.StatusBadRequest, gin.H{"error": err_update.Error()})
+	// // 				return
+	// // 			}
+	// // 		}
 		
-    //     }
-	// }
-	c.JSON(http.StatusOK, gin.H{"result": objects})
-			return
+    // //     }
+	// // }
+		return nil
 }
 
-func Proof(c *gin.Context){
- 
-
-}
 func SetMarshal(objects map[string]int, key string )  error {
 	client := common.NewClient()
 
@@ -113,15 +111,6 @@ func SetMarshal(objects map[string]int, key string )  error {
 	return nil
 }
 
-func ProductList(c *gin.Context) {
-	productModels, modelCount, err := FindManyProducts()
-	if err != nil {
-		c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
-		return
-	}
-	serializer := ProductsSerializer{c, productModels}
-	c.JSON(http.StatusOK, gin.H{"products": serializer.Response(), "productsCount": modelCount})
-}
 
 func ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
@@ -141,45 +130,134 @@ func ProductFeed(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"products": serializer.Response(), "productsCount": modelCount})
 }
 
-
-// func ArticleFavorite(c *gin.Context) {
-// 	slug := c.Param("slug")
-// 	articleModel, err := FindOneArticle(&ArticleModel{Slug: slug})
-// 	if err != nil {
-// 		c.JSON(http.StatusNotFound, common.NewError("articles", errors.New("Invalid slug")))
-// 		return
-// 	}
-// 	myUserModel := c.MustGet("my_user_model").(users.UserModel)
-// 	err = articleModel.favoriteBy(GetArticleUserModel(myUserModel))
-// 	serializer := ArticleSerializer{c, articleModel}
-// 	c.JSON(http.StatusOK, gin.H{"article": serializer.Response()})
-// }
-
-// func ArticleUnfavorite(c *gin.Context) {
-// 	slug := c.Param("slug")
-// 	articleModel, err := FindOneArticle(&ArticleModel{Slug: slug})
-// 	if err != nil {
-// 		c.JSON(http.StatusNotFound, common.NewError("articles", errors.New("Invalid slug")))
-// 		return
-// 	}
-// 	myUserModel := c.MustGet("my_user_model").(users.UserModel)
-// 	err = articleModel.unFavoriteBy(GetArticleUserModel(myUserModel))
-// 	serializer := ArticleSerializer{c, articleModel}
-// 	c.JSON(http.StatusOK, gin.H{"article": serializer.Response()})
-// }
-
-func ProductRetrieve(c *gin.Context) {
+func ProductFavorite(c *gin.Context) {
 	slug := c.Param("slug")
-	if slug == "feed" {
-		ProductFeed(c)
+	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
+	if err != nil {
+		c.JSON(http.StatusNotFound, common.NewError("protucts", errors.New("Invalid slug")))
 		return
 	}
+	myUserModel := c.MustGet("my_user_model").(Users)
+	err = productModel.favoriteBy(GetProductUsers(myUserModel))
+
+
+	err_karma:= Karma_redis("product", productModel.Slug, 10)
+	if err_karma != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	return
+	}
+	serializer := ProductSerializer{c, productModel}
+	c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
+}
+
+func ProductUnfavorite(c *gin.Context) {
+	slug := c.Param("slug")
 	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
 	if err != nil {
 		c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid slug")))
 		return
 	}
+	myUserModel := c.MustGet("my_user_model").(Users)
+	err = productModel.unFavoriteBy(GetProductUsers(myUserModel))
+
+	err_karma:= Karma_redis("product", productModel.Slug, -10)
+	if err_karma != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	return
+	}	
 	serializer := ProductSerializer{c, productModel}
 	c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
 }
+
+func ProductList(c *gin.Context) {
+	slug := c.Param("slug")
+
+
+	if (slug=="list"){
+		favorited := c.Query("favorited")
+		limit := c.Query("limit")
+		offset := c.Query("offset")
+	
+		productModels, modelCount, err := FindManyProducts(limit, offset, favorited)
+		if err != nil {
+			c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
+			return
+		}
+		serializer := ProductsSerializer{c, productModels}
+		c.JSON(http.StatusOK, gin.H{"products": serializer.Response(), "productsCount": modelCount})
+	} else if (slug=="home"){
+
+		client := common.NewClient()
+		err_get, val := common.Get("brands", client)
+		if err_get != nil {
+	
+			//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})	
+			}
+	
+			objects := map[string]int{}
+
+			json.Unmarshal([]byte(val), &objects)
+
+			type object struct {
+				Key   string
+				Value int
+			}
+		
+			var objectsort []object
+			for k, v := range objects {
+				objectsort = append(objectsort, object{k, v})
+			}
+
+		
+			sort.Slice(objectsort, func(i, j int) bool {
+				return objectsort[i].Value > objectsort[j].Value
+			})
+
+			keys := make([]string, 0)
+
+			for k := range objectsort {
+				keys= append(keys,objectsort[k].Key )
+			}
+
+			c.JSON(http.StatusOK, gin.H{"brands": keys})
+
+
+	}else{
+		if slug == "feed" {
+			ProductFeed(c)
+			return
+		}
+		productModel, err := FindOneProduct(&ProductModel{Slug: slug})
+		if err != nil {
+			c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid slug")))
+			return
+		}
+	
+		err_karma:= Karma_redis("product", productModel.Slug, 5)
+		if err_karma != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+		return
+		}
+	
+		serializer := ProductSerializer{c, productModel}
+		c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
+	}
+	
+}
+
+func BrandsHome(c *gin.Context){
+	client := common.NewClient()
+	err_get, val := common.Get("brands", client)
+	if err_get != nil {
+
+		//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})
+
+
+
+		}
+
+		fmt.Println(val)
+	}
 

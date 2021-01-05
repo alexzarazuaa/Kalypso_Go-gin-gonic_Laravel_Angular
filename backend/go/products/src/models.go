@@ -19,14 +19,14 @@ type ProductModel struct {
 	Rating 		 int     `gorm:"column:rating"`
 	Category 	 string  `gorm:"column:category"`
 	Author      ProductUsers
-	AuthorID    uint
+	AuthorID    uint 
 }
 
-type Brands struct {
-	gorm.Model
-	Name         string `gorm:"unique_index"`
-	Karma     	 int  `gorm:"column:Karma"`
-}
+// type Brands struct {
+// 	gorm.Model
+// 	Name         string `gorm:"unique_index"`
+// 	Karma     	 int  `gorm:"column:Karma"`
+// }
 
 type Users struct {
 	ID           uint    `gorm:"primary_key"`
@@ -47,16 +47,17 @@ type ProductUsers struct {
 	Users      Users
 	UsersID    uint
 	ProductModels  []ProductModel  `gorm:"ForeignKey:AuthorID"`
+	FavoriteModels []FavoriteModel `gorm:"ForeignKey:FavoriteByID"`
 }
 
 
-// type FavoriteModel struct {
-// 	gorm.Model
-// 	Favorite     ArticleModel
-// 	FavoriteID   uint
-// 	FavoriteBy   ArticleUserModel
-// 	FavoriteByID uint
-// }
+type FavoriteModel struct {
+	gorm.Model
+	Favorite     ProductModel
+	FavoriteID   uint
+	FavoriteBy   ProductUsers
+	FavoriteByID uint
+}
 
 
 func GetProductUsers(userModel Users) ProductUsers {
@@ -72,43 +73,81 @@ func GetProductUsers(userModel Users) ProductUsers {
 	return productUsers
 }
 
-func FindManyProducts() ([]ProductModel, int, error) {
+func FindManyProducts(limit, offset, favorited string) ([]ProductModel, int, error) {
 	db := common.GetDB()
 	var count int
 	var models []ProductModel
+	tx := db.Begin()
+
+	offset_int, err := strconv.Atoi(offset)
+	if err != nil {
+		offset_int = 0
+	}
+
+	limit_int, err := strconv.Atoi(limit)
+	if err != nil {
+		limit_int = 20
+	}
+	if favorited != "" {
+		var userModel Users
+		tx.Where(Users{Username: favorited}).First(&userModel)
+		productUserModel := GetProductUsers(userModel)
+		if productUserModel.ID != 0 {
+			var favoriteModels []FavoriteModel
+			tx.Where(FavoriteModel{
+				FavoriteByID: productUserModel.ID,
+			}).Offset(offset_int).Limit(limit_int).Find(&favoriteModels)
+
+			count = tx.Model(&productUserModel).Association("FavoriteModels").Count()
+			for _, favorite := range favoriteModels {
+				var model ProductModel
+				tx.Model(&favorite).Related(&model, "Favorite")
+				models = append(models, model)
+			}
+		}
+	}
 	db.Model(&models).Count(&count)
-	err :=db.Find(&models).Error
+	err =db.Find(&models).Error
 	return models,count, err
 }
 
-func (article ArticleModel) isFavoriteBy(user ArticleUserModel) bool {
+func (product ProductModel) favoritesCount() uint {
+	db := common.GetDB()
+	var count uint
+	db.Model(&FavoriteModel{}).Where(FavoriteModel{
+		FavoriteID: product.ID,
+	}).Count(&count)
+	return count
+}
+
+func (product ProductModel) isFavoriteBy(user ProductUsers) bool {
 	db := common.GetDB()
 	var favorite FavoriteModel
 	db.Where(FavoriteModel{
-		FavoriteID:   article.ID,
+		FavoriteID:   product.ID,
 		FavoriteByID: user.ID,
 	}).First(&favorite)
 	return favorite.ID != 0
 }
 
-// func (article ArticleModel) favoriteBy(user ArticleUserModel) error {
-// 	db := common.GetDB()
-// 	var favorite FavoriteModel
-// 	err := db.FirstOrCreate(&favorite, &FavoriteModel{
-// 		FavoriteID:   article.ID,
-// 		FavoriteByID: user.ID,
-// 	}).Error
-// 	return err
-// }
+func (product ProductModel) favoriteBy(user ProductUsers) error {
+	db := common.GetDB()
+	var favorite FavoriteModel
+	err := db.FirstOrCreate(&favorite, &FavoriteModel{
+		FavoriteID:   product.ID,
+		FavoriteByID: user.Users.ID,
+	}).Error
+	return err
+}
 
-// func (article ArticleModel) unFavoriteBy(user ArticleUserModel) error {
-// 	db := common.GetDB()
-// 	err := db.Where(FavoriteModel{
-// 		FavoriteID:   article.ID,
-// 		FavoriteByID: user.ID,
-// 	}).Delete(FavoriteModel{}).Error
-// 	return err
-// }
+func (product ProductModel) unFavoriteBy(user ProductUsers) error {
+	db := common.GetDB()
+	err := db.Where(FavoriteModel{
+		FavoriteID:   product.ID,
+		FavoriteByID: user.Users.ID,
+	}).Delete(FavoriteModel{}).Error
+	return err
+}
 
 
 func SaveOne(data interface{}) error {
@@ -156,8 +195,8 @@ func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, 
 	return models, count, err
 }
 
-func UpdateBrands(name string, karma int) (error) {
-	db := common.GetDB()
-	err:= db.Model(Brands{}).Where("name = ?", name).Updates(Brands{Karma: karma}).Error
-	return err
-}
+// func UpdateBrands(name string, karma int) (error) {
+// 	db := common.GetDB()
+// 	err:= db.Model(Brands{}).Where("name = ?", name).Updates(Brands{Karma: karma}).Error
+// 	return err
+// }

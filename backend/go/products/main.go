@@ -11,7 +11,9 @@ import (
 
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&products.ProductModel{})
-	db.AutoMigrate(&products.Brands{})
+
+	db.AutoMigrate(&products.FavoriteModel{})
+	// db.AutoMigrate(&products.Brands{})
 
 }
 
@@ -31,6 +33,10 @@ func main() {
 
 	v1.Use(products.AuthMiddleware(false))
 	products.ProductsAnonymousRegister(v1.Group("/products"))
+
+
+	v1.Use(products.AuthMiddleware(true))
+	products.ProductsRegister(v1.Group("/products"))
 
 	// testAuth := r.Group("/api/ping")
 	// testAuth.GET("/", func(c *gin.Context) {

@@ -48,7 +48,10 @@ class Products extends Controller
         // print_r($request->product['name']);
 
         $product = new Product();
-        $product -> name = $request -> product['name'];
+        $name = $request -> product['name'];
+
+        $product -> slug = str_slug($name);  
+        $product -> name = $name;
         $product -> brand = $request -> product['brand'];
         // $product -> img = $request -> product['img'];
         $product -> description = $request -> product['description'];
