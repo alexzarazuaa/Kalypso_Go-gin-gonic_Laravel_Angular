@@ -8,7 +8,8 @@ import { concatMap ,  tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-favorite-button',
-  templateUrl: './favorite-button.component.html'
+  templateUrl: './favorite-button.component.html',
+  styleUrls: ['./favorite-button.component.css']
 })
 export class FavoriteButtonComponent {
   constructor(
@@ -39,10 +40,11 @@ export class FavoriteButtonComponent {
           return this.productsService.favorite(this.product.slug)
           .pipe(tap(
             data => {
-              console.log('jajaj')
+              this.toastr.success('PRODUCT FAVORITE');
               this.isSubmitting = false;
-              this.toastr.success('PRODUCT FAVORITE')
+              // document.getElementById('like').style.color = "red";
               this.toggle.emit(true);
+     
             },
             err => this.isSubmitting = false
           ));
@@ -52,8 +54,8 @@ export class FavoriteButtonComponent {
           return this.productsService.unfavorite(this.product.slug)
           .pipe(tap(
             data => {
+              this.toastr.success('FAVORITE DELETE');
               this.isSubmitting = false;
-              this.toastr.success('FAVORITE DELETE')
               this.toggle.emit(false);
             },
             err => this.isSubmitting = false
