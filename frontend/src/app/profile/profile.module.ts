@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { ProfileArticlesComponent } from './profile-articles.component';
+import { ProfileProductsComponent } from './profile-products.component';
 import { ProfileComponent } from './profile.component';
 import { ProfileFavoritesComponent } from './profile-favorites.component';
 import { ProfileResolver } from './profile-resolver.service';
@@ -14,7 +14,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
     ProfileRoutingModule
   ],
   declarations: [
-    ProfileArticlesComponent,
+    ProfileProductsComponent,
     ProfileComponent,
     ProfileFavoritesComponent
   ],

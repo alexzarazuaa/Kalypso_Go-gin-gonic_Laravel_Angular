@@ -12,6 +12,7 @@ import {
   SharedModule
 } from './shared';
 import { SliderComponent } from './shared/slider-helpers/slider.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +29,7 @@ import { from } from 'rxjs';
     AppRoutingModule,
     ProductModule,
     CarouselModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ToastrModule.forRoot()
   ],

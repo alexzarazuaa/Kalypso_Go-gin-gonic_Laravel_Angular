@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Errors, UserService } from '../core';
@@ -52,9 +53,16 @@ export class AuthComponent implements OnInit {
       .attemptAuth(this.authType, credentials)
       .subscribe(
         data => {
-          console.log(data)
+          console.log(data['user'].type == 'admin')
+          const route = this.router.navigateByUrl;
           this.toastr.success('Logged in');
-          setTimeout(() => { this.router.navigateByUrl('/') }, 1000);
+          if(data['user'].type == 'admin'){
+            route('/admin')
+          }else{
+            route('/profile/' + data['user'].username)
+          }
+        
+          
         },
         err => {
           this.toastr.error(err.error, 'Invalid credentials')
