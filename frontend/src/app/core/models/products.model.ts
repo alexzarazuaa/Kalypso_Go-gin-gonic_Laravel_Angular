@@ -7,4 +7,5 @@ export interface Products {
     desc:string,
     rating: number;
     Category: number;
+    favorited: boolean;
 }// Products

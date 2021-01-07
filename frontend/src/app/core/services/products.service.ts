@@ -54,14 +54,14 @@ export class ProductsService {
 
 
   favorite(slug): Observable<Products> {
-    return this.apiService.post('/products/' + slug + '/favorite');
+    return this.apiService.post_goProd('/' + slug + '/favorite');
+
+    //http://localhost:3000/api/products/levis-crop-jeans/favorite
   }
 
   unfavorite(slug): Observable<Products> {
-    return this.apiService.delete('/products/' + slug + '/favorite');
+    return this.apiService.delete_goProd('/' + slug + '/favorite');
   }
 
 }
-
-
 

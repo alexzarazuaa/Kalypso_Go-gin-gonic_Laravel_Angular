@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
-import { Article, ArticlesService, UserService } from '../../core';
+import { Products, ProductsService, UserService } from '../../core';
 import { of } from 'rxjs';
 import { concatMap ,  tap } from 'rxjs/operators';
 
@@ -11,17 +12,19 @@ import { concatMap ,  tap } from 'rxjs/operators';
 })
 export class FavoriteButtonComponent {
   constructor(
-    private articlesService: ArticlesService,
+    private productsService: ProductsService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {}
 
-  @Input() article: Article;
+  @Input() product: Products;
   @Output() toggle = new EventEmitter<boolean>();
   isSubmitting = false;
 
   toggleFavorite() {
     this.isSubmitting = true;
+    console.log(this.product);
 
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
@@ -31,23 +34,26 @@ export class FavoriteButtonComponent {
           return of(null);
         }
 
-        // Favorite the article if it isn't favorited yet
-        if (!this.article.favorited) {
-          return this.articlesService.favorite(this.article.slug)
+        // Favorite the products if it isn't favorited yet
+        if (!this.product.favorited) {
+          return this.productsService.favorite(this.product.slug)
           .pipe(tap(
             data => {
+              console.log('jajaj')
               this.isSubmitting = false;
+              this.toastr.success('PRODUCT FAVORITE')
               this.toggle.emit(true);
             },
             err => this.isSubmitting = false
           ));
 
-        // Otherwise, unfavorite the article
+        // Otherwise, unfavorite the products
         } else {
-          return this.articlesService.unfavorite(this.article.slug)
+          return this.productsService.unfavorite(this.product.slug)
           .pipe(tap(
             data => {
               this.isSubmitting = false;
+              this.toastr.success('FAVORITE DELETE')
               this.toggle.emit(false);
             },
             err => this.isSubmitting = false
