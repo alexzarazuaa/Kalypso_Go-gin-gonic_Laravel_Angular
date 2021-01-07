@@ -15,9 +15,9 @@ export class ProductslistComponent implements OnInit {
 
   ngOnInit() {
      this.products = [];
-    this.productsService.getAll().subscribe(data => {
+    this.productsService.getAll_goProd().subscribe(data => {
       this.products = data;
-      console.log(this.products,'products laravel');
+      console.log(this.products);
     })
   }
 
@@ -25,7 +25,7 @@ export class ProductslistComponent implements OnInit {
 
 
 /**
- * NG ON INIT TESTING DATA GO
+ * NG ON INIT TESTING DATA LARAVEL
  */
 
 // ngOnInit() {

@@ -7,5 +7,5 @@ export const environment = {
   production: false,
   laravel: '/api',
   go:'http://0.0.0.0:3002/api',
-  go_prods:'http://0.0.0.0:3000/api'
+  go_prods:'http://0.0.0.0:3000/api/products',
 };

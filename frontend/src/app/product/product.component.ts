@@ -24,7 +24,7 @@ export class ProductComponent implements OnInit {
     // Retreive the prefetched product
     this.route.data.subscribe(
       (data: { product: Products; }) => {
-        console.log(data)
+        console.log(data.product,'detail')
         this.product = data.product;
       }
     );

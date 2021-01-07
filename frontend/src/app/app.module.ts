@@ -14,6 +14,7 @@ import {
 import { SliderComponent } from './shared/slider-helpers/slider.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 import { from } from 'rxjs';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { from } from 'rxjs';
     AppRoutingModule,
     ProductModule,
     CarouselModule,
+    HttpClientModule,
     ToastrModule.forRoot()
   ],
   providers: [],

@@ -104,4 +104,10 @@ export class ApiService {
     ).pipe(catchError(this.formatErrors));
   }
 
+  // goBrands(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+  //   return this.http.get(`${environment.brands}${path}`, { params })
+  //     .pipe(catchError(this.formatErrors));
+  // }
+
+
 }

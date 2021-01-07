@@ -48,7 +48,7 @@ http://0.0.0.0:3000/api/products/slug
 LOGIN
 
 --> 
-http://0.0.0.0:3000/api/users/login
+http://0.0.0.0:3002/api/users/login
 
 ** Authorization Token ... **
 

@@ -8,7 +8,7 @@ import { ProductsResolver } from './product-resolver.service';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: ':slug',
     component: ProductComponent,
     resolve:{
         product : ProductsResolver,

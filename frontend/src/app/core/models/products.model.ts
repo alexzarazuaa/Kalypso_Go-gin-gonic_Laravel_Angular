@@ -1,6 +1,6 @@
 export interface Products {
     id_user: number;
-    slug:number;
+    slug:string;
     name: string;
     brand: string;
     image:string,

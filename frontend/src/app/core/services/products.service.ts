@@ -16,11 +16,27 @@ export class ProductsService {
     const params = {};
     return this.apiService.get('/products/');
   }// end_query
+
+
+  //GET PRODUCTS BY BACKEND GO
   
   getAll_goProd(): Observable<Products[]> {
     const params = {};
-    return this.apiService.get_goProd('/products/');
+    return this.apiService.get_goProd('/list')
+    .pipe(map(data => {
+      console.log('data in service',data.products);
+      return data.products;
+    }));
   }// end_query
+
+  getOneGO(slug): Observable<Products> {
+    return this.apiService.get_goProd('/' + slug)
+      .pipe(map(data => {
+        console.log('slug detail product GO',data);
+        return data;
+      }));
+  }// end_get
+
   
 
   getOne(id): Observable<Products> {
@@ -32,8 +48,8 @@ export class ProductsService {
   }// end_get
 
 
-  destroy(slug) {
-    return this.apiService.delete('/product/' + slug);
+  destroy(id) {
+    return this.apiService.delete('/product/' + id);
   }
 
 
