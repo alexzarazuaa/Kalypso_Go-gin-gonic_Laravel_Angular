@@ -2,7 +2,7 @@
 
 
   <app-slider></app-slider>
-  
+
   <div class="banner" *appShowAuthed="false">
     <div class="container">
       <h1 class="logo-font">KALYPSO</h1>
@@ -13,51 +13,17 @@
 
 
   <div class="container page">
-    <div class="row">
 
-      <div class="col-md-9">
-        <div class="feed-toggle">
-          <ul class="nav nav-pills outline-active">
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': listConfig.type === 'feed'}" (click)="setListTo('feed')">
-                Your Feed
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="{'active': listConfig.type === 'all' && !listConfig.filters.tag}"
-                (click)="setListTo('all')">
-                Global Feed
-              </a>
-            </li>
-            <li class="nav-item" [hidden]="!listConfig.filters.tag">
-              <a class="nav-link active">
-                <i class="ion-pound"></i> {{ listConfig.filters.tag }}
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- <app-product-list [config]="listConfig"></app-product-list>  -->
-        <!-- <app-products></app-products> -->
-
-        <br>
-        <br>
-        <br>
-        <a class="brands"> NUESTRAS MARCAS</a>
-
-        <br>
-        <br>
-        <div class="scrollmenu">
-          <a  *ngFor="let brand of brands" (click)="FilterBrand(brand)"> {{brand}} </a>
-        </div>
-
-
-
-
+    <div class="banner_brands">
+      <div class="container">
+        <h1 class="logo-font"> MARCAS MÁS POPULARES</h1>
       </div>
-
-
-
     </div>
+
+    <br>
+    <div class="scrollmenu">
+      <a *ngFor="let brand of brands" (click)="FilterBrand(brand)"> {{brand}} </a>
+    </div>
+
   </div>
 </div>
