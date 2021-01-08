@@ -10,7 +10,8 @@ import { Products, ProductsService } from '../core';
 export class ShopComponent implements OnInit {
 
     constructor(
-        private productsService: ProductsService) { }
+        private productsService: ProductsService) {; // should log out 'hello'
+      }
     
     
         products : Products[];

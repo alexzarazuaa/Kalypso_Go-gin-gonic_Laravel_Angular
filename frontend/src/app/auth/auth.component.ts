@@ -54,13 +54,16 @@ export class AuthComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data['user'].type == 'admin')
-          const route = this.router.navigateByUrl;
+      
           this.toastr.success('Logged in');
-          if(data['user'].type == 'admin'){
-            route('/admin')
-          }else{
-            route('/profile/' + data['user'].username)
-          }
+
+          this.router.navigateByUrl('/')
+
+          // if(data['user'].type == 'admin'){
+          //   this.router.navigateByUrl('/admin')
+          // }else{
+          //   this.router.navigateByUrl('/')
+          // }
         
           
         },

@@ -21,7 +21,7 @@ go get github.com/go-sql-driver/mysql
 
 REGISTER
 --> POST 
-http://0.0.0.0:3000/api/users
+http://0.0.0.0:3002/api/users
 
 {
   "user":{
@@ -33,21 +33,27 @@ http://0.0.0.0:3000/api/users
 
 
 ------------------------------------------------------ GENERAL LIST ------------------------------------
-http://0.0.0.0:3000/api/products/list
 -> all
 
-http://0.0.0.0:3000/api/products/home 
+http://0.0.0.0:3000/api/products/list
+
+
  -> brands
 
+http://0.0.0.0:3000/api/products/home 
+
+
+-> only-one
 
 http://0.0.0.0:3000/api/products/slug
--> only-one
+
 //////////////////////////////////////////////////
 
 
 LOGIN
 
 --> 
+
 http://0.0.0.0:3002/api/users/login
 
 ** Authorization Token ... **
@@ -66,30 +72,32 @@ POST PRODUCTS
 ** Authorization Token ... **
 
 --> 
-http://0.0.0.0:3000/api/buy_products/
+http://0.0.0.0:8001/api/buy_products/
 
 {
-  "buy_product": {
-    "Name": "rthhjhh",
-    "brand":"jajajajaja",
-    "img":"sdfsfd",
-    "description": "Ever wonder how?",
-    "rating": 40,
-    "category":"jajajjajajaaj"
+  "product": {
+    
+    "name": "Levis CROP JEANS",
+    "brand":"Levis",
+    "description": "cono cultural para varias generaciones, lleva décadas definiendo el estilo.",
+    "rating": 80,
+    "category":"Vaqueros"
+
   }
 }
 
-
 --> 
-http://0.0.0.0:3000/api/products
+
+http://0.0.0.0:8001/api/products
+
 {
   "product": {
-    "slug":"jajajajaja",
-    "name": "How to train your dragon",
-    "brand":"jajajajaja",
-    "description": "Ever wonder how?",
-    "rating": 40,
-    "category":"jajajjajajaaj"
+    
+    "name": "Levis CROP JEANS",
+    "brand":"Levis",
+    "description": "cono cultural para varias generaciones, lleva décadas definiendo el estilo.",
+    "rating": 80,
+    "category":"Vaqueros"
 
   }
 }

@@ -149,7 +149,6 @@ func (product ProductModel) unFavoriteBy(user ProductUsers) error {
 	return err
 }
 
-
 func SaveOne(data interface{}) error {
 	db := common.GetDB()
 	err := db.Save(data).Error
@@ -193,6 +192,13 @@ func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, 
 	}
 	err = tx.Commit().Error
 	return models, count, err
+}
+
+func ProductsbyBrands(condition interface{}) ([]ProductModel, error) {
+	db := common.GetDB()
+	var model []ProductModel
+	err :=db.Where(condition).Find(&model).Error
+	return model, err
 }
 
 // func UpdateBrands(name string, karma int) (error) {

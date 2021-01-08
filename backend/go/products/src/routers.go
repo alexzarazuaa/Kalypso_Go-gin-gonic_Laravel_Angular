@@ -3,6 +3,7 @@ package products
 import (
 	"fmt"
 	"sort"
+	"strings"
 	// "reflect"
 	// "time"
 	// "strconv"
@@ -16,7 +17,6 @@ import (
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
 	// router.PUT("/:types", Proof)
-
 }
 
 
@@ -36,10 +36,13 @@ func ProductsRegister(router *gin.RouterGroup) {
 //General function to karma in products and brands
 func Karma_redis( types string, id string, karma int) error{
 	client := common.NewClient()
+	fmt.Println("-------------------------------------")
 
 	//obtain data(brands or products) from redis 
 	err_get, val := common.Get(types, client)
 	if err_get != nil {//If not exist data in redis we storege first brand or product
+
+		fmt.Println("NO HAY NADAAA")
 
 		objects := map[string]int{ id: karma }
 		err_SetMarshal:= SetMarshal(objects,types)//Object -> Byte and storage in redis
@@ -47,6 +50,9 @@ func Karma_redis( types string, id string, karma int) error{
 		if (err_SetMarshal!= nil){//Any mistakes
 			return err_SetMarshal
 		}
+
+
+		fmt.Println(" HAY NADAAA")
 
 	return nil
 	}
@@ -111,7 +117,6 @@ func SetMarshal(objects map[string]int, key string )  error {
 	return nil
 }
 
-
 func ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
 	offset := c.Query("offset")
@@ -141,9 +146,16 @@ func ProductFavorite(c *gin.Context) {
 	err = productModel.favoriteBy(GetProductUsers(myUserModel))
 
 
-	err_karma:= Karma_redis("product", productModel.Slug, 10)
-	if err_karma != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	err_karmaProd:= Karma_redis("product", productModel.Slug, 10)
+
+	if err_karmaProd != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaProd.Error()})
+	return
+	}
+
+	err_karmaBrd:= Karma_redis("brands", productModel.Brand, 5)
+	if err_karmaBrd != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaBrd.Error()})
 	return
 	}
 	serializer := ProductSerializer{c, productModel}
@@ -171,7 +183,6 @@ func ProductUnfavorite(c *gin.Context) {
 
 func ProductList(c *gin.Context) {
 	slug := c.Param("slug")
-
 
 	if (slug=="list"){
 		favorited := c.Query("favorited")
@@ -223,6 +234,34 @@ func ProductList(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"brands": keys})
 
 
+	}else if (strings.Contains(slug, "brands")){
+		brands:= strings.Split(slug, ",")
+		brand:=brands[1]
+
+		products, err := ProductsbyBrands(&ProductModel{Brand: brand})
+
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+		}
+
+		product := make([]ProductModel, 0)
+
+		for i := range products {
+			product= append(product,products[i])
+		}
+
+
+		err_karmaBrd:= Karma_redis("brands", brand, 5)
+		if err_karmaBrd != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaBrd.Error()})
+		return
+		}
+	
+
+		c.JSON(http.StatusOK, gin.H{"product": product})
+				
 	}else{
 		if slug == "feed" {
 			ProductFeed(c)
