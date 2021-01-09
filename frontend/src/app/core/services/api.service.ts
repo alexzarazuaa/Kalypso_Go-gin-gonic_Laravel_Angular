@@ -68,6 +68,12 @@ export class ApiService {
       JSON.stringify(body),
     ).pipe(catchError(this.formatErrors));
   }
+  put_Go(path: string, body: Object = {}): Observable<any> {
+    return this.http.put(
+      `${environment.go}${path}`,
+      JSON.stringify(body)
+    ).pipe(catchError(this.formatErrors));
+  }
 
 
   delete_go(path): Observable<any> {

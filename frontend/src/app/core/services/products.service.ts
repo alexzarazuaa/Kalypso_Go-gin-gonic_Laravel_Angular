@@ -63,5 +63,21 @@ export class ProductsService {
     return this.apiService.delete_goProd('/' + slug + '/favorite');
   }
 
+  // SAVE PRODUCT FOR EDITOR
+
+  save(product): Observable<Products> {
+    // If we're updating an existing product
+    if (product.slug) {
+      return this.apiService.put('/products/' + product.slug, {product: product})
+        .pipe(map(data => data.product));
+
+    // Otherwise, create a new product
+    } else {
+      return this.apiService.post('/products/', {product: product})
+        .pipe(map(data => data.product));
+    }
+  }
+
+
 }
 
