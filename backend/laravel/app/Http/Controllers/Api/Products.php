@@ -99,7 +99,20 @@ class Products extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        if(!$product) return response() -> json('Product Not Found');
+
+        $product -> slug = str_slug($request -> product['name']);  
+        $product -> name = $request -> product['name'];;
+        $product -> brand = $request -> product['brand'];
+        $product -> description = $request -> product['description'];
+        $product -> rating = $request -> product['rating'];
+        $product -> category = $request -> product['category'];
+
+    
+        $product -> save();
+
+        return response() -> json($product);
     }
 
     /**
@@ -108,9 +121,9 @@ class Products extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $Products = Product::find($id);
+        $Products = Product::find($slug);
         
         if(!$Products) return response() -> json('Product not Found');
 

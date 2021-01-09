@@ -48,9 +48,6 @@ export class ProductsService {
   }// end_get
 
 
-  destroy(id) {
-    return this.apiService.delete('/product/' + id);
-  }
 
 
   favorite(slug): Observable<Products> {
@@ -76,7 +73,16 @@ export class ProductsService {
       return this.apiService.post('/products/', {product: product})
         .pipe(map(data => data.product));
     }
+
   }
+
+  destroy(slug) {
+    return this.apiService.delete('/product/' + slug);
+  }
+
+
+
+ 
 
 
 }

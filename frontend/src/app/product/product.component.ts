@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Products, UserService, User } from '../core';
+import { ActivatedRoute ,Router} from '@angular/router';
+import { Products,ProductsService, UserService, User } from '../core';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -11,6 +12,9 @@ import { Products, UserService, User } from '../core';
 export class ProductComponent implements OnInit {
 
   product: Products;
+  productsService : ProductsService;
+  
+
   currentUser: User;
   canModify: boolean;
   isSubmitting = false;
@@ -18,6 +22,8 @@ export class ProductComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -36,5 +42,17 @@ export class ProductComponent implements OnInit {
 
       }
     );
+  }
+
+  deleteProduct() {
+    this.isDeleting = true;
+    console.log('click ---->   ',this.product['product'].slug);
+    this.productsService.destroy(this.product['product'].slug)
+      .subscribe(
+        success => {
+          this.toastr.success('Producto Eliminado', 'Eliminado');
+          this.router.navigateByUrl('/');
+        }
+      );
   }
 }
