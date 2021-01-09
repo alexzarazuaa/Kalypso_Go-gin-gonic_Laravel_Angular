@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-md-10 offset-md-1 col-xs-12">
 
+
         <app-list-errors [errors]="errors"></app-list-errors>
 
         <form [formGroup]="productForm">
@@ -10,14 +11,14 @@
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
-                formControlName="Pname"
+                formControlName="name"
                 type="text"
                 placeholder="Product Name" />
             </fieldset>
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
-                formControlName="Pbrand"
+                formControlName="brand"
                 type="text"
                 placeholder="Product Brand" />
             </fieldset>
@@ -32,7 +33,7 @@
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
-                formControlName="Prating"
+                formControlName="rating"
                 type="number"
                 placeholder="Product Rating" />
             </fieldset>
@@ -40,7 +41,7 @@
 
             <fieldset class="form-group">
               <input class="form-control form-control-lg"
-                formControlName="Pcategory"
+                formControlName="category"
                 type="text"
                 placeholder="Product Category" />
             </fieldset>

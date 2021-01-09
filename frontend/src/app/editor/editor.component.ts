@@ -23,12 +23,13 @@ export class EditorComponent implements OnInit {
     private toastr: ToastrService
   ) {
     // use the FormBuilder to create a form group
+
     this.productForm = this.fb.group({
-      Pname: '',
-      Pbrand:'',
+      name: '',
+      brand:'',
       description: '',
-      Prating:'',
-      Pcategory:''
+      rating:'',
+      category:''
     });
   }
 

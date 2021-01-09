@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\RealWorld\Transformers\BuyProductTransformer;
+use App\Http\Requests\Api\CreateProduct;
 use App\Product;
 
 
@@ -43,17 +44,11 @@ class Products extends Controller
     public function store(Request $request)
     {
     
-        // echo($request);
-        // echo("-----------------");
-        // print_r($request->product['name']);
-
         $product = new Product();
-        $name = $request -> product['name'];
-
-        $product -> slug = str_slug($name);  
-        $product -> name = $name;
+        // $name = $request -> product['name'];
+        $product -> slug = str_slug($request -> product['name']);  
+        $product -> name = $request -> product['name'];;
         $product -> brand = $request -> product['brand'];
-        // $product -> img = $request -> product['img'];
         $product -> description = $request -> product['description'];
         $product -> rating = $request -> product['rating'];
         $product -> category = $request -> product['category'];
@@ -62,7 +57,6 @@ class Products extends Controller
         $product -> save();
 
         return response() -> json($product);
-         //return $this->respondWithTransformer($buyProduct);
         
     }
 
