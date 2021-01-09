@@ -17,7 +17,7 @@ class Product extends Model
      */
     public function getRouteKeyName()
     {
-        return 'id';
+        return 'slug';
     }
 
         /**
@@ -27,7 +27,7 @@ class Product extends Model
      */
     public function getSlugSourceColumn()
     {
-        return 'slug';
+        return 'name';
     }
 
 }

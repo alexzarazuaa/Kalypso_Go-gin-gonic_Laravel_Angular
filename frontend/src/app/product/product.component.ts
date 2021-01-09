@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductComponent implements OnInit {
 
   product: Products;
-  productsService : ProductsService;
+
   
 
   currentUser: User;
@@ -21,6 +21,7 @@ export class ProductComponent implements OnInit {
   isDeleting = false;
   constructor(
     private userService: UserService,
+    private productsService : ProductsService,
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -45,11 +46,12 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct() {
-    this.isDeleting = true;
+
     console.log('click ---->   ',this.product['product'].slug);
     this.productsService.destroy(this.product['product'].slug)
       .subscribe(
         success => {
+          this.isDeleting = true;
           this.toastr.success('Producto Eliminado', 'Eliminado');
           this.router.navigateByUrl('/');
         }
