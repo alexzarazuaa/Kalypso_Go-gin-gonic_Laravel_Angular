@@ -8,15 +8,39 @@
       <section class="flip-card-back">
 
         <h3>NAME</h3>
-        <span>{{product.name}}</span>
+        <span *ngIf="product.name; else name">
+          {{product.name}}
+        </span>
+        <ng-template #name>
+          <span>{{product.Name}}</span>
+        </ng-template>
+
         <h3>BRAND</h3>
-        <span>{{product.brand}}</span>
+        <span *ngIf="product.brand; else brand">
+          {{product.brand}}
+        </span>
+        <ng-template #brand>
+          <span>{{product.Brand}}</span>
+        </ng-template>
+
         <h3 class="rating">RATING</h3>
-        <span>{{product.rating}}</span>
+        <span *ngIf="product.rating; else rating">
+          {{product.rating}}
+        </span>
+        <ng-template #rating>
+          <span>{{product.Rating}}</span>
+        </ng-template>
         <br>
-        <button class="like">❤</button>
         <br>
-        <a [routerLink]="['/product', product.id]" class="preview-link">READ MORE</a>
+
+        <div *ngIf="product.slug; else slug"> 
+          <a  [routerLink]="['/product', product.slug]" class="preview-link">READ MORE</a>
+        </div>
+
+        <ng-template #slug>
+          <a  [routerLink]="['/product', product.Slug]" class="preview-link">READ MORE</a>
+        </ng-template>
+
       </section>
     </article>
   </section>

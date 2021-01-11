@@ -1,82 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
-import { Article, ArticlesService } from '../core';
+import { Products, ProductsService } from '../core';
 
 @Component({
   selector: 'app-editor-page',
   templateUrl: './editor.component.html'
 })
 export class EditorComponent implements OnInit {
-  article: Article = {} as Article;
-  articleForm: FormGroup;
-  tagField = new FormControl();
+  product: Products = {} as Products;
+  productForm: FormGroup;
   errors: Object = {};
   isSubmitting = false;
 
   constructor(
-    private articlesService: ArticlesService,
+    private productService: ProductsService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {
     // use the FormBuilder to create a form group
-    this.articleForm = this.fb.group({
-      title: '',
+
+    this.productForm = this.fb.group({
+      name: '',
+      brand:'',
       description: '',
-      body: ''
+      rating:'',
+      category:''
     });
-
-    // Initialized tagList as empty array
-    this.article.tagList = [];
-
-    // Optional: subscribe to value changes on the form
-    // this.articleForm.valueChanges.subscribe(value => this.updateArticle(value));
   }
 
   ngOnInit() {
-    // If there's an article prefetched, load it
-    this.route.data.subscribe((data: { article: Article }) => {
-      if (data.article) {
-        this.article = data.article;
-        this.articleForm.patchValue(data.article);
+    // If there's an product prefetched, load it
+    this.route.data.subscribe((data: { product: Products }) => {
+      if (data.product) {
+        this.product = data.product;
+        this.productForm.patchValue(data.product);
       }
     });
   }
 
-  addTag() {
-    // retrieve tag control
-    const tag = this.tagField.value;
-    // only add tag if it does not exist yet
-    if (this.article.tagList.indexOf(tag) < 0) {
-      this.article.tagList.push(tag);
-    }
-    // clear the input
-    this.tagField.reset('');
-  }
-
-  removeTag(tagName: string) {
-    this.article.tagList = this.article.tagList.filter(tag => tag !== tagName);
-  }
 
   submitForm() {
+    console.log('click')
+    console.log(this.product);
+    
     this.isSubmitting = true;
 
     // update the model
-    this.updateArticle(this.articleForm.value);
+    this.updateProduct(this.productForm.value);
 
     // post the changes
-    this.articlesService.save(this.article).subscribe(
-      article => this.router.navigateByUrl('/article/' + article.slug),
+    this.productService.save(this.product).subscribe(
+      data => {
+        console.log(data);
+        this.toastr.success('Product Created', 'Create');
+        this.router.navigateByUrl('/')
+      }, 
       err => {
+        this.toastr.error('Something Happens...', 'Create');
         this.errors = err;
         this.isSubmitting = false;
       }
     );
   }
 
-  updateArticle(values: Object) {
-    Object.assign(this.article, values);
+  updateProduct(values: Object) {
+    Object.assign(this.product, values);
   }
 }

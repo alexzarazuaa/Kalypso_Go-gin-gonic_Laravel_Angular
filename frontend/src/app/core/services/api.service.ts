@@ -68,6 +68,12 @@ export class ApiService {
       JSON.stringify(body),
     ).pipe(catchError(this.formatErrors));
   }
+  put_Go(path: string, body: Object = {}): Observable<any> {
+    return this.http.put(
+      `${environment.go}${path}`,
+      JSON.stringify(body)
+    ).pipe(catchError(this.formatErrors));
+  }
 
 
   delete_go(path): Observable<any> {
@@ -86,6 +92,12 @@ export class ApiService {
    * @param params 
    */
 
+  // get_goProd(path: string, params: HttpParams = new HttpParams()): Observable<any> {
+  //   return this.http.get(`${environment.go_prods}${path}`, { params })
+  //     .pipe(catchError(this.formatErrors));
+  // }
+
+
   get_goProd(path: string, params: HttpParams = new HttpParams()): Observable<any> {
     return this.http.get(`${environment.go_prods}${path}`, { params })
       .pipe(catchError(this.formatErrors));
@@ -103,5 +115,6 @@ export class ApiService {
       `${environment.go_prods}${path}`
     ).pipe(catchError(this.formatErrors));
   }
+
 
 }

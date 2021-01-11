@@ -18,15 +18,18 @@ type ProfileResponse struct {
 	Email     string  `json:"email"`
 	Image     *string `json:"image"`
 	Karma 	   int    `json:"karma"`
+	Following bool    `json:"following"`
 }
 
 // Put your response logic including wrap the userModel here.
 func (self *ProfileSerializer) Response() ProfileResponse {
+	myUserModel := self.C.MustGet("my_user_model").(Users)
 	profile := ProfileResponse{
 		Username:  self.Username,
 		Image:     self.Image,
 		Karma:	   self.Karma,
 		Email:	   self.Email,
+		Following: myUserModel.isFollowing(self.Users),
 	}
 	return profile
 }

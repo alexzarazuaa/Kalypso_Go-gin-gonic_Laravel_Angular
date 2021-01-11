@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArticleListConfig, TagsService, UserService } from '../core';
+import { ArticleListConfig, TagsService, BrandsService, UserService, User } from '../core';
 
 @Component({
   selector: 'app-home-page',
@@ -12,8 +12,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     //private tagsService: TagsService,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private BrandsService: BrandsService
+  ) { }
+
+
 
   isAuthenticated: boolean;
   listConfig: ArticleListConfig = {
@@ -21,13 +24,25 @@ export class HomeComponent implements OnInit {
     filters: {}
   };
   // tags: Array<string> = [];
+  brands: Array<string> = [];
+  brandsLoaded = false;
   // tagsLoaded = false;
 
   ngOnInit() {
 
+    // this.userService.currentUser.subscribe(
+    //   (userData) => {
+    //     console.log("-+-----", userData)
+
+    //     if(userData.type == 'admin'){
+    //       this.router.navigateByUrl('/admin')
+    //     }
+    //   })
+
     this.userService.isAuthenticated.subscribe(
       (authenticated) => {
         this.isAuthenticated = authenticated;
+
 
         // set the article list accordingly
         if (authenticated) {
@@ -43,6 +58,14 @@ export class HomeComponent implements OnInit {
     //   this.tags = tags;
     //   this.tagsLoaded = true;
     // });
+
+    this.BrandsService.getBrands()
+      .subscribe(brands => {
+        // console.log(brands['brands'])
+        this.brands = brands['brands'];
+        this.brandsLoaded = true;
+      });
+
   }
 
   setListTo(type: string = '', filters: Object = {}) {
@@ -53,6 +76,13 @@ export class HomeComponent implements OnInit {
     }
 
     // Otherwise, set the list object
-    this.listConfig = {type: type, filters: filters};
+    this.listConfig = { type: type, filters: filters };
+  }
+
+  FilterBrand(brand) {
+    brand= "brands," + brand
+    this.router.navigateByUrl('/shop', { state: { data :brand } });
+
+  
   }
 }

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Products, ProductsService } from '../../core';
+import { Products, ProductsService,BrandsService } from '../../core';
+import { Router } from '@angular/router';
+import { flatMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-products',
@@ -8,24 +11,48 @@ import { Products, ProductsService } from '../../core';
 })
 export class ProductslistComponent implements OnInit {
   constructor(
-    private productsService: ProductsService) { }
+    private productsService: ProductsService,
+    private BrandsService: BrandsService) { 
+  }
 
-
+  
     products : Products[];
 
   ngOnInit() {
-     this.products = [];
-    this.productsService.getAll().subscribe(data => {
+    // console.log( typeofhistory.state.data)
+if(history.state.data){
+    if((history.state.data).includes('brands')){
+          this.BrandsService.filterBrands(history.state.data)
+      .subscribe(data => {
+        console.log(data['product'])
+        this.products=data['product'];
+      })
+    }
+  }else{
+     this.products = [];  
+      this.productsService.getAll_goProd().subscribe(data => {
       this.products = data;
-      console.log(this.products,'products laravel');
+      console.log(this.products);
     })
   }
+}
 
+
+  // FilterBrand(brand) {
+
+  //   console.log()
+  //   // brand= "brands," + brand
+
+  //   // this.BrandsService.filterBrands(brand)
+  //   //   .subscribe(data => {
+  //   //     console.log(data)
+  //   //   })
+  // }
 }
 
 
 /**
- * NG ON INIT TESTING DATA GO
+ * NG ON INIT TESTING DATA LARAVEL
  */
 
 // ngOnInit() {

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\RealWorld\Transformers\BuyProductTransformer;
+use App\Http\Requests\Api\CreateProduct;
+use App\Http\Requests\Api\DeleteProduct;
 use App\Product;
 
 
 
-class Products extends Controller
+class Products extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -43,17 +45,11 @@ class Products extends Controller
     public function store(Request $request)
     {
     
-        // echo($request);
-        // echo("-----------------");
-        // print_r($request->product['name']);
-
         $product = new Product();
-        $name = $request -> product['name'];
-
-        $product -> slug = str_slug($name);  
-        $product -> name = $name;
+        // $name = $request -> product['name'];
+        $product -> slug = str_slug($request -> product['name']);  
+        $product -> name = $request -> product['name'];;
         $product -> brand = $request -> product['brand'];
-        // $product -> img = $request -> product['img'];
         $product -> description = $request -> product['description'];
         $product -> rating = $request -> product['rating'];
         $product -> category = $request -> product['category'];
@@ -62,20 +58,18 @@ class Products extends Controller
         $product -> save();
 
         return response() -> json($product);
-         //return $this->respondWithTransformer($buyProduct);
         
     }
 
+
     /**
-     * Display the specified resource.
+     * Get the product given by its slug.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(Product $product)
     {
-        // echo("holagola");
-        $product = Product::find($id);
         return response() -> json($product);
     }
 
@@ -88,10 +82,10 @@ class Products extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
         //
     }
@@ -100,28 +94,37 @@ class Products extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  int  $slug
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $product = Product::find($slug);
+        if(!$product) return response() -> json('Product Not Found');
+
+        $product -> slug = str_slug($request -> product['name']);  
+        $product -> name = $request -> product['name'];;
+        $product -> brand = $request -> product['brand'];
+        $product -> description = $request -> product['description'];
+        $product -> rating = $request -> product['rating'];
+        $product -> category = $request -> product['category'];
+
+    
+        $product -> save();
+
+        return response() -> json($product);
     }
-
     /**
-     * Remove the specified resource from storage.
+     * Delete the product given by its slug.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param DeleteProduct $request
+     * @param Product $product
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(DeleteProduct $request, Product $product)
     {
-        $Products = Product::find($id);
-        
-        if(!$Products) return response() -> json('Product not Found');
+        $product->delete();
 
-        $Products -> delete();
-
-        return response() -> json($Products);
+        return $this->respondSuccess();
     }
 }

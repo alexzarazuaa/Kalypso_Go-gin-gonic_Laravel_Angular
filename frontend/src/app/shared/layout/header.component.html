@@ -45,11 +45,7 @@
           </a>
         </li>
 
-        <li *ngIf="currentUser.type == 'admin'" class="nav-item">
-          <a class="nav-link" routerLink="/editor" routerLinkActive="active">
-            <i class="ion-compose"></i>&nbsp;New Article
-          </a>
-        </li>
+
 
         <li *ngIf="currentUser.type == 'admin'" class="nav-item">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active">

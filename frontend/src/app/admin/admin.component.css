@@ -11,3 +11,9 @@
    @media screen and (max-width: 767px) {
 	 .row.content {height: auto;} 
    }
+
+   a.active {
+      background-color: dodgerblue;
+      color: white;
+    }
+    

@@ -1,27 +1,35 @@
 <main class="container">
- 
 
- 
+
+
   <!-- Right Column -->
   <div class="right-column">
- 
+
     <!-- Product Description -->
     <div class="product-description">
       <span>CLOTH</span>
-      <h1><strong> Name :</strong>{{product.name}}</h1>
-      <h4><strong> Marca :</strong>{{product.brand}}</h4>
-      <span><strong> Description :</strong>{{product.description}}</span>
+      <h1><strong> Name :</strong>{{product.product.name}}</h1>
+      <h4><strong> Marca :</strong>{{product.product.brand}}</h4>
+      <span><strong> Description :</strong>{{product.product.description}}</span>
     </div>
- 
-   
- 
+
+
+
     <!-- Product Pricing -->
     <div class="product-price">
-      <span> <strong> Rating :</strong>  {{product.rating}}</span> 
+      <span> <strong> Rating :</strong> {{product.product.rating}}</span>
       <br>
       <br>
-      <button  class="cart-btn">Add to cart</button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <button class="like">❤</button>
+
+      <button class="cart-btn">Add to cart</button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <button *ngIf="currentUser.type == 'admin'"  class="btn btn-sm btn-outline-danger" [ngClass]="{disabled: isDeleting}" (click)="deleteProduct()">
+        <i class="ion-trash-a"></i>&nbsp;Delete Product
+      </button>&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <app-favorite-button [product]="product.product" class="like">
+
+      </app-favorite-button>
       <br>
     </div>
   </div>

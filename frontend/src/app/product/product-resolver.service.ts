@@ -18,7 +18,7 @@ export class ProductsResolver implements Resolve<Products> {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.productsService.getOne(route.params['id'])
+    return this.productsService.getOneGO(route.params['slug'])
       .pipe(catchError((err) => {
         return this.router.navigateByUrl('/');
       }));

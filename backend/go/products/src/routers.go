@@ -15,7 +15,7 @@ import (
 
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
-	// router.PUT("/:types", Proof)
+	router.PUT("/:types", Proof)
 
 }
 
@@ -25,17 +25,18 @@ func ProductsRegister(router *gin.RouterGroup) {
 	router.DELETE("/:slug/favorite", ProductUnfavorite)
 }
 
-// func Proof(c *gin.Context){
-// 	client := common.NewClient()
-// 	types := c.Param("types")
-// 	err_get, val := common.Get(types, client)
-// 	fmt.Println(err_get)
-// 	fmt.Println(val)
-// }
+func Proof(c *gin.Context){
+	client := common.NewClient()
+	types := c.Param("types")
+	err_get, val := common.Get(types, client)
+	fmt.Println(err_get)
+	fmt.Println(val)
+}
 
 //General function to karma in products and brands
 func Karma_redis( types string, id string, karma int) error{
 	client := common.NewClient()
+
 
 	//obtain data(brands or products) from redis 
 	err_get, val := common.Get(types, client)
@@ -46,6 +47,7 @@ func Karma_redis( types string, id string, karma int) error{
 
 		if (err_SetMarshal!= nil){//Any mistakes
 			return err_SetMarshal
+
 		}
 
 	return nil
@@ -59,7 +61,7 @@ func Karma_redis( types string, id string, karma int) error{
 		objects[id]=karma
 	
 	}else{//If this brand or product is stored in redis
-		objects[id]+=karma
+		objects[id]+=karma	
 	}
 
 	//Then stored data in redis
@@ -141,7 +143,7 @@ func ProductFavorite(c *gin.Context) {
 	err = productModel.favoriteBy(GetProductUsers(myUserModel))
 
 
-	err_karma:= Karma_redis("product", productModel.Slug, 10)
+	err_karma:= Karma_redis("products", productModel.Slug, 10)
 	if err_karma != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
 	return
@@ -160,7 +162,7 @@ func ProductUnfavorite(c *gin.Context) {
 	myUserModel := c.MustGet("my_user_model").(Users)
 	err = productModel.unFavoriteBy(GetProductUsers(myUserModel))
 
-	err_karma:= Karma_redis("product", productModel.Slug, -10)
+	err_karma:= Karma_redis("products", productModel.Slug, -10)
 	if err_karma != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
 	return
@@ -185,42 +187,55 @@ func ProductList(c *gin.Context) {
 		}
 		serializer := ProductsSerializer{c, productModels}
 		c.JSON(http.StatusOK, gin.H{"products": serializer.Response(), "productsCount": modelCount})
+
 	} else if (slug=="home"){
 
+		var vars [2]string
+		vars[0] = "brands"
+		vars[1] = "products"
+
+		products := make([]ProductModel, 0)
+		data := make(map[string]interface{})
+
+
 		client := common.NewClient()
-		err_get, val := common.Get("brands", client)
-		if err_get != nil {
-	
-			//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
-			c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})	
-			}
-	
-			objects := map[string]int{}
 
-			json.Unmarshal([]byte(val), &objects)
+		for v := range vars {
+			fmt.Println(vars[v])
 
-			type object struct {
-				Key   string
-				Value int
-			}
-		
-			var objectsort []object
-			for k, v := range objects {
-				objectsort = append(objectsort, object{k, v})
+			err_get, val := common.Get(vars[v], client)
+
+			if err_get != nil {
+				//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
+				c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})	
+				return
 			}
 
-		
-			sort.Slice(objectsort, func(i, j int) bool {
-				return objectsort[i].Value > objectsort[j].Value
-			})
+			keys:= order_redis(val)
 
-			keys := make([]string, 0)
 
-			for k := range objectsort {
-				keys= append(keys,objectsort[k].Key )
+			if (vars[v] == "products"){
+				 for k := range keys {
+					 err, productModel:=detail(keys[k])
+
+					 if err != nil {
+						 c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+						 return
+					 }
+
+					 products= append(products,productModel)  
+				}
+
+				data["products"]=products
+
+
+			}else{
+				data["brands"]=keys
 			}
 
-			c.JSON(http.StatusOK, gin.H{"brands": keys})
+
+		}
+		c.JSON(http.StatusOK, gin.H{"data": data})
 
 
 	}else{
@@ -228,36 +243,66 @@ func ProductList(c *gin.Context) {
 			ProductFeed(c)
 			return
 		}
-		productModel, err := FindOneProduct(&ProductModel{Slug: slug})
+
+		 err, productModel:=detail(slug)
+
 		if err != nil {
-			c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid slug")))
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-	
-		err_karma:= Karma_redis("product", productModel.Slug, 5)
-		if err_karma != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
-		return
-		}
-	
+
 		serializer := ProductSerializer{c, productModel}
 		c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
+		
 	}
 	
 }
 
-func BrandsHome(c *gin.Context){
-	client := common.NewClient()
-	err_get, val := common.Get("brands", client)
-	if err_get != nil {
 
-		//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
-		c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})
+func order_redis( val string )  []string{
+	objects := map[string]int{}
 
+	json.Unmarshal([]byte(val), &objects)
 
-
-		}
-
-		fmt.Println(val)
+	type object struct {
+		Key   string
+		Value int
+	}
+	
+	var objectsort []object
+	for k, v := range objects {
+		objectsort = append(objectsort, object{k, v})
 	}
 
+	sort.Slice(objectsort, func(i, j int) bool {
+		return objectsort[i].Value > objectsort[j].Value
+	})
+
+	keys := make([]string, 0)
+
+	for k := range objectsort {
+		keys= append(keys,objectsort[k].Key )
+		if k==4	{break}
+	}
+
+	return keys
+}
+
+
+func detail (slug string) (error,ProductModel) {
+	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
+	if err != nil {
+		// c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid slug")))
+		return err , productModel
+	}
+
+	err_karma:= Karma_redis("products", productModel.Slug, 5)
+	if err_karma != nil {
+		// c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	return err_karma, productModel
+	}
+
+	return nil, productModel
+	// serializer := ProductSerializer{c, productModel}
+	// c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
+}

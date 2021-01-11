@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"goProducts/common"
 	"goProducts/src"
@@ -11,7 +10,7 @@ import (
 
 func Migrate(db *gorm.DB) {
 	db.AutoMigrate(&products.ProductModel{})
-
+	db.AutoMigrate(&products.ProductUsers{})
 	db.AutoMigrate(&products.FavoriteModel{})
 	// db.AutoMigrate(&products.Brands{})
 
