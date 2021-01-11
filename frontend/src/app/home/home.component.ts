@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArticleListConfig, TagsService, BrandsService, UserService, User } from '../core';
+import { ArticleListConfig, TagsService, BrandsService, UserService, Products } from '../core';
 
 @Component({
   selector: 'app-home-page',
@@ -26,6 +26,8 @@ export class HomeComponent implements OnInit {
   // tags: Array<string> = [];
   brands: Array<string> = [];
   brandsLoaded = false;
+  products : Products[];
+
   // tagsLoaded = false;
 
   ngOnInit() {
@@ -51,18 +53,12 @@ export class HomeComponent implements OnInit {
           this.setListTo('all');
         }
       }
-    );
+    );  
 
-    // this.tagsService.getAll()
-    // .subscribe(tags => {
-    //   this.tags = tags;
-    //   this.tagsLoaded = true;
-    // });
 
     this.BrandsService.getBrands()
-      .subscribe(brands => {
-        // console.log(brands['brands'])
-        this.brands = brands['brands'];
+      .subscribe(data => {
+        this.brands = data['data']['brands']
         this.brandsLoaded = true;
       });
 
@@ -80,6 +76,7 @@ export class HomeComponent implements OnInit {
   }
 
   FilterBrand(brand) {
+    console.log(brand)
     brand= "brands," + brand
     this.router.navigateByUrl('/shop', { state: { data :brand } });
 

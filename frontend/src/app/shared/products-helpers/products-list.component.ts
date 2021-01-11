@@ -12,7 +12,8 @@ import { flatMap } from 'rxjs/operators';
 export class ProductslistComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
-    private BrandsService: BrandsService) { 
+    private BrandsService: BrandsService,
+    private router: Router) { 
   }
 
   
@@ -28,7 +29,14 @@ if(history.state.data){
         this.products=data['product'];
       })
     }
+  }else if(this.router.url==="/"){
+    this.BrandsService.getBrands()
+      .subscribe(data => {
+        this.products = data['data']['products']
+      });
   }else{
+
+    console.log(this.router.url)
      this.products = [];  
       this.productsService.getAll_goProd().subscribe(data => {
       this.products = data;

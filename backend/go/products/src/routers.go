@@ -5,7 +5,7 @@ import (
 	"sort"
 	// "reflect"
 	// "time"
-	// "strconv"
+	"strings"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -148,6 +148,13 @@ func ProductFavorite(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
 	return
 	}
+
+	err_karmaBrd:= Karma_redis("brands", productModel.Brand, 5)
+	if err_karmaBrd != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaBrd.Error()})
+	return
+	}
+	
 	serializer := ProductSerializer{c, productModel}
 	c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
 }
@@ -238,6 +245,34 @@ func ProductList(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": data})
 
 
+	}else if (strings.Contains(slug, "brands")){
+		brands:= strings.Split(slug, ",")
+		brand:=brands[1]
+
+		products, err := ProductsbyBrands(&ProductModel{Brand: brand})
+
+
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+		}
+
+		product := make([]ProductModel, 0)
+
+		for i := range products {
+			product= append(product,products[i])
+		}
+
+
+		err_karmaBrd:= Karma_redis("brands", brand, 5)
+		if err_karmaBrd != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaBrd.Error()})
+		return
+		}
+	
+
+		c.JSON(http.StatusOK, gin.H{"product": product})
+				
 	}else{
 		if slug == "feed" {
 			ProductFeed(c)

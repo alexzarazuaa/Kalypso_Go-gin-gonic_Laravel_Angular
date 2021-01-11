@@ -37,7 +37,8 @@ div.scrollmenu a {
   display: inline-block;
   color: white;
   text-align: center;
-  padding: 14px;
+  padding: 122px;
+  
   text-decoration: none;
 }
 
@@ -46,6 +47,19 @@ div.scrollmenu a:hover {
 }
 
 .brands{
+
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.logo {
 
   color: black;
   text-align: center;
