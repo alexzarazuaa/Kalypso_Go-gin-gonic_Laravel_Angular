@@ -31,6 +31,7 @@ import { from } from 'rxjs';
     CarouselModule,
     BrowserAnimationsModule,
     HttpClientModule,
+
     ToastrModule.forRoot()
   ],
   providers: [],

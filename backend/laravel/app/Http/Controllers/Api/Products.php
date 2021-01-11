@@ -121,10 +121,9 @@ class Products extends ApiController
      * @param Product $product
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(DeleteProduct $request, Product $product)
-    {
-        $product->delete();
 
-        return $this->respondSuccess();
-    }
+    public function destroy($slug) {
+        $product = Product::where('slug', $slug)->delete();
+        return $this -> respondSuccess();
+    }// end_delete
 }

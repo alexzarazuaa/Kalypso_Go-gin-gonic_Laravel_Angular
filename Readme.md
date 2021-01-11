@@ -58,10 +58,11 @@ To get the repo running locally:
 
 | Page | Features |
 | - | - |
-| Home | Brands with Laravel and MySql  |
-| Shop | List with Laravel and MySql, Details with Laravel and MySql |
+| Home | Slider with Images , Brands with GO and MySql , and Some Products More Visited by Go  |
+| Shop | List with GO and MySql, Details with gO and MySql |
 | Settings | LogOut and  User Settings |
 | Profile | User info, favourited Garment |
+| PanelAdmin | Dashborad For Users Admin that they can Create and Delete products |
 
 <br>
 
