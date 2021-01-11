@@ -35,6 +35,11 @@ To get the repo running locally:
 
 ## Preview
 
+  * **KALYPSO HOME**
+
+      <img src="./frontend/src/img/homePreview.png">
+
+
   * **Products Shop List**
 
     <img src="./frontend/src/img/Preview_List.png">
