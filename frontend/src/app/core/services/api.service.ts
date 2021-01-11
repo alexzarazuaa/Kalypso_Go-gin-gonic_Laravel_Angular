@@ -117,4 +117,11 @@ export class ApiService {
   }
 
 
+      /* ===================  GO BUYS PRODUCTS METHODS ===================*/
+      post_buys(path: string, body: Object = {}): Observable<any> {
+        return this.http.post(
+          `${environment.go_buy}${path}`,
+          JSON.stringify(body),
+        ).pipe(catchError(this.formatErrors));
+      }
 }

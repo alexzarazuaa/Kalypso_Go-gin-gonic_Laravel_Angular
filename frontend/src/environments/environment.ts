@@ -8,4 +8,6 @@ export const environment = {
   laravel: '/api',
   go:'http://0.0.0.0:3002/api',
   go_prods:'http://0.0.0.0:3000/api/products',
+  go_buy:'http://0.0.0.0:3001/api/buy_products',
+
 };

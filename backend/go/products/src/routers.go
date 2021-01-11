@@ -16,6 +16,7 @@ import (
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
 	router.PUT("/:types", Proof)
+	router.POST("/:slug", UpKarmaProduct)
 
 }
 
@@ -24,6 +25,19 @@ func ProductsRegister(router *gin.RouterGroup) {
 	router.POST("/:slug/favorite", ProductFavorite)
 	router.DELETE("/:slug/favorite", ProductUnfavorite)
 }
+
+
+func ProductUnfavorite(c *gin.Context) {
+	slug := c.Param("slug")
+
+	err_karma:= Karma_redis("products", productModel.Slug, -10)
+	if err_karma != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	return
+	}	
+	c.JSON(http.StatusOK, gin.H{"product": "okey"})
+}
+
 
 func Proof(c *gin.Context){
 	client := common.NewClient()

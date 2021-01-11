@@ -77,7 +77,7 @@ export class ProductsService {
   }
 
   destroy(slug) {
-    return this.apiService.delete('/product/' + slug);
+    return this.apiService.delete('/products/' + slug);
   }
 
 

@@ -1,6 +1,7 @@
 package buy_products
 
 import (
+	"fmt"
 	"errors"
 	"net/http"
 	"gobuys_products/common"
@@ -8,25 +9,30 @@ import (
 )
 
 func Buy_ProductsRegister(router *gin.RouterGroup) {
-	router.POST("/", Buy_ProductCreate)
+	router.POST("/:slug", Buy_ProductCreate)
 	router.GET("/", Buy_ProductList)
 	router.GET("/:slug", Buy_ProductRetrieve)
 }
 
 func Buy_ProductCreate(c *gin.Context) {
-	buy_productModelValidator := NewBuy_ProductModelValidator()
-	if err := buy_productModelValidator.Bind(c); err != nil {
+
+	slug := c.Param("slug")
+	fmt.Println(slug)
+
+	err := InsertBuyProduct(&ProductModel{Slug: slug})
+
+
+	if err != nil {
 		c.JSON(http.StatusUnprocessableEntity, common.NewValidatorError(err))
 		return
 	}
-	//fmt.Println(buy_productModelValidator.buy_productModel.Author.Users)
 
-	if err := SaveOne(&buy_productModelValidator.buy_productModel); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))
-		return
-	}
-	serializer := Buy_ProductSerializer{c, buy_productModelValidator.buy_productModel}
-	c.JSON(http.StatusCreated, gin.H{"buy_product": serializer.Response()})
+	// if err := SaveOne(&buy_productModelValidator.buy_productModel); err != nil {
+	// 	c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))
+	// 	return
+	// }
+	// serializer := Buy_ProductSerializer{c, buy_productModelValidator.buy_productModel}
+	c.JSON(http.StatusCreated, gin.H{"data":"okey"})
 }
 
 func Buy_ProductList(c *gin.Context) {

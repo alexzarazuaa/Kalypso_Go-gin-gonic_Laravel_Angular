@@ -1,0 +1,5 @@
+# goProducts/src
+src/routers.go:19:24: undefined: UpKarmaProduct
+src/routers.go:33:38: undefined: productModel
+src/routers.go:176:6: ProductUnfavorite redeclared in this block
+	previous declaration at src/routers.go:30:27

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
-  selector: 'app-slider',
+  selector: 'home-slider',
   templateUrl: './slider.component.html',
   styleUrls: ['./slider.component.css']
 })

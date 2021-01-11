@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
-import { from } from 'rxjs';
+//import { from } from 'rxjs';
 
 @NgModule({
   declarations: [AppComponent, FooterComponent, HeaderComponent,SliderComponent],

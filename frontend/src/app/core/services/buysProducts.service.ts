@@ -30,6 +30,14 @@ export class BuysProductsService {
   destroy(slug) {
     return this.apiService.delete('/product/' + slug);
   }
+  
+  insert(slug){
+    return this.apiService.post_buys('/' + slug)
+    .pipe(map(data => {
+      console.log('data in service',data);
+      return data;
+    }));
+  }
 
 }
 

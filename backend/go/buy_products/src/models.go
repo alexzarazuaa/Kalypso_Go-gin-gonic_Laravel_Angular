@@ -1,6 +1,7 @@
 package buy_products
 
 import (
+	// "fmt"
 	"time"
 	"strconv"
 	"github.com/jinzhu/gorm"
@@ -34,6 +35,16 @@ type Users struct {
 }
 
 
+type ProductModel struct {
+	gorm.Model
+	Slug         string `gorm:"unique_index"`
+	Name     	 string  `gorm:"column:name"`
+	Brand        string  `gorm:"column:brand"`
+	Img        	 string  `gorm:"column:img"`
+	Description  string  `gorm:"column:description"`
+	Rating 		 int     `gorm:"column:rating"`
+	Category 	 string  `gorm:"column:category"`
+}
 
 type Buy_ProductUsers struct {
 	gorm.Model
@@ -43,6 +54,15 @@ type Buy_ProductUsers struct {
 }
 
 
+func InsertBuyProduct(condition interface{}) (error){
+
+	db := common.GetDB()
+	var model ProductModel
+	err :=db.Where(condition).First(&model).Error
+	data:= Buy_ProductModel{Slug:model.Slug, Name:model.Name, Brand:model.Brand, Description:model.Description, Rating:model.Rating, Category:model.Category }
+	err= db.Create(&data).Error
+	return err
+}
 func GetBuy_ProductUsers(userModel Users) Buy_ProductUsers {
 	var buy_productUsers Buy_ProductUsers
 	if userModel.ID == 0 {
