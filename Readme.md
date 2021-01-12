@@ -2,7 +2,7 @@
 
 <p align="center">
 
-  <h3 align="center"><strong>KALYPSO APP</strong></h3>
+  <h1 align="center"><strong>KALYPSO APP</strong></h1>
 
 </p>
 
@@ -28,9 +28,9 @@ As you make purchases, your karma points will increase, with which you will be a
 
 To get the repo running locally:
 
- * Clone this repo
- * Install Docker Community Edition
- * ` docker-compose up --build `
+ * 1.- Clone this repo
+ * 2.- Install Docker Community Edition : 
+   * ` docker-compose up --build `
 
 
 ## Preview
@@ -43,6 +43,7 @@ To get the repo running locally:
   * **Products Shop List**
 
     <img src="./frontend/src/img/Preview_List.png">
+
 
   * **List Product Description**
 
@@ -60,29 +61,29 @@ To get the repo running locally:
 
 ## Features
 
-
 | Page | Features |
 | - | - |
-| Home | Slider with Images , Brands with GO and MySql , and Some Products More Visited by Go  |
-| Shop | List with GO and MySql, Details with gO and MySql |
+| Home | Popular Brands with GO and MySql , and Products More Visited by Go  |
+| Shop | List with GO and MySql, Details with Go and MySql |
 | Settings | LogOut and  User Settings |
 | Profile | User info, favourited Garment |
-| PanelAdmin | Dashborad For Users Admin that they can Create and Delete products |
+| PanelAdmin | Dashborad For Users Admin that they can Create and Delete products with Laravel |
 
 <br>
 
 | Service | Features |
 | - | - |
-| Register | Regular register |
-| Login | Regular login |
+| Register | Regular register  |
+| Login | Regular login with Go if is an User client and with Laravel if is an Admin User |
 | Favourites | Favourite button in each garment , favourited show up on profile  |
+
 
 <br>
 
 | Techical Feature | Where it works |
 | - | - |
 | Docker | Entire application is dockerized |
-| Redis | In Login Service |
+| Redis | In Login Service and Karma in Brands and Products for more Visited or More Popular in case of the Brands |
 | Authentication | Login and Register Services with JWT |
 
 <br>
@@ -103,8 +104,10 @@ To get the repo running locally:
 ## Built With
 
  * GinGonic
+ * Laravel with PHP 7.0
  * Angular 11.0.2
  * Docker
+ * Docker-Compose
  * MySQL
  * Redis
 

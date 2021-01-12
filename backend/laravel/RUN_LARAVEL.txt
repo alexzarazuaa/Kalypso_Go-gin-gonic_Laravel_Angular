@@ -1,13 +1,26 @@
+-------------------------------------  INSTALAR LAS DEPENDENCIAS DEL COMPOSER.JSON   -------------------------------
+
+    INSTALAR LAS DEPENDENCIAS DEL COMPOSER.JSON
+
+        composer install
+
+        O
+
+        php composer install
+
 -------------------------------------  PARA INICIAR LA APP -------------------------------
 
 
 1. 
+
 php artisan key:generate
 
 2. 
+
 php artisan jwt:secret
 
 3.
+
 php artisan serve
 
 ----------------------------------------------------------------------------
