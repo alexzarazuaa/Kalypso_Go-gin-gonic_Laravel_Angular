@@ -80,10 +80,8 @@ export class ProductsService {
     return this.apiService.delete('/products/' + slug);
   }
 
-
-
- 
-
-
+  UpKarmaProduct(data): Observable<Products> {
+    return this.apiService.post_goProd('/' + data);
+    }
 }
 

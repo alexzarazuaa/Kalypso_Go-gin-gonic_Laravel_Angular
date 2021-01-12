@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -29,6 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     ProductModule,
     CarouselModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     HttpClientModule,
 

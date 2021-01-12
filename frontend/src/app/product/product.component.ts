@@ -49,8 +49,6 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct() {
-
-    console.log('click ---->   ', this.product['product'].slug);
     this.productsService.destroy(this.product['product'].slug)
       .subscribe(
         success => {
@@ -77,7 +75,12 @@ export class ProductComponent implements OnInit {
         .subscribe(data =>{
           console.log(data)
           if(data['data']=="okey"){
-            console.log("OKEY")
+            this.toastr.success('Producto Comprado', 'Comprado');
+            
+            let data=this.product["product"].slug + ',' + this.product["product"].brand;
+            this.productsService.UpKarmaProduct(data).subscribe()
+
+
           }
         })
 

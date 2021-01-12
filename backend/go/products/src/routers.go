@@ -27,15 +27,22 @@ func ProductsRegister(router *gin.RouterGroup) {
 }
 
 
-func ProductUnfavorite(c *gin.Context) {
-	slug := c.Param("slug")
+func UpKarmaProduct(c *gin.Context) {
+	data := c.Param("slug")
+	s := strings.Split(data, ",")
 
-	err_karma:= Karma_redis("products", productModel.Slug, -10)
+	err_karma:= Karma_redis("products", s[0], 10)
 	if err_karma != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
 	return
 	}	
-	c.JSON(http.StatusOK, gin.H{"product": "okey"})
+
+	err_karma = Karma_redis("brands", s[1], 10)
+	if err_karma != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
+	return
+	}	
+	c.JSON(http.StatusOK, gin.H{"karma": "okey"})
 }
 
 
@@ -126,7 +133,6 @@ func SetMarshal(objects map[string]int, key string )  error {
 
 	return nil
 }
-
 
 func ProductFeed(c *gin.Context) {
 	limit := c.Query("limit")
@@ -239,12 +245,10 @@ func ProductList(c *gin.Context) {
 				 for k := range keys {
 					 err, productModel:=detail(keys[k])
 
-					 if err != nil {
-						 c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-						 return
+					 if err == nil {
+						products= append(products,productModel) 
 					 }
-
-					 products= append(products,productModel)  
+ 
 				}
 
 				data["products"]=products
@@ -256,6 +260,7 @@ func ProductList(c *gin.Context) {
 
 
 		}
+		fmt.Println(data["brands"])
 		c.JSON(http.StatusOK, gin.H{"data": data})
 
 
