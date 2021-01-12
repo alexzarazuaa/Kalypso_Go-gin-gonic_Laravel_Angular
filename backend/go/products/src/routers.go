@@ -215,14 +215,17 @@ func ProductList(c *gin.Context) {
 		serializer := ProductsSerializer{c, productModels}
 		c.JSON(http.StatusOK, gin.H{"products": serializer.Response(), "productsCount": modelCount})
 
-	} else if (slug=="home"){
+	} else if (strings.Contains(slug, "home")){
 
 		var vars [2]string
 		vars[0] = "brands"
 		vars[1] = "products"
 
-		products := make([]ProductModel, 0)
+		// products := make([]ProductModel, 0)
 		data := make(map[string]interface{})
+		product := make(map[string]interface{})
+		products := []map[string]interface{}{}
+
 
 
 		client := common.NewClient()
@@ -243,10 +246,14 @@ func ProductList(c *gin.Context) {
 
 			if (vars[v] == "products"){
 				 for k := range keys {
-					 err, productModel:=detail(keys[k])
+					 
+					 err, productModel:=detail(fmt.Sprintf("%v", keys[k]["key"]))
 
 					 if err == nil {
-						products= append(products,productModel) 
+						 product["key"]=productModel
+						 product["value"]=keys[k]["value"]
+
+						products= append(products,product) 
 					 }
 				}
 				data["products"]=products
@@ -255,7 +262,6 @@ func ProductList(c *gin.Context) {
 				data["brands"]=keys
 			}
 		}
-		fmt.Println(data["brands"])
 		c.JSON(http.StatusOK, gin.H{"data": data})
 
 
@@ -277,13 +283,11 @@ func ProductList(c *gin.Context) {
 			product= append(product,products[i])
 		}
 
-
 		err_karmaBrd:= Karma_redis("brands", brand, 5)
 		if err_karmaBrd != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err_karmaBrd.Error()})
 		return
 		}
-	
 
 		c.JSON(http.StatusOK, gin.H{"product": product})
 				
@@ -304,11 +308,10 @@ func ProductList(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
 		
 	}
-	
 }
 
 
-func order_redis( val string )  []string{
+func order_redis( val string )  []map[string]interface{} {
 	objects := map[string]int{}
 
 	json.Unmarshal([]byte(val), &objects)
@@ -327,31 +330,34 @@ func order_redis( val string )  []string{
 		return objectsort[i].Value > objectsort[j].Value
 	})
 
-	keys := make([]string, 0)
+
+	data := []map[string]interface{}{}
 
 	for k := range objectsort {
-		keys= append(keys,objectsort[k].Key )
+		object := map[string]interface{}{
+			"key" : objectsort[k].Key, 
+			"value" : objectsort[k].Value,
+		}
+
+		data = append(data, object)
+
 		if k==4	{break}
 	}
 
-	return keys
+	return data
 }
 
 
 func detail (slug string) (error,ProductModel) {
 	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
 	if err != nil {
-		// c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid slug")))
 		return err , productModel
 	}
 
 	err_karma:= Karma_redis("products", productModel.Slug, 5)
 	if err_karma != nil {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": err_karma.Error()})
 	return err_karma, productModel
 	}
 
 	return nil, productModel
-	// serializer := ProductSerializer{c, productModel}
-	// c.JSON(http.StatusOK, gin.H{"product": serializer.Response()})
 }
