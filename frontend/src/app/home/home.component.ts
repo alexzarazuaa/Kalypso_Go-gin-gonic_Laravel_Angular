@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   // tags: Array<string> = [];
   brands: Array<string> = [];
   brandsLoaded = false;
-  products : Products[];
+  products: Products[];
 
   // tagsLoaded = false;
 
@@ -53,12 +53,14 @@ export class HomeComponent implements OnInit {
           this.setListTo('all');
         }
       }
-    );  
+    );
 
 
     this.BrandsService.getBrands()
       .subscribe(data => {
         this.brands = data['data']['brands']
+
+        console.log(data)
         this.brandsLoaded = true;
       });
 
@@ -77,9 +79,9 @@ export class HomeComponent implements OnInit {
 
   FilterBrand(brand) {
     console.log(brand)
-    brand= "brands," + brand
-    this.router.navigateByUrl('/shop', { state: { data :brand } });
+    brand = "brands," + brand
+    this.router.navigateByUrl('/shop', { state: { data: brand } });
 
-  
+
   }
 }

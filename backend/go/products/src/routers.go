@@ -248,17 +248,12 @@ func ProductList(c *gin.Context) {
 					 if err == nil {
 						products= append(products,productModel) 
 					 }
- 
 				}
-
 				data["products"]=products
-
 
 			}else{
 				data["brands"]=keys
 			}
-
-
 		}
 		fmt.Println(data["brands"])
 		c.JSON(http.StatusOK, gin.H{"data": data})
