@@ -2,7 +2,7 @@
 
 <p align="center">
 
-  <h1 align="center"><strong>KALYPSO APP</strong></h1>
+  <h2 align="center"><strong>KALYPSO APP</strong></h2>
 
 </p>
 
