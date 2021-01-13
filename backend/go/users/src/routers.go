@@ -1,8 +1,6 @@
 package users
 
 import (
-	// "encoding/json"
-	// "time"
 	"fmt"
 	"strings"
 	"errors"
@@ -14,7 +12,6 @@ import (
 func UsersRegister(router *gin.RouterGroup) {
 	router.POST("/", UsersRegistration)
 	router.POST("/login", UsersLogin)
-	router.GET("/:username/proof", Proof)
 
 }
 
@@ -29,21 +26,6 @@ func ProfileRegister(router *gin.RouterGroup) {
 	router.DELETE("/:username/follow", ProfileUnfollow)
 
 
-}
-
-func Proof(c *gin.Context){
-	username := c.Param("username")
-	userModel, err := FindOneUser(&Users{Username: username})
-	if err != nil {
-		c.JSON(http.StatusNotFound, common.NewError("profile", errors.New("Invalid username")))
-		return
-	}
-
-	algo:= userModel.GetFollowings()
-
-	fmt.Println(algo)
-	// profileSerializer := ProfileSerializer{c, userModel}
-	// c.JSON(http.StatusOK, gin.H{"profile": profileSerializer.Response()})
 }
 
 func ProfileRetrieve(c *gin.Context) {
@@ -155,9 +137,6 @@ func UsersLogin(c *gin.Context) {
 		client := common.NewClient()
 		user:=`{"username":"`+userModel.Username+`", "email":"`+userModel.Email+`", "type": "`+userModel.Type+`", "bearer":"`+bearer+`", "code":"`+code+`"}`
 
-		// fmt.Println(code)
-			// user:=`{"hola":"adios"}`
-		//save json in redis
 		err_redis := common.SetUser(userModel.Email, user, client)
 		if err_redis != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err_redis.Error()})

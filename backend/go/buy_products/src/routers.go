@@ -1,7 +1,7 @@
 package buy_products
 
 import (
-	"fmt"
+	// "fmt"
 	"errors"
 	"net/http"
 	"gobuys_products/common"
@@ -17,7 +17,6 @@ func Buy_ProductsRegister(router *gin.RouterGroup) {
 func Buy_ProductCreate(c *gin.Context) {
 
 	slug := c.Param("slug")
-	fmt.Println(slug)
 
 	err := InsertBuyProduct(&ProductModel{Slug: slug})
 
@@ -27,11 +26,6 @@ func Buy_ProductCreate(c *gin.Context) {
 		return
 	}
 
-	// if err := SaveOne(&buy_productModelValidator.buy_productModel); err != nil {
-	// 	c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))
-	// 	return
-	// }
-	// serializer := Buy_ProductSerializer{c, buy_productModelValidator.buy_productModel}
 	c.JSON(http.StatusCreated, gin.H{"data":"okey"})
 }
 

@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"strconv"
 	"sort"
-	// "reflect"
 	"strings"
 	"encoding/json"
 	"errors"
@@ -15,7 +14,6 @@ import (
 
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
-	// router.PUT("/:types", Proof)
 	router.POST("/:slug", UpKarmaProduct)
 
 }
@@ -45,12 +43,6 @@ func UpKarmaProduct(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"karma": "okey"})
 }
 
-
-// func Proof(c *gin.Context){
-// 	client := common.NewClient()
-// 	types := c.Param("types")
-// 	err_get, val := common.Get(types, client)
-// }
 
 //General function to karma in products and brands
 func Karma_redis( types string, id string, karma int) error{

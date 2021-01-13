@@ -113,12 +113,7 @@ func (self *Buy_ProductUsers) GetBuy_ProductFeed(limit, offset string) ([]Buy_Pr
 	}
 
 	tx := db.Begin()
-	//followings := self.Users.GetFollowings()
 	 var buy_productUserss []uint
-	// for _, following := range followings {
-	// 	buy_productUsers := GetBuy_ProductUsers(following)
-	// 	buy_productUserss = append(buy_productUserss, buy_productUsers.ID)
-	// }
 
 	tx.Where("author_id in (?)", buy_productUserss).Offset(offset_int).Limit(limit_int).Find(&models)
 

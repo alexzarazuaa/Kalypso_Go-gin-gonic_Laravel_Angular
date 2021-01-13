@@ -29,18 +29,6 @@ type DBConfig struct {
 	Password string
 }
 
-// func BuildDBConfig() *DBConfig {
-// 	dbConfig := DBConfig{
-// 		Host:     "localhost",
-// 		Port:     3306,
-// 		User:     "root",
-// 		Password: "root",
-// 		DBName:   "kalypso",
-// 	}
-// 	// fmt.Println(&dbConfig)
-// 	return &dbConfig
-// }
-
 func BuildDBConfig() *DBConfig {
 	dbConfig := DBConfig{
 		Host:     "mysql",

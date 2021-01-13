@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/gin-gonic/gin"
 	"goProducts/common"
 	"goProducts/src"
@@ -35,36 +35,6 @@ func main() {
 	v1.Use(products.AuthMiddleware(true))
 	products.ProductsRegister(v1.Group("/products"))
 
-	// testAuth := r.Group("/api/ping")
-	// testAuth.GET("/", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message": "pong",
-	// 	})
-	// })
-
-	// test 1 to 1
-	// tx1 := db.Begin()
-	// userA := users.Users{
-	// 	Username: "AAAAAAAAAAAAAAAA",
-	// 	Email:    "aaaa@g.cn",
-	// 	Bio:      "hehddeda",
-	// 	Image:    nil,
-	// }
-	// tx1.Save(&userA)
-	// tx1.Commit()
-	// fmt.Println(userA)
-
-	//db.Save(&Buy_ProductUsers{
-	//    UsersID:userA.ID,
-	//})
-	//var userAA Buy_ProductUsers
-	//db.Where(&Buy_ProductUsers{
-	//    UsersID:userA.ID,
-	//}).First(&userAA)
-	//fmt.Println(userAA)
-
-	//r.Run() // listen and serve on 0.0.0.0:8080
-	fmt.Printf("0.0.0.0:3000")
 	r.Run(":3000")
 }
 
@@ -81,12 +51,6 @@ func MakeRoutes(r *gin.Engine) {
 		}
 		c.Next()
 
-		/*
-			fmt.Printf("c.Request.Method \n")
-			fmt.Printf(c.Request.Method)
-			fmt.Printf("c.Request.RequestURI \n")
-			fmt.Printf(c.Request.RequestURI)
-		*/
 	}
 	r.Use(cors)
 }

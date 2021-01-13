@@ -38,7 +38,6 @@ type Buy_ProductsSerializer struct {
 }
 
 func (s *Buy_ProductSerializer) Response() Buy_ProductResponse {
-	// myUsers := s.C.MustGet("my_user_model").(users.Users)
 	authorSerializer := Buy_ProductUserSerializer{s.C, s.Author}
 	response := Buy_ProductResponse{
 		ID:          s.ID,
