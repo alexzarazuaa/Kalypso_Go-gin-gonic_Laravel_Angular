@@ -22,11 +22,11 @@ type ProductModel struct {
 	AuthorID    uint 
 }
 
-// type Brands struct {
-// 	gorm.Model
-// 	Name         string `gorm:"unique_index"`
-// 	Karma     	 int  `gorm:"column:Karma"`
-// }
+type BrandsKarma struct {
+	gorm.Model
+	Name         string `gorm:"unique_index"`
+	Rating 		 int     `gorm:"column:rating"`
+}
 
 type Users struct {
 	ID           uint    `gorm:"primary_key"`
@@ -201,8 +201,3 @@ func ProductsbyBrands(condition interface{}) ([]ProductModel, error) {
 	return model, err
 }
 
-// func UpdateBrands(name string, karma int) (error) {
-// 	db := common.GetDB()
-// 	err:= db.Model(Brands{}).Where("name = ?", name).Updates(Brands{Karma: karma}).Error
-// 	return err
-// }

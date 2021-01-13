@@ -1,6 +1,8 @@
 package users
 
 import (
+	// "encoding/json"
+	// "time"
 	"fmt"
 	"strings"
 	"errors"
@@ -30,8 +32,6 @@ func ProfileRegister(router *gin.RouterGroup) {
 }
 
 func Proof(c *gin.Context){
-	fmt.Println("-------------------------------")
-
 	username := c.Param("username")
 	userModel, err := FindOneUser(&Users{Username: username})
 	if err != nil {
@@ -103,6 +103,7 @@ func UsersRegistration(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, common.NewError("database", err))
 		return
 	}
+	
 	c.Set("my_user_model", userModelValidator.userModel)
 	serializer := UserSerializer{c}
 	c.JSON(http.StatusCreated, gin.H{"user": serializer.Response()})
@@ -168,9 +169,7 @@ func UsersLogin(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 	} else{		//No normal type -> show type
-		
 		c.JSON(http.StatusOK, gin.H{"Does not have a normal type": userModel.Type })
-
 	}
 
 }

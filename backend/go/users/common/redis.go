@@ -31,3 +31,20 @@ func SetUser(key string, value string, client *redis.Client) error {
 	}
 	return nil
 }
+
+//-----------------------------------------------------------------------------------
+
+
+//Karma :  Struct of the redis package
+// type Karma struct{
+// 	Key   string `json:"key"   binding:"required"`
+// 	Value []byte `json:"value" binding:"required"`
+// }
+
+func GetKarma(key string, client *redis.Client) (error, string) {
+	val, err := client.Get(ctx, key).Result()
+    if err != nil {
+        return err, val
+    }
+	return err, val
+}

@@ -20,7 +20,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     console.log('CONSOLE PANEL ADMIN');
 
-    this.BrandsService.getBrands()
+    this.BrandsService.getBrands(',admin')
     .subscribe(data => {
       this.brands = data['data']['brands']
       this.products = data['data']['products'];

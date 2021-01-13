@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     );
 
 
-    this.BrandsService.getBrands()
+    this.BrandsService.getBrands( ',client')
       .subscribe(data => {
         this.brands = data['data']['brands']
 

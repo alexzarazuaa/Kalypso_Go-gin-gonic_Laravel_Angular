@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sort"
 	// "reflect"
-	// "time"
 	"strings"
 	"encoding/json"
 	"errors"
@@ -15,7 +14,7 @@ import (
 
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
-	router.PUT("/:types", Proof)
+	// router.PUT("/:types", Proof)
 	router.POST("/:slug", UpKarmaProduct)
 
 }
@@ -46,13 +45,11 @@ func UpKarmaProduct(c *gin.Context) {
 }
 
 
-func Proof(c *gin.Context){
-	client := common.NewClient()
-	types := c.Param("types")
-	err_get, val := common.Get(types, client)
-	fmt.Println(err_get)
-	fmt.Println(val)
-}
+// func Proof(c *gin.Context){
+// 	client := common.NewClient()
+// 	types := c.Param("types")
+// 	err_get, val := common.Get(types, client)
+// }
 
 //General function to karma in products and brands
 func Karma_redis( types string, id string, karma int) error{
@@ -90,30 +87,6 @@ func Karma_redis( types string, id string, karma int) error{
 	if(err_SetMarshal!= nil){
 		return err_SetMarshal
 	}
-
-	// //At 10 minutes
-	// // timeDelay := 60000typytypess0 * time.Millisecond
-
-	// // var endTime <-chan time.Time
-	
-	// // endTime = time.After(timeDelay)
-
-    // // for {
-    // //     select {
-    // //     case <-endTime:
-		
-	// // 		//We pass redis(products & brands) in database
-	// // 		for key, element := range objects {
-	// // 			err_update := UpdateBrands(key, element)
-
-	// // 			if (err_update!=nil){
-	// // 				c.JSON(http.StatusBadRequest, gin.H{"error": err_update.Error()})
-	// // 				return
-	// // 			}
-	// // 		}
-		
-    // //     }
-	// // }
 		return nil
 }
 
@@ -217,13 +190,15 @@ func ProductList(c *gin.Context) {
 
 	} else if (strings.Contains(slug, "home")){
 
+		mode:= strings.Split(slug, ",")
+
+
 		var vars [2]string
 		vars[0] = "brands"
-		vars[1] = "products"
+		vars[1] = "pp"
 
 		// products := make([]ProductModel, 0)
 		data := make(map[string]interface{})
-		product := make(map[string]interface{})
 		products := []map[string]interface{}{}
 
 
@@ -231,30 +206,63 @@ func ProductList(c *gin.Context) {
 		client := common.NewClient()
 
 		for v := range vars {
-			fmt.Println(vars[v])
 
 			err_get, val := common.Get(vars[v], client)
 
 			if err_get != nil {
-				//AQUI LO BUSCAREMOS DE BASE DE DATOS/////////////////////////
-				c.JSON(http.StatusBadRequest, gin.H{"error": err_get.Error()})	
-				return
+			
+				if (vars[v] == "pp"){
+
+				favorited := c.Query("favorited")
+				limit := c.Query("limit")
+				offset := c.Query("offset")
+				productModels, _, err := FindManyProducts(limit, offset, favorited)
+				if err != nil {
+					c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
+					return
+				}
+
+				for k := range productModels {
+
+					product := map[string]interface{}{
+						productModels[k].Brand: productModels[k].Rating,
+					}
+
+					algo, _ := json.Marshal(product)
+
+					val = string(algo)
+					// if err_marshal != nil {
+					// 	return err_marshal
+					// }
+
+			   }
 			}
+			}else{ 
 
-			keys:= order_redis(val)
+			value:= false
+
+			if (mode[1]=="admin"){ value=true}
+			fmt.Println("--------------------------")
+
+			fmt.Println(val)
+			keys:= order_redis(val, value)
 
 
-			if (vars[v] == "products"){
+			if (vars[v] == "pp"){
 				 for k := range keys {
+
+					
 					 
 					 err, productModel:=detail(fmt.Sprintf("%v", keys[k]["key"]))
 
 					 if err == nil {
-						 product["key"]=productModel
-						 product["value"]=keys[k]["value"]
+						 product := map[string]interface{}{
+							"key" : productModel,
+							"value" : keys[k]["value"],
+						}
 
 						products= append(products,product) 
-					 }
+					}
 				}
 				data["products"]=products
 
@@ -262,6 +270,7 @@ func ProductList(c *gin.Context) {
 				data["brands"]=keys
 			}
 		}
+	}
 		c.JSON(http.StatusOK, gin.H{"data": data})
 
 
@@ -311,7 +320,7 @@ func ProductList(c *gin.Context) {
 }
 
 
-func order_redis( val string )  []map[string]interface{} {
+func order_redis( val string, value bool )  []map[string]interface{} {
 	objects := map[string]int{}
 
 	json.Unmarshal([]byte(val), &objects)
@@ -333,6 +342,7 @@ func order_redis( val string )  []map[string]interface{} {
 
 	data := []map[string]interface{}{}
 
+
 	for k := range objectsort {
 		object := map[string]interface{}{
 			"key" : objectsort[k].Key, 
@@ -341,7 +351,7 @@ func order_redis( val string )  []map[string]interface{} {
 
 		data = append(data, object)
 
-		if k==4	{break}
+		if (value==false && k==4 ) {break}
 	}
 
 	return data

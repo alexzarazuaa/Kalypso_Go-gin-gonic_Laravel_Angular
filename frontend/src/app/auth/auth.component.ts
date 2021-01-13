@@ -68,8 +68,21 @@ export class AuthComponent implements OnInit {
           
         },
         err => {
-          this.toastr.error(err.error, 'Invalid credentials')
+      
+           let error=err['errors']["database"]
+          if (error.includes("Duplicate entry")){
+
+            if(error.includes("for key 'uix_users_email'")){
+              this.toastr.error(err.error, 'This email is alredy in use')
+            }else if(error.includes("for key 'username_UNIQUE'")){
+              this.toastr.error(err.error, 'This username is alredy in use')
+            }
+
+          }else{
+            this.toastr.error(err.error, 'Invalid credentials')
+          }
           this.isSubmitting = false;
+
         }
       );
   }

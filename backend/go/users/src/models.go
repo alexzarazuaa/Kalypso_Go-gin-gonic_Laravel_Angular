@@ -9,14 +9,9 @@ import (
 	"time"
 )
 
-// Models should only be concerned with database schema, more strict checking should be put in validator.
-//
-// More detail you can find here: http://jinzhu.me/gorm/models.html#model-definition
-//
-// HINT: If you want to split null and "", you should use *string instead of string.
 type Users struct {
 	ID           uint    `gorm:"primary_key"`
-	Username     string  `gorm:"column:username"`
+	Username     string  `gorm:"column:username;unique_index"`
 	Email        string  `gorm:"column:email;unique_index"`
 	Image        *string `gorm:"column:image"`
 	PasswordHash string  `gorm:"column:password;not null"`
@@ -27,16 +22,6 @@ type Users struct {
 	UpdatedAt    time.Time
 }
 
-// A hack way to save ManyToMany relationship,
-// gorm will build the alias as FollowingBy <-> FollowingByID <-> "following_by_id".
-//
-// DB schema looks like: id, created_at, deleted_at, following_id, followed_by_id.
-//
-// Retrieve them by:
-// 	db.Where(FollowModel{ FollowingID:  v.ID, FollowedByID: u.ID, }).First(&follow)
-// 	db.Where(FollowModel{ FollowedByID: u.ID, }).Find(&follows)
-//
-// More details about gorm.Model: http://jinzhu.me/gorm/models.html#conventions
 type FollowModel struct {
 	gorm.Model
 	Following    Users
@@ -45,18 +30,20 @@ type FollowModel struct {
 	FollowedByID uint
 }
 
+
+type BrandsKarma struct {
+	gorm.Model
+	Name         string `gorm:"unique_index"`
+	Karma     	 int  `gorm:"column:Karma"`
+}
+
 // Migrate the schema of database if needed
 func AutoMigrate() {
 	db := common.GetDB()
-
 	db.AutoMigrate(&Users{})
 	db.AutoMigrate(&FollowModel{})
 }
 
-// What's bcrypt? https://en.wikipedia.org/wiki/Bcrypt
-// Golang bcrypt doc: https://godoc.org/golang.org/x/crypto/bcrypt
-// You can change the value in bcrypt.DefaultCost to adjust the security index.
-// 	err := userModel.setPassword("password0")
 func (u *Users) setPassword(password string) error {
 	if len(password) == 0 {
 		return errors.New("password should not be empty!")
@@ -160,4 +147,10 @@ func (u Users) GetFollowings() []Users {
 	}
 	tx.Commit()
 	return followings
+}
+
+func UpdateBrands(name string, karma int) (error) {
+	db := common.GetDB()
+	err:= db.Model(BrandsKarma{}).Where("name = ?", name).Updates(BrandsKarma{Karma: karma}).Error
+	return err
 }

@@ -13,8 +13,8 @@ export class BrandsService {
         private apiService: ApiService
     ) { }
 
-    getBrands(): Observable<[string]> {
-        return this.apiService.get_goProd('/home')
+    getBrands(mode): Observable<[string]> {
+        return this.apiService.get_goProd('/home'+ mode)
             .pipe(map(data => {
                 console.log(data)
                 return data;

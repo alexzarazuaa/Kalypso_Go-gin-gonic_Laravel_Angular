@@ -25,13 +25,13 @@ if(history.state.data){
     if((history.state.data).includes('brands')){
           this.BrandsService.filterBrands(history.state.data)
       .subscribe(data => {
-        console.log(data['product'])
         this.products=data['product'];
       })
     }
   }else if(this.router.url==="/"){
-    this.BrandsService.getBrands()
+    this.BrandsService.getBrands(',client')
       .subscribe(data => {
+        console.log(data)
         this.products = data['data']['products']
       });
   }else{
