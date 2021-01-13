@@ -23,23 +23,15 @@ export class HomeComponent implements OnInit {
     type: 'all',
     filters: {}
   };
-  // tags: Array<string> = [];
+
   brands: Array<string> = [];
   brandsLoaded = false;
   products: Products[];
 
-  // tagsLoaded = false;
+
 
   ngOnInit() {
 
-    // this.userService.currentUser.subscribe(
-    //   (userData) => {
-    //     console.log("-+-----", userData)
-
-    //     if(userData.type == 'admin'){
-    //       this.router.navigateByUrl('/admin')
-    //     }
-    //   })
 
     this.userService.isAuthenticated.subscribe(
       (authenticated) => {
@@ -60,7 +52,6 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         this.brands = data['data']['brands']
 
-        console.log(data)
         this.brandsLoaded = true;
       });
 
@@ -78,7 +69,6 @@ export class HomeComponent implements OnInit {
   }
 
   FilterBrand(brand) {
-    console.log(brand)
     brand = "brands," + brand
     this.router.navigateByUrl('/shop', { state: { data: brand.key } });
 

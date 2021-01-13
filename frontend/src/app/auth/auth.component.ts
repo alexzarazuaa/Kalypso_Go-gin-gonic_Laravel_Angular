@@ -53,17 +53,12 @@ export class AuthComponent implements OnInit {
       .attemptAuth(this.authType, credentials)
       .subscribe(
         data => {
-          console.log(data['user'].type == 'admin')
+
       
           this.toastr.success('Logged in');
 
           this.router.navigateByUrl('/')
 
-          // if(data['user'].type == 'admin'){
-          //   this.router.navigateByUrl('/admin')
-          // }else{
-          //   this.router.navigateByUrl('/')
-          // }
         
           
         },

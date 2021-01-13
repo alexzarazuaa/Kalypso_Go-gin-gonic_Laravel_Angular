@@ -21,7 +21,7 @@ export class BuysProductsService {
   getOne(id): Observable<BuyProduct> {
     return this.apiService.get('/buysproducts/' + id)
       .pipe(map(data => {
-        console.log('data in service',data);
+ 
         return data;
       }));
   }// end_get
@@ -34,7 +34,7 @@ export class BuysProductsService {
   insert(slug){
     return this.apiService.post_buys('/' + slug)
     .pipe(map(data => {
-      console.log('data in service',data);
+
       return data;
     }));
   }

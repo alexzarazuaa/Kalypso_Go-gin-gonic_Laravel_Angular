@@ -25,7 +25,7 @@ export class FavoriteButtonComponent {
 
   toggleFavorite() {
 
-    console.log(this.product);
+
 
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
@@ -43,7 +43,6 @@ export class FavoriteButtonComponent {
               this.toastr.success('PRODUCT FAVORITE');
               this.isSubmitting = true;
               this.product.favorited = true;
-              // document.getElementById('like').style.color = "red";
               this.toggle.emit(true);
      
             },
@@ -52,7 +51,6 @@ export class FavoriteButtonComponent {
 
         // Otherwise, unfavorite the products
         } else {
-          console.log("PEPEPEPEP")
           return this.productsService.unfavorite(this.product.slug)
           .pipe(tap(
             data => {

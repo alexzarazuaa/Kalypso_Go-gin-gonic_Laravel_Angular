@@ -34,7 +34,6 @@ export class ProductComponent implements OnInit {
     // Retreive the prefetched product
     this.route.data.subscribe(
       (data: { product: Products; }) => {
-        console.log(data.product, 'detail')
         this.product = data.product;
       }
     );
@@ -62,8 +61,6 @@ export class ProductComponent implements OnInit {
 
   BuyProduct() {
 
-    // console.log(this.product);
-
     this.userService.isAuthenticated.pipe(concatMap(
       (authenticated) => {
         // Not authenticated? Push to login screen
@@ -73,7 +70,6 @@ export class ProductComponent implements OnInit {
         }        
         this.buysProducts.insert(this.product["product"].slug)
         .subscribe(data =>{
-          console.log(data)
           if(data['data']=="okey"){
             this.toastr.success('Producto Comprado', 'Comprado');
             

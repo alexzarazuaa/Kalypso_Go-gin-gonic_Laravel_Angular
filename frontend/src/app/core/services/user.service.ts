@@ -44,8 +44,7 @@ export class UserService {
   setAuth(user: User) {
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
-    console.log("TOKEN==========> : ");
-    console.log(user.token);
+
 
 
 

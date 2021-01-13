@@ -24,7 +24,7 @@ export class ProductsService {
     const params = {};
     return this.apiService.get_goProd('/list')
     .pipe(map(data => {
-      console.log('data in service',data.products);
+    
       return data.products;
     }));
   }// end_query
@@ -32,7 +32,7 @@ export class ProductsService {
   getOneGO(slug): Observable<Products> {
     return this.apiService.get_goProd('/' + slug)
       .pipe(map(data => {
-        console.log('slug detail product GO',data);
+      
         return data;
       }));
   }// end_get
@@ -42,7 +42,7 @@ export class ProductsService {
   getOne(id): Observable<Products> {
     return this.apiService.get('/products/' + id)
       .pipe(map(data => {
-        console.log('data in service',data);
+   
         return data;
       }));
   }// end_get

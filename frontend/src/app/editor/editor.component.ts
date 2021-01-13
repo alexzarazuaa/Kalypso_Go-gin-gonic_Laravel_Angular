@@ -45,8 +45,7 @@ export class EditorComponent implements OnInit {
 
 
   submitForm() {
-    console.log('click')
-    console.log(this.product);
+
     
     this.isSubmitting = true;
 
@@ -56,7 +55,6 @@ export class EditorComponent implements OnInit {
     // post the changes
     this.productService.save(this.product).subscribe(
       data => {
-        console.log(data);
         this.toastr.success('Product Created', 'Create');
         this.router.navigateByUrl('/')
       }, 
