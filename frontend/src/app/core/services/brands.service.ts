@@ -29,4 +29,13 @@ export class BrandsService {
             }));
     }
 
+    insertRedisDb(): Observable<[string]> {
+        return this.apiService.get('/brands')
+            .pipe(map(data => {
+                console.log(data)
+                return data;
+            }));
+    }
+
+
 }

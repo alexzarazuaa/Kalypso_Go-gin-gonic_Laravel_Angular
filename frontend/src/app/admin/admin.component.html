@@ -43,32 +43,58 @@
 
         <section>
 
-          <div>
-            <span>Brands</span>
-            <div class="scrollmenu">
-              <a *ngFor="let brand of brands"> {{brand.key}} : {{brand.value}} </a>
-            </div>
-          </div>
-          <div>
-            <span> Products</span>
-            <div class="scrollmenu">
-              <a *ngFor="let product of products"  [routerLink]="['/product', product.key.Slug]" > {{product.key.Name}} : {{product.value}}  </a>
-            </div>
-          </div>
+          <section class="container">
 
-          <h1>PRODUCTOS</h1>
-          <ul class="nav nav-pills nav-stacked">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/editor" routerLinkActive="active">
+            <article>
+              <h1><strong>INSERTAR PRODUCTOS</strong></h1>
+
+              <button   class="btnEditor" routerLink="/editor" routerLinkActive="active">
                 <i class="ion-compose"></i>&nbsp;Nuevo Producto
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/shop" routerLinkActive="active">
+              </button> &nbsp;&nbsp;&nbsp;&nbsp;
+
+  
+              <button class="btnDelete" routerLink="/shop" routerLinkActive="active">
                 <i></i>&nbsp; Eliminar Producto
-              </a>
-            </li>
-          </ul>
+              </button>
+  
+            </article>
+        
+            <section>
+              <h1><strong>INSERTAR RATING EN BD</strong></h1>
+  
+              <button class="btnInsert" (click)="insertBD()">INSERT</button>
+            </section>
+  
+  
+            <section>
+              <article>
+                <h1> MARCAS Y SU RATING</h1>
+                <br>
+                <div class="scrollmenu">
+                  <a *ngFor="let brand of brands"> {{brand.key}} : {{brand.value}} </a>
+                </div>
+              </article>
+  
+              <article>
+                <br>
+                <h1>PRODUCTOS Y SU RATING</h1>
+                <br>
+                <div class="scrollmenu">
+                  <a *ngFor="let product of products" [routerLink]="['/product', product.key.Slug]"> {{product.key.Name}}
+                    :
+                    {{product.value}} </a>
+                </div>
+              </article>
+              <br>
+  
+            </section>
+
+          </section>
+
+
+
+
+
 
 
 

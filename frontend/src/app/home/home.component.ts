@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit {
   FilterBrand(brand) {
     console.log(brand)
     brand = "brands," + brand
-    this.router.navigateByUrl('/shop', { state: { data: brand } });
+    this.router.navigateByUrl('/shop', { state: { data: brand.key } });
 
 
   }

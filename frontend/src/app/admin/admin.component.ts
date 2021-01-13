@@ -25,6 +25,19 @@ export class AdminComponent implements OnInit {
       this.brands = data['data']['brands']
       this.products = data['data']['products'];
     });
+
+
+
+
+  }
+
+  insertBD(){
+
+    console.log('-++-+--+-- entra ------')
+    this.BrandsService.insertRedisDb()
+    .subscribe(data =>{
+          console.log(data)
+    })
   }
 
 }
