@@ -201,3 +201,10 @@ func ProductsbyBrands(condition interface{}) ([]ProductModel, error) {
 	return model, err
 }
 
+func GetBrands() ([]BrandsKarma, error) {
+	db := common.GetDB()
+	var model []BrandsKarma
+	err :=db.Order("rating desc").Find(&model).Error
+	return model, err
+}
+

@@ -2,6 +2,7 @@ package products
 
 import (
 	"fmt"
+	"strconv"
 	"sort"
 	// "reflect"
 	"strings"
@@ -195,85 +196,79 @@ func ProductList(c *gin.Context) {
 
 		var vars [2]string
 		vars[0] = "brands"
-		vars[1] = "pp"
+		vars[1] = "products"
 
-		// products := make([]ProductModel, 0)
 		data := make(map[string]interface{})
 		products := []map[string]interface{}{}
-
-
-
+		value:= false
+		if (mode[1]=="admin"){ value=true}
 		client := common.NewClient()
 
+		//bucleamos para que busque brands y product
 		for v := range vars {
 
 			err_get, val := common.Get(vars[v], client)
 
-			if err_get != nil {
-			
-				if (vars[v] == "pp"){
+			if err_get != nil { ///SI no existen datos en redis los buscara en la base de datos
+				if (vars[v] == "products"){//Si los datos que no existen son los de productos
 
-				favorited := c.Query("favorited")
-				limit := c.Query("limit")
-				offset := c.Query("offset")
-				productModels, _, err := FindManyProducts(limit, offset, favorited)
-				if err != nil {
-					c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
-					return
-				}
-
-				for k := range productModels {
-
-					product := map[string]interface{}{
-						productModels[k].Brand: productModels[k].Rating,
+					favorited := c.Query("favorited")
+					limit := c.Query("limit")
+					offset := c.Query("offset")
+					productModels, _, err := FindManyProducts(limit, offset, favorited)
+					if err != nil {
+						c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
+						return
 					}
 
-					algo, _ := json.Marshal(product)
-
-					val = string(algo)
-					// if err_marshal != nil {
-					// 	return err_marshal
-					// }
-
-			   }
-			}
-			}else{ 
-
-			value:= false
-
-			if (mode[1]=="admin"){ value=true}
-			fmt.Println("--------------------------")
-
-			fmt.Println(val)
-			keys:= order_redis(val, value)
-
-
-			if (vars[v] == "pp"){
-				 for k := range keys {
-
-					
-					 
-					 err, productModel:=detail(fmt.Sprintf("%v", keys[k]["key"]))
-
-					 if err == nil {
-						 product := map[string]interface{}{
-							"key" : productModel,
-							"value" : keys[k]["value"],
+					str:=`{`
+					for k := range productModels {
+						if (	k ==(len(productModels)-1)) {
+							str=str+ `"`+ productModels[k].Slug+`":`+ strconv.Itoa(productModels[k].Rating)
+						}else{
+							str=str+ `"`+ productModels[k].Slug+`":`+ strconv.Itoa(productModels[k].Rating)+`,`
 						}
-
-						products= append(products,product) 
 					}
-				}
-				data["products"]=products
+			   		str=str+ `}`
 
-			}else{
-				data["brands"]=keys
+					keys:= order_redis(str, value)
+
+					products:= ProductsKarma(keys, products)
+					data["products"]=products
+
+				}else{  // Si los datos que no existen son los de marcas
+					brands, err := GetBrands()
+					if err != nil {
+						c.JSON(http.StatusNotFound, common.NewError("products", errors.New("Invalid param")))
+						return
+					}
+
+					str:=`{`
+					for k := range brands {
+						if (k ==(len(brands)-1)) {
+							str=str+ `"`+ brands[k].Name+`":`+ strconv.Itoa(brands[k].Rating)
+						}else{
+							str=str+ `"`+ brands[k].Name+`":`+ strconv.Itoa(brands[k].Rating)+`,`
+						}
+			 		}
+			  		str=str+ `}`
+
+					keys:= order_redis(str, value)
+					data["brands"]=keys
+				}
+			}else{  // Si existen datos en redis los buscara en redis
+
+				keys:= order_redis(val, value)
+
+					if (vars[v] == "products"){ // si los datos existentes en redis son de productos
+						products:= ProductsKarma(keys, products)
+						data["products"]=products
+					}else{// si los datos existentes en redis son de marcas
+						data["brands"]=keys
+					}
 			}
 		}
-	}
 		c.JSON(http.StatusOK, gin.H{"data": data})
-
-
 	}else if (strings.Contains(slug, "brands")){
 		brands:= strings.Split(slug, ",")
 		brand:=brands[1]
@@ -306,7 +301,7 @@ func ProductList(c *gin.Context) {
 			return
 		}
 
-		 err, productModel:=detail(slug)
+		 err, productModel:=detail(slug, true)
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -319,7 +314,6 @@ func ProductList(c *gin.Context) {
 	}
 }
 
-
 func order_redis( val string, value bool )  []map[string]interface{} {
 	objects := map[string]int{}
 
@@ -329,7 +323,7 @@ func order_redis( val string, value bool )  []map[string]interface{} {
 		Key   string
 		Value int
 	}
-	
+
 	var objectsort []object
 	for k, v := range objects {
 		objectsort = append(objectsort, object{k, v})
@@ -357,17 +351,38 @@ func order_redis( val string, value bool )  []map[string]interface{} {
 	return data
 }
 
-
-func detail (slug string) (error,ProductModel) {
+func detail (slug string, key bool) (error,ProductModel) {
 	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
 	if err != nil {
 		return err , productModel
 	}
 
-	err_karma:= Karma_redis("products", productModel.Slug, 5)
-	if err_karma != nil {
-	return err_karma, productModel
+	if (key==true){
+		err_karma:= Karma_redis("products", productModel.Slug, 5)
+		if err_karma != nil {
+		return err_karma, productModel
+		}
 	}
+	
 
 	return nil, productModel
+}
+
+func ProductsKarma (keys, products []map[string]interface{}) []map[string]interface{} {
+	for k := range keys {
+
+					
+					 
+		err, productModel:=detail(fmt.Sprintf("%v", keys[k]["key"]), false)
+
+		if err == nil {
+			product := map[string]interface{}{
+			   "key" : productModel,
+			   "value" : keys[k]["value"],
+		   }
+
+		   products= append(products,product) 
+	   }
+   }
+   return products
 }
