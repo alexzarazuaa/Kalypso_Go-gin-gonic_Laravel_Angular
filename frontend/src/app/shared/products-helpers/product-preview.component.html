@@ -12,7 +12,7 @@
           {{product.name}}
         </span>
         <ng-template #name>
-          <span>{{product.key.Name}}</span>
+          <span>{{product.Name}}</span>
         </ng-template>
 
         <h3>BRAND</h3>
@@ -20,7 +20,7 @@
           {{product.brand}}
         </span>
         <ng-template #brand>
-          <span>{{product.key.Brand}}</span>
+          <span>{{product.Brand}}</span>
         </ng-template>
 
         <h3 class="rating">RATING</h3>
@@ -28,7 +28,7 @@
           {{product.rating}}
         </span>
         <ng-template #rating>
-          <span>{{product.key.Rating}}</span>
+          <span>{{product.Rating}}</span>
         </ng-template>
         <br>
         <br>
@@ -38,7 +38,7 @@
         </div>
 
         <ng-template #slug>
-          <a  [routerLink]="['/product', product.key.Slug]" class="preview-link">READ MORE</a>
+          <a  [routerLink]="['/product', product.Slug]" class="preview-link">READ MORE</a>
         </ng-template>
 
       </section>
