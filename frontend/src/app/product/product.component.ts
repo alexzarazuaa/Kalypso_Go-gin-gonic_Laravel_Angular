@@ -67,18 +67,18 @@ export class ProductComponent implements OnInit {
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
-        }        
+        }
         this.buysProducts.insert(this.product["product"].slug)
-        .subscribe(data =>{
-          if(data['data']=="okey"){
-            this.toastr.success('Producto Comprado', 'Comprado');
-            
-            let data=this.product["product"].slug + ',' + this.product["product"].brand;
-            this.productsService.UpKarmaProduct(data).subscribe()
+          .subscribe(data => {
+            if (data['data'] == "okey") {
+              this.toastr.success('Producto Comprado', 'Comprado');
+
+              let data = this.product["product"].slug + ',' + this.product["product"].brand;
+              this.productsService.UpKarmaProduct(data).subscribe()
 
 
-          }
-        })
+            }
+          })
 
 
       }

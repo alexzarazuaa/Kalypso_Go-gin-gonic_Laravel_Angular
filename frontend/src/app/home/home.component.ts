@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ArticleListConfig, TagsService, BrandsService, UserService, Products } from '../core';
+import { BrandsService, UserService, Products } from '../core';
 
 @Component({
   selector: 'app-home-page',
@@ -11,7 +11,6 @@ import { ArticleListConfig, TagsService, BrandsService, UserService, Products } 
 export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
-    //private tagsService: TagsService,
     private userService: UserService,
     private BrandsService: BrandsService
   ) { }
@@ -19,10 +18,6 @@ export class HomeComponent implements OnInit {
 
 
   isAuthenticated: boolean;
-  listConfig: ArticleListConfig = {
-    type: 'all',
-    filters: {}
-  };
 
   brands: Array<string> = [];
   brandsLoaded = false;
@@ -37,18 +32,11 @@ export class HomeComponent implements OnInit {
       (authenticated) => {
         this.isAuthenticated = authenticated;
 
-
-        // set the article list accordingly
-        if (authenticated) {
-          this.setListTo('feed');
-        } else {
-          this.setListTo('all');
-        }
       }
     );
 
 
-    this.BrandsService.getBrands( ',client')
+    this.BrandsService.getBrands(',client')
       .subscribe(data => {
         this.brands = data['data']['brands']
 
@@ -57,21 +45,17 @@ export class HomeComponent implements OnInit {
 
   }
 
-  setListTo(type: string = '', filters: Object = {}) {
-    // If feed is requested but user is not authenticated, redirect to login
-    if (type === 'feed' && !this.isAuthenticated) {
-      this.router.navigateByUrl('/login');
-      return;
-    }
+  // setListTo(type: string = '', ) {
+  //   // If feed is requested but user is not authenticated, redirect to login
+  //   if (type === 'feed' && !this.isAuthenticated) {
+  //     this.router.navigateByUrl('/login');
+  //     return;
+  //   }
 
-    // Otherwise, set the list object
-    this.listConfig = { type: type, filters: filters };
-  }
+  // }
 
   FilterBrand(brand) {
     brand = "brands," + brand
     this.router.navigateByUrl('/shop', { state: { data: brand.key } });
-
-
   }
 }

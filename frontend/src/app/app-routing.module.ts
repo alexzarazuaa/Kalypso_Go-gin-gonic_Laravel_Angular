@@ -15,10 +15,6 @@ const routes: Routes = [
     loadChildren: './editor/editor.module#EditorModule'
   },
   {
-    path: 'article',
-    loadChildren: './article/article.module#ArticleModule'
-  },
-  {
     path:'product',
     loadChildren : './product/products.module#ProductModule'
 

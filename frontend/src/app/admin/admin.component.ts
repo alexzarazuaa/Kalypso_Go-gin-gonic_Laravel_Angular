@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Products, BrandsService  } from '../core';
+import { Products, BrandsService } from '../core';
 
 
 @Component({
@@ -11,35 +10,29 @@ import { Products, BrandsService  } from '../core';
 })
 export class AdminComponent implements OnInit {
   brands: Array<string> = [];
-  products : Products[];
+  products: Products[];
 
   constructor(
-    private router: Router,
-    private BrandsService : BrandsService,
+    private BrandsService: BrandsService,
     private toastr: ToastrService
   ) { }
 
   ngOnInit() {
 
-
     this.BrandsService.getBrands(',admin')
-    .subscribe(data => {
-      this.brands = data['data']['brands']
-      this.products = data['data']['products'];
-    });
-
-
-
+      .subscribe(data => {
+        this.brands = data['data']['brands']
+        this.products = data['data']['products'];
+      });
 
   }
 
-  insertBD(){
 
- 
+  insertBD() {
     this.BrandsService.insertRedisDb()
-    .subscribe(data =>{
-          this.toastr.success('INSERT IN BD');
-    })
+      .subscribe(data => {
+        this.toastr.success('INSERT IN BD');
+      })
   }
 
 }
