@@ -115,12 +115,29 @@ func UsersLogin(c *gin.Context) {
 
 		UpdateContextUsers(c, userModel.ID)
 		serializer := UserSerializer{c}
+		// bearer:=serializer.Response().Bearer
+
+		// mail:=serializer.Response().Email
+
+		mail:= strings.Split(serializer.Response().Email, "@")
+		bearer:= strings.Split(serializer.Response().Bearer, ".")
+		cryptbearer:=bearer[0] + `*` + mail[0] + `*` + bearer[1] + `*` + mail[1] + `*` + bearer[2] 
+
+
+		client := common.NewClient()
+
+		err_redis := common.SetUser("user", cryptbearer, client)
+		if err_redis != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_redis.Error()})
+			return
+		}
 		c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
+
 
 	}else if ((userModel.Type)=="admin"){	//Type admin -> show user information
 		// create bearer
 		serializer1 := UserSerializer{c}
-		bearer:=serializer1.Response().Token
+		bearer:=serializer1.Response().Bearer
 
 		// insert bearer in DB
 		err := userModel.InsertToken(&Users{Bearer:bearer})

@@ -126,6 +126,7 @@ func ProductFavorite(c *gin.Context) {
 		return
 	}
 	myUserModel := c.MustGet("my_user_model").(Users)
+
 	err = productModel.favoriteBy(GetProductUsers(myUserModel))
 
 
@@ -193,6 +194,7 @@ func ProductList(c *gin.Context) {
 		data := make(map[string]interface{})
 		products := []map[string]interface{}{}
 		value:= false
+		
 		if (mode[1]=="admin"){ value=true}
 		client := common.NewClient()
 
