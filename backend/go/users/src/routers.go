@@ -130,18 +130,18 @@ func UsersLogin(c *gin.Context) {
 		serializer := UserSerializer{c}
 
 
-		// mail:= strings.Split(serializer.Response().Email, "@")
-		// bearer:= strings.Split(serializer.Response().Bearer, ".")
-		// cryptbearer:=bearer[0] + `*` + mail[0] + `*` + bearer[1] + `*` + mail[1] + `*` + bearer[2] 
+		mail:= strings.Split(serializer.Response().Email, "@")
+		bearer:= strings.Split(serializer.Response().Bearer, ".")
+		cryptbearer:=bearer[0] + `*` + mail[0] + `*` + bearer[1] + `*` + mail[1] + `*` + bearer[2] 
 
 
-		// client := common.NewClient()
+		client := common.NewClient()
 
-		// err_redis := common.SetUser("user", cryptbearer, client)
-		// if err_redis != nil {
-		// 	c.JSON(http.StatusBadRequest, gin.H{"error": err_redis.Error()})
-		// 	return
-		// }
+		err_redis := common.SetUser("user", cryptbearer, client)
+		if err_redis != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err_redis.Error()})
+			return
+		}
 		 c.JSON(http.StatusOK, gin.H{"user": serializer.Response()})
 
 
