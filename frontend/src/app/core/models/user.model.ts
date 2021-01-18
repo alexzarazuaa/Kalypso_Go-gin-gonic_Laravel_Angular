@@ -1,6 +1,6 @@
 export interface User {
   email: string;
-  token: string;
+  bearer: string;
   username: string;
   bio: string;
   image: string;

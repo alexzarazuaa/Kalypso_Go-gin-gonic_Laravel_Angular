@@ -46,7 +46,6 @@ type ProductUsers struct {
 	gorm.Model
 	Users      Users
 	UsersID    uint
-	ProductModels  []ProductModel  `gorm:"ForeignKey:AuthorID"`
 	FavoriteModels []FavoriteModel `gorm:"ForeignKey:FavoriteByID"`
 }
 
@@ -60,16 +59,17 @@ type FavoriteModel struct {
 }
 
 
-func GetProductUsers(userModel Users) ProductUsers {
+func GetProductUsers(user Users) ProductUsers {
 	var productUsers ProductUsers
-	if userModel.ID == 0 {
+	if user.ID == 0 {
 		return productUsers
 	}
 	db := common.GetDB()
+
 	db.Where(&ProductUsers{
-		UsersID: userModel.ID,
+		UsersID: user.ID,
 	}).FirstOrCreate(&productUsers)
-	productUsers.Users = userModel
+	productUsers.Users = user
 	return productUsers
 }
 
@@ -123,10 +123,13 @@ func (product ProductModel) favoritesCount() uint {
 func (product ProductModel) isFavoriteBy(user ProductUsers) bool {
 	db := common.GetDB()
 	var favorite FavoriteModel
-	db.Where(FavoriteModel{
-		FavoriteID:   product.ID,
-		FavoriteByID: user.ID,
-	}).First(&favorite)
+
+	if ( user.UsersID != 0){
+		db.Where(FavoriteModel{
+			FavoriteID:   product.ID,
+			FavoriteByID: user.UsersID,
+		}).First(&favorite)
+	}
 	return favorite.ID != 0
 }
 
@@ -135,7 +138,7 @@ func (product ProductModel) favoriteBy(user ProductUsers) error {
 	var favorite FavoriteModel
 	err := db.FirstOrCreate(&favorite, &FavoriteModel{
 		FavoriteID:   product.ID,
-		FavoriteByID: user.Users.ID,
+		FavoriteByID: user.UsersID,
 	}).Error
 	return err
 }
@@ -144,7 +147,7 @@ func (product ProductModel) unFavoriteBy(user ProductUsers) error {
 	db := common.GetDB()
 	err := db.Where(FavoriteModel{
 		FavoriteID:   product.ID,
-		FavoriteByID: user.Users.ID,
+		FavoriteByID: user.UsersID,
 	}).Delete(FavoriteModel{}).Error
 	return err
 }
@@ -160,6 +163,16 @@ func FindOneProduct(condition interface{}) (ProductModel, error) {
 	var model ProductModel
 	err :=db.Where(condition).First(&model).Error
 	return model, err
+
+	// db := common.GetDB()
+	// var model ProductModel
+	// tx := db.Begin()
+	// tx.Where(condition).First(&model)
+	// tx.Model(&model).Related(&model.Author, "Author")
+	// tx.Model(&model.Author).Related(&model.Author.UserModel)
+	// // tx.Model(&model).Related(&model.Tags, "Tags")
+	// err := tx.Commit().Error
+	// return model, err
 }
 
 func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, int, error) {
@@ -177,12 +190,7 @@ func (self *ProductUsers) GetProductFeed(limit, offset string) ([]ProductModel, 
 	}
 
 	tx := db.Begin()
-	//followings := self.Users.GetFollowings()
-	 var productUserss []uint
-	// for _, following := range followings {
-	// 	productUsers := GetProductUsers(following)
-	// 	productUserss = append(productUserss, productUsers.ID)
-	// }
+	var productUserss []uint
 
 	tx.Where("author_id in (?)", productUserss).Offset(offset_int).Limit(limit_int).Find(&models)
 
@@ -208,3 +216,9 @@ func GetBrands() ([]BrandsKarma, error) {
 	return model, err
 }
 
+func FindOneUser(condition interface{}) (Users, error) {
+	db := common.GetDB()
+	var model Users
+	err :=db.Where(condition).First(&model).Error
+	return model, err
+}

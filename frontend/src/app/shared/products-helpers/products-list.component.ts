@@ -30,7 +30,6 @@ if(history.state.data){
   }else if(this.router.url==="/"){
     this.BrandsService.getBrands(',client')
       .subscribe(data => {
-
         this.products = data['data']['products']
       });
   }else{

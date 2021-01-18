@@ -1,14 +1,25 @@
 <div class="home-page">
 
-
-  <home-slider></home-slider>
-
-  <div class="banner" *appShowAuthed="false">
+  <div class="banner">
     <div class="container">
       <h1 class="logo-font">KALYPSO</h1>
       <p>A place to shop your <i>QUALITY</i> CLOTH.</p>
     </div>
   </div>
+
+
+
+  <owl-carousel-o  style="height: 400px;" [options]="customOptions">
+    <ng-template carouselSlide>
+      <img style="margin: -20% 0" src="https://www.snipes.es/dw/image/v2/BDCB_PRD/on/demandware.static/-/Sites-snse-master-eu/default/dwe243676f/1584366_P.jpg?sw=780&sh=780&sm=fit&sfrm=png">
+    </ng-template>
+    <ng-template carouselSlide>
+      <img style="margin: -20% 0" src="https://www.rlmedia.io/is/image/PoloGSI/s7-1401463_lifestyle?$rl_df_pdp_5_7_lif$">
+    </ng-template>
+    <ng-template carouselSlide>
+      <img style="margin: -20% 0" src="https://img01.ztat.net/article/spp-media-p1/b315c2af947232d19e95f23344f9134e/cc4e1d24d593433fab3e8d504048075a.jpg?imwidth=762">
+    </ng-template>
+  </owl-carousel-o>
 
 
 

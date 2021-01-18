@@ -57,10 +57,9 @@ export class AuthComponent implements OnInit {
           this.router.navigateByUrl('/')
         },
         err => {
-
           let error = err['errors']["database"]
-          if (error.includes("Duplicate entry")) {
 
+          if ( error && error.includes("Duplicate entry")) {
             if (error.includes("for key 'uix_users_email'")) {
               this.toastr.error(err.error, 'This email is alredy in use')
             } else if (error.includes("for key 'username_UNIQUE'")) {

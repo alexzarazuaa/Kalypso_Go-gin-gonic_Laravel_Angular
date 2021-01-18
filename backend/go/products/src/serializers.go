@@ -29,7 +29,6 @@ type ProductResponse struct {
 	Category       string                `json:"category"`
 	CreatedAt      string                `json:"createdAt"`
 	UpdatedAt      string                `json:"updatedAt"`
-	Author         ProfileResponse `json:"author"`
 	Favorite       bool                  `json:"favorited"`
 	FavoritesCount uint                  `json:"favoritesCount"`
 }
@@ -41,7 +40,6 @@ type ProductsSerializer struct {
 
 func (s *ProductSerializer) Response() ProductResponse {
 	myUserModel := s.C.MustGet("my_user_model").(Users)
-	authorSerializer := ProductUserSerializer{s.C, s.Author}
 	response := ProductResponse{
 		ID:          s.ID,
 		Slug:        s.Slug,
@@ -51,7 +49,6 @@ func (s *ProductSerializer) Response() ProductResponse {
 		Description: s.Description,
 		Rating:      s.Rating,
 		Category:    s.Category,
-		Author:      authorSerializer.Response(),
 		Favorite:       s.isFavoriteBy(GetProductUsers(myUserModel)),
 		FavoritesCount: s.favoritesCount(),
 	}

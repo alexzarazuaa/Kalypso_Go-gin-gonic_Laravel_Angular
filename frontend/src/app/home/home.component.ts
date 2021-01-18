@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 import { BrandsService, UserService, Products } from '../core';
 
@@ -14,6 +15,31 @@ export class HomeComponent implements OnInit {
     private userService: UserService,
     private BrandsService: BrandsService
   ) { }
+
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: true,
+    navSpeed: 700,
+    navText: ['<', '>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+    nav: true
+  }
 
 
 
@@ -39,20 +65,10 @@ export class HomeComponent implements OnInit {
     this.BrandsService.getBrands(',client')
       .subscribe(data => {
         this.brands = data['data']['brands']
-
-        this.brandsLoaded = true;
       });
 
   }
 
-  // setListTo(type: string = '', ) {
-  //   // If feed is requested but user is not authenticated, redirect to login
-  //   if (type === 'feed' && !this.isAuthenticated) {
-  //     this.router.navigateByUrl('/login');
-  //     return;
-  //   }
-
-  // }
 
   FilterBrand(brand) {
     brand = "brands," + brand
