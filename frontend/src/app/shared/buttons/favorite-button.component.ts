@@ -52,12 +52,12 @@ export class FavoriteButtonComponent{
           return this.productsService.favorite(this.product.slug)
           .subscribe(
             _ => {
-              // this.product.favoritesCount++;
+  
               this.product.favorited = true;
               this.isSubmitting = false;
               this.toggle.emit(true);
+              this.product.favoritesCount++;
               this.toastr.success('PRODUCT FAVORITE');
-              // ngOnDestroy(): void
    
             },  
             
@@ -68,11 +68,10 @@ export class FavoriteButtonComponent{
           return this.productsService.unfavorite(this.product.slug)
           .subscribe(
             _ => {
-
-              // this.product.favoritesCount++;
               this.product.favorited = false;
               this.isSubmitting = false;
               this.toggle.emit(false);
+              this.product.favoritesCount--;
               this.toastr.success('FAVORITE DELETE');
             },
             _ => this.isSubmitting = false

@@ -47,25 +47,11 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  onToggleFavorite(favorited: boolean) {
-    this.product.favorited = favorited;
-
-    console.log("-----------------")
-
-    if (favorited) {
-      this.product.favoritesCount++;
-      this.product.favorited = true;
-    } else {
-      this.product.favoritesCount--;
-      this.product.favorited = false;
-
-    }
-  }
 
   deleteProduct() {
     this.productsService.destroy(this.product['product'].slug)
       .subscribe(
-        success => {
+        _ => {
           this.isDeleting = true;
           this.toastr.success('Producto Eliminado', 'Eliminado');
           this.router.navigateByUrl('/');
