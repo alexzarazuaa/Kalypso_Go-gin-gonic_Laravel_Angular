@@ -344,6 +344,7 @@ func order_redis( val string, value bool )  []map[string]interface{} {
 }
 
 func detail (slug string, key bool) (error,ProductModel) {
+	
 	productModel, err := FindOneProduct(&ProductModel{Slug: slug})
 	if err != nil {
 		return err , productModel
