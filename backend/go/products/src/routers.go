@@ -15,6 +15,8 @@ import (
 func ProductsAnonymousRegister(router *gin.RouterGroup) {
 	router.GET("/:slug", ProductList)
 	router.POST("/:slug", UpKarmaProduct)
+	router.PUT("", Proof)
+
 
 }
 
@@ -24,6 +26,14 @@ func ProductsRegister(router *gin.RouterGroup) {
 	router.DELETE("/:slug/favorite", ProductUnfavorite)
 }
 
+func Proof(c *gin.Context){
+	client := common.NewClient()
+
+
+	//obtain data(brands or products) from redis 
+	err := common.DelKey("products", client)
+	fmt.Println(err)
+}
 
 func UpKarmaProduct(c *gin.Context) {
 	data := c.Param("slug")
@@ -354,6 +364,11 @@ func detail (slug string, key bool) (error,ProductModel) {
 
 	if (key==true){
 		err_karma:= Karma_redis("products", productModel.Slug, 5)
+		if err_karma != nil {
+		return err_karma, productModel
+		}
+
+		err_karma= Karma_redis("brands", productModel.Brand, 2)
 		if err_karma != nil {
 		return err_karma, productModel
 		}
