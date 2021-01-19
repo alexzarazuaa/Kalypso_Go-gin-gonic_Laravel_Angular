@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Products } from '../../../core';
 
@@ -6,9 +6,6 @@ import { Products } from '../../../core';
   selector: 'app-products-admin-preview',
   templateUrl: './products-admin-preview.html'
 })
-export class ProductsAdminPreviewComponent implements OnInit{
+export class ProductsAdminPreviewComponent{
   @Input() products: Products;
-  ngOnInit() {
-        
-  }
 }

@@ -12,7 +12,7 @@ import {
   HeaderComponent,
   SharedModule
 } from './shared';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     ProductModule,
     CarouselModule,
     NgxPaginationModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
     HttpClientModule,
 
     ToastrModule.forRoot()
