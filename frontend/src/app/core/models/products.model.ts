@@ -10,4 +10,6 @@ export interface Products {
     rating: number;
     Category: number;
     favorited: boolean;
+    favoritesCount: number;
+
 }// Products

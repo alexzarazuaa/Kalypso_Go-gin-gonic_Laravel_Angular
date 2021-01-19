@@ -37,7 +37,9 @@ To get the repo running locally:
 
   * **KALYPSO HOME**
 
-      <img src="./frontend/src/img/homePreview.png">
+
+   <img src="./frontend/src/img/homePreview1.png">
+       <img src="./frontend/src/img/homePreview.png">
 
 
   * **Products Shop List**
@@ -48,6 +50,10 @@ To get the repo running locally:
   * **List Product Description**
 
       <img src="./frontend/src/img/preview2.png">
+
+  * **Product Detail**
+
+      <img src="./frontend/src/img/preview_detail.png">     
 
   * **Register**
 
@@ -63,8 +69,9 @@ To get the repo running locally:
 
 | Page | Features |
 | - | - |
-| Home | Popular Brands with GO and MySql , and Products More Visited by Go  |
+| Home | Carousel with some images,Popular Brands with GO and MySql , and Products More Visited by Go  |
 | Shop | List with GO and MySql, Details with Go and MySql |
+| Product | Product Info , and Favorite button and Buy Product Button |
 | Settings | LogOut and  User Settings |
 | Profile | User info, favourited Garment |
 | PanelAdmin | Dashborad For Users Admin that they can Create and Delete products with Laravel |

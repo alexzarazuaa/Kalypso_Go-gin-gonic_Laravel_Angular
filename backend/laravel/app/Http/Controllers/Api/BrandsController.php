@@ -15,6 +15,7 @@ class Brands extends ApiController
 
     public function index()
     {
+
       
         $types=['brands', 'products'];
 
@@ -35,8 +36,11 @@ class Brands extends ApiController
                         $object -> save();
                     }
             }
+
         }
+
     return $this -> respondSuccess("okey");
 
     }
+    
 }

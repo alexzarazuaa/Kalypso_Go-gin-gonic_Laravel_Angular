@@ -28,55 +28,78 @@
       </div>
     </div>
   </nav>
-
-  <div class="container-fluid">
-    <div class="row content">
-      <div class="col-sm-3 sidenav hidden-xs">
-        <h2>Dashboard</h2>
-        <ul class="nav nav-pills nav-stacked">
-          <li class="active"><a>Products</a></li>
-        </ul><br>
-      </div>
-      <br>
-
-      <div class="col-sm-9">
-
-        <section>
-
-          <div>
-            <span>Brands</span>
-            <div class="scrollmenu">
-              <a *ngFor="let brand of brands"> {{brand.key}} : {{brand.value}} </a>
-            </div>
-          </div>
-          <div>
-            <span> Products</span>
-            <div class="scrollmenu">
-              <a *ngFor="let product of products"  [routerLink]="['/product', product.key.Slug]" > {{product.key.Name}} : {{product.value}}  </a>
-            </div>
-          </div>
-
-          <h1>PRODUCTOS</h1>
+  <main>
+    <div class="container-fluid">
+      <div class="row content">
+        <div class="col-sm-3 sidenav hidden-xs">
+          <h2>Dashboard</h2>
           <ul class="nav nav-pills nav-stacked">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/editor" routerLinkActive="active">
-                <i class="ion-compose"></i>&nbsp;Nuevo Producto
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/shop" routerLinkActive="active">
-                <i></i>&nbsp; Eliminar Producto
-              </a>
-            </li>
-          </ul>
+            <li class="active"><a>Products</a></li>
+          </ul><br>
+        </div>
+        <br>
+
+        <div class="col-sm-9">
+
+          <section>
+
+            <section class="container">
+
+              <article>
+                <h1><strong>INSERTAR PRODUCTOS</strong></h1>
+
+                <button class="btnEditor" routerLink="/editor" routerLinkActive="active">
+                  <i class="ion-compose"></i>&nbsp;Nuevo Producto
+                </button> &nbsp;&nbsp;&nbsp;&nbsp;
 
 
+                <button class="btnDelete" routerLink="/shop" routerLinkActive="active">
+                  <i></i>&nbsp; Eliminar Producto
+                </button>
 
-        </section>
+              </article>
+
+              <section>
+                <h1><strong>INSERTAR RATING EN BD</strong></h1>
+
+                <button class="btnInsert" (click)="insertBD()">INSERT</button>
+              </section>
+
+
+              <section>
+                <article>
+                  <h1> MARCAS Y SU RATING</h1>
+                  <br>
+                  <div class="scrollmenu">
+                    <a *ngFor="let brand of brands"> {{brand.key}} : {{brand.value}} </a>
+                  </div>
+                </article>
+
+                <article>
+                  <br>
+                  <h1>PRODUCTOS Y SU RATING</h1>
+                  <br>
+                  <div class="scrollmenu">
+                    <a *ngFor="let product of products" [routerLink]="['/product', product.key.Slug]">
+                      {{product.key.Name}}
+                      :
+                      {{product.value}} </a>
+                  </div>
+                </article>
+                <br>
+
+              </section>
+
+            </section>
+
+          </section>
+        </div>
+
       </div>
-
     </div>
-  </div>
+  </main>
+
+
 
 
 </body>

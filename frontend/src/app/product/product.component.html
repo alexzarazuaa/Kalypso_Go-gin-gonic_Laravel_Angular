@@ -1,7 +1,5 @@
 <main class="container">
 
-
-
   <!-- Right Column -->
   <div class="right-column">
 
@@ -21,18 +19,18 @@
       <br>
       <br>
 
-      <button  *ngIf="currentUser.type == 'client'" class="cart-btn" (click)="BuyProduct()">Buy Product</button>&nbsp;&nbsp;&nbsp;&nbsp;
-
+      <button class="cart-btn" (click)="BuyProduct()">Buy Product</button>&nbsp;&nbsp;&nbsp;&nbsp;
+      <br>
+      <br>
 
       <button *ngIf="currentUser.type == 'admin'"  class="btn btn-sm btn-outline-danger" [ngClass]="{disabled: isDeleting}" (click)="deleteProduct()">
         <i class="ion-trash-a"></i>&nbsp;Delete Product
       </button>&nbsp;&nbsp;&nbsp;&nbsp;
 
-      <app-favorite-button *ngIf="currentUser.type == 'client'" [product]="product.product" class="like">
-
-
-      </app-favorite-button>
+      <app-favorite-button [product]="product.product">
+      </app-favorite-button> &nbsp;&nbsp;<span><strong>{{product.product.favoritesCount}}</strong></span>
       <br>
     </div>
+
   </div>
 </main>

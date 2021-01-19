@@ -1,39 +1,85 @@
    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-   .row.content {height: 550px}
-    
-   /* Set gray background color and 100% height */
-   .sidenav {
-	 background-color: #f1f1f1;
-	 height: 100%;
+
+   .row.content {
+     height: 550px
    }
-	   
+
+   /* Set gray background color and 100% height */
+
+   .sidenav {
+     background-color: #f1f1f1;
+     height: 100%;
+   }
+
    /* On small screens, set height to 'auto' for the grid */
+
    @media screen and (max-width: 767px) {
-	 .row.content {height: auto;} 
+     .row.content {
+       height: auto;
+     }
    }
 
    a.active {
-      background-color: dodgerblue;
-      color: white;
-    }
+     background-color: dodgerblue;
+     color: white;
+   }
 
+   div.scrollmenu {
+     background-color: #333;
+     overflow: auto;
+     white-space: nowrap;
+   }
 
-div.scrollmenu {
-   background-color: #333;
-   overflow: auto;
-   white-space: nowrap;
- }
- 
- div.scrollmenu a {
-   display: inline-block;
-   color: white;
-   text-align: center;
-   padding: 12px;
-   
-   text-decoration: none;
- }
- 
- div.scrollmenu a:hover {
-   background-color: #777;
- }
-    
+   div.scrollmenu a {
+     display: inline-block;
+     color: white;
+     text-align: center;
+     padding: 12px;
+     text-decoration: none;
+   }
+
+   div.scrollmenu a:hover {
+     background-color: #777;
+   }
+
+   .btnEditor {
+     background-color: #e7e7e7;
+     color: black;
+     font-weight: bold;
+     border: none;
+     padding: 15px 32px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     margin: 4px 2px;
+     cursor: pointer;
+   }
+
+   .btnDelete{
+    background-color: #e7e7e7;
+    color: red;
+    font-weight: bold;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+   }
+
+   .btnInsert{
+    background-color: grey;
+    color: khaki;
+    font-weight: bold;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+   }

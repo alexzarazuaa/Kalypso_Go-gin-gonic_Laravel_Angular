@@ -16,7 +16,7 @@ export class BrandsService {
     getBrands(mode): Observable<[string]> {
         return this.apiService.get_goProd('/home'+ mode)
             .pipe(map(data => {
-                console.log(data)
+              
                 return data;
             }));
     }
@@ -24,9 +24,18 @@ export class BrandsService {
     filterBrands(brand): Observable<[string]> {
         return this.apiService.get_goProd('/' + brand)
             .pipe(map(data => {
-                console.log(data)
+              
                 return data;
             }));
     }
+
+    insertRedisDb(): Observable<[string]> {
+        return this.apiService.get('/brands')
+            .pipe(map(data => {
+              
+                return data;
+            }));
+    }
+
 
 }

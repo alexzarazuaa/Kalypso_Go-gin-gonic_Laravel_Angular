@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { Products, ProductsService, UserService } from '../core';
+import { Products, ProductsService } from '../core';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
@@ -10,7 +10,6 @@ export class EditableProduct implements Resolve<Products> {
   constructor(
     private productsService: ProductsService,
     private router: Router,
-    private userService: UserService
   ) { }
 
   resolve(

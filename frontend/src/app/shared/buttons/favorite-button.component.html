@@ -2,6 +2,6 @@
  [ngClass]="{ 'disabled' : isSubmitting,
               'btn-outline-primary': !product.favorited,
               'btn-primary': product.favorited }"
- (click)="toggleFavorite()">
+ (click)="toggleFavorite($event)">
   <i class="ion-heart"></i> <ng-content></ng-content>
 </button>

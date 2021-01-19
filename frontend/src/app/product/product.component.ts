@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Products, ProductsService, UserService, User, BuysProductsService } from '../core';
 import { ToastrService } from 'ngx-toastr';
 import { concatMap, flatMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of , Subscription} from 'rxjs';
 
 
 @Component({
@@ -30,11 +30,12 @@ export class ProductComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  private subscription: Subscription;
+
   ngOnInit() {
     // Retreive the prefetched product
     this.route.data.subscribe(
       (data: { product: Products; }) => {
-        console.log(data.product, 'detail')
         this.product = data.product;
       }
     );
@@ -48,10 +49,14 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
   deleteProduct() {
     this.productsService.destroy(this.product['product'].slug)
       .subscribe(
-        success => {
+        _ => {
           this.isDeleting = true;
           this.toastr.success('Producto Eliminado', 'Eliminado');
           this.router.navigateByUrl('/');
@@ -62,31 +67,31 @@ export class ProductComponent implements OnInit {
 
   BuyProduct() {
 
-    // console.log(this.product);
 
-    this.userService.isAuthenticated.pipe(concatMap(
+    this.subscription = this.userService.isAuthenticated.subscribe(
       (authenticated) => {
+
         // Not authenticated? Push to login screen
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
-        }        
+        }
+
         this.buysProducts.insert(this.product["product"].slug)
-        .subscribe(data =>{
-          console.log(data)
-          if(data['data']=="okey"){
-            this.toastr.success('Producto Comprado', 'Comprado');
-            
-            let data=this.product["product"].slug + ',' + this.product["product"].brand;
-            this.productsService.UpKarmaProduct(data).subscribe()
+          .subscribe(data => {
+            if (data['data'] == "okey") {
+              this.toastr.success('Producto Comprado', 'Comprado');
+
+              let data = this.product["product"].slug + ',' + this.product["product"].brand;
+              this.productsService.UpKarmaProduct(data).subscribe()
 
 
-          }
-        })
+            }
+          })
 
 
       }
-    )).subscribe();
+    );
   }
 
 

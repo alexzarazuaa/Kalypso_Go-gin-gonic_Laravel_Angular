@@ -19,7 +19,6 @@ export class ShopComponent implements OnInit {
       ngOnInit() {
 
 
-          console.log('SHOOOOOP');
         
       }
     

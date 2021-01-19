@@ -50,7 +50,7 @@ type UserResponse struct {
 	Image     *string `json:"image"`
 	Karma 	   int    `json:"karma"`
 	Type	   string  `json:"type"`
-	Token    string  `json:"token"`
+	Bearer    string  `json:"bearer"`
 }
 
 func (self *UserSerializer) Response() UserResponse {
@@ -61,7 +61,7 @@ func (self *UserSerializer) Response() UserResponse {
 		Image:    myUsers.Image,
 		Karma: 	   myUsers.Karma,
 		Type:	  myUsers.Type,
-		Token:    common.GenToken(myUsers.ID),
+		Bearer:    common.GenToken(myUsers.ID),
 	}
 	return user
 }

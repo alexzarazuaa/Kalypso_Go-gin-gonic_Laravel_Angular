@@ -13,7 +13,7 @@ export class ProductsPreviewComponent {
 
   ngOnInit() {
     this.product;
-    console.log('Entra en el preview component', this.product);
+
 
 
   }
