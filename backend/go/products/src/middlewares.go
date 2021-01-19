@@ -51,6 +51,7 @@ func AuthMiddleware(auto401 bool) gin.HandlerFunc {
 		client := common.NewClient()
 
 		err, val := common.Get("user", client)
+
 		if err != nil {
 			if auto401 {
 				c.AbortWithError(http.StatusUnauthorized, err)

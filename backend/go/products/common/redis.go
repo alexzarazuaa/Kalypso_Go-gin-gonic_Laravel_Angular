@@ -38,3 +38,7 @@ func Get(key string, client *redis.Client) (error, string) {
     }
 	return err, val
 }
+
+func DelKey(key string, client *redis.Client) (error) {
+	return client.Del(ctx, key).Err()
+}

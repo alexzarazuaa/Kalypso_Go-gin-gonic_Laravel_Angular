@@ -35,4 +35,19 @@ export class AdminComponent implements OnInit {
       })
   }
 
+
+  DelDB() {
+    this.BrandsService.DelRatingDB()
+      .subscribe(data => {
+        this.toastr.success('Del Rating');
+      })
+  }
+
+  DelRedis() {
+    this.BrandsService.DelRatingRedis()
+      .subscribe(data => {
+        this.toastr.success('Del Rating');
+      })
+  }
+
 }

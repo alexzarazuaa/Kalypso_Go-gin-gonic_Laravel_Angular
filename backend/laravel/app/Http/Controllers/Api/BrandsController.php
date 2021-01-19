@@ -39,8 +39,25 @@ class Brands extends ApiController
 
         }
 
-    return $this -> respondSuccess("okey");
+        return $this -> respondSuccess("okey");
+    }
+
+    public function update(){
+        echo("PPEPEPEPPEEP");
 
     }
+
+    public function destroy(){
+
+        echo("PPEPEPEPPEEP");
+        Redis::del('brands');
+        Redis::del('products');
+
+        return $this -> respondSuccess("okey");
+
+
+    }
+
+   
     
 }
