@@ -11,8 +11,7 @@ import { of, Subscription } from 'rxjs';
 export class FavoriteButtonComponent{
   onDestroyEvent: EventEmitter<string> = new EventEmitter();
 
-  myValue: string;
-  myValueSub: UserService;
+
 
   constructor(
     private productsService: ProductsService,

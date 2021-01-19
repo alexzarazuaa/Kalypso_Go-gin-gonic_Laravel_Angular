@@ -20,7 +20,8 @@
       <br>
 
       <button class="cart-btn" (click)="BuyProduct()">Buy Product</button>&nbsp;&nbsp;&nbsp;&nbsp;
-
+      <br>
+      <br>
 
       <button *ngIf="currentUser.type == 'admin'"  class="btn btn-sm btn-outline-danger" [ngClass]="{disabled: isDeleting}" (click)="deleteProduct()">
         <i class="ion-trash-a"></i>&nbsp;Delete Product

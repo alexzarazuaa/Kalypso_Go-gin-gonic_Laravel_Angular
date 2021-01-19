@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Products, ProductsService, UserService, User, BuysProductsService } from '../core';
 import { ToastrService } from 'ngx-toastr';
 import { concatMap, flatMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of , Subscription} from 'rxjs';
 
 
 @Component({
@@ -30,6 +30,8 @@ export class ProductComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  private subscription: Subscription;
+
   ngOnInit() {
     // Retreive the prefetched product
     this.route.data.subscribe(
@@ -47,6 +49,9 @@ export class ProductComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
 
   deleteProduct() {
     this.productsService.destroy(this.product['product'].slug)
@@ -62,13 +67,16 @@ export class ProductComponent implements OnInit {
 
   BuyProduct() {
 
-    this.userService.isAuthenticated.pipe(concatMap(
+
+    this.subscription = this.userService.isAuthenticated.subscribe(
       (authenticated) => {
+
         // Not authenticated? Push to login screen
         if (!authenticated) {
           this.router.navigateByUrl('/login');
           return of(null);
         }
+
         this.buysProducts.insert(this.product["product"].slug)
           .subscribe(data => {
             if (data['data'] == "okey") {
@@ -83,7 +91,7 @@ export class ProductComponent implements OnInit {
 
 
       }
-    )).subscribe();
+    );
   }
 
 
