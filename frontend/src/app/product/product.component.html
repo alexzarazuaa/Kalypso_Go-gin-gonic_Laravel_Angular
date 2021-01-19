@@ -20,16 +20,15 @@
       <br>
 
       <button class="cart-btn" (click)="BuyProduct()">Buy Product</button>&nbsp;&nbsp;&nbsp;&nbsp;
-      <h1>{{product.product.favoritesCount}}</h1>
+
 
       <button *ngIf="currentUser.type == 'admin'"  class="btn btn-sm btn-outline-danger" [ngClass]="{disabled: isDeleting}" (click)="deleteProduct()">
         <i class="ion-trash-a"></i>&nbsp;Delete Product
       </button>&nbsp;&nbsp;&nbsp;&nbsp;
 
       <app-favorite-button [product]="product.product">
-      </app-favorite-button>
+      </app-favorite-button> &nbsp;&nbsp;<span><strong>{{product.product.favoritesCount}}</strong></span>
       <br>
-
     </div>
 
   </div>
