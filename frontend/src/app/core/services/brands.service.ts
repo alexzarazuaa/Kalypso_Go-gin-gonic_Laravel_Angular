@@ -38,4 +38,23 @@ export class BrandsService {
     }
 
 
+    DelRedisService() : Observable<[string]>  {
+        console.log('HEY ENTRE SERVICE ++++ ------')
+        return this.apiService.delete('/brands/deleteRedis')
+        .pipe(map(data => {
+            console.log(data)
+            return data;
+        }));
+      }
+    
+      UpRedisService() : Observable<[string]> {
+        console.log('HEY ENTRE SERVICE +++ ------')
+        return this.apiService.put('/brands/updateRedis')
+        .pipe(map(data => {
+            console.log(data)
+            return data;
+        }));
+      }
+
+
 }

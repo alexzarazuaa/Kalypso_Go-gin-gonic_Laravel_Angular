@@ -17,6 +17,9 @@ Route::group(['namespace' => 'Api'], function () {
      Route::resource('products', 'Products');
      Route::resource('brands', 'Brands');
 
+     Route::resource('brands/updateRedis', 'Brands@update');
+     Route::resource('brands/deleteRedis', 'Brands@destroy');
+
     Route::post('users/login', 'AuthController@login');
     Route::post('users/login_admin_go', 'AuthController@login_admin_go');
 

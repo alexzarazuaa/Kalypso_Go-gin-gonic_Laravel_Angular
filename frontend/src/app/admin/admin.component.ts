@@ -35,4 +35,22 @@ export class AdminComponent implements OnInit {
       })
   }
 
+  DelRedis() {
+    console.log('HEY ENTRE DEL ------')
+    this.BrandsService.DelRedisService()
+      .subscribe(data => {
+        console.log(data)
+        this.toastr.success('DELETE REDIS');
+      })
+  }
+
+  UpRedis() {
+    console.log('HEY ENTRE UP ------')
+    this.BrandsService.UpRedisService()
+      .subscribe(data => {
+        console.log(data)
+        this.toastr.success('UPDATE REDIS');
+      })
+  }
+
 }
