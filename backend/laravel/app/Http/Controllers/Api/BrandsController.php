@@ -38,10 +38,15 @@ class Brands extends ApiController
 
         }
 
-    return $this -> respondSuccess("okey");
+        return $this -> respondSuccess("okey");
+    }
+
+    public function update(){
+        echo("PPEPEPEPPEEP");
 
     }
 
+<<<<<<< HEAD
     public function store(Request $request)
     {
             //
@@ -78,5 +83,19 @@ class Brands extends ApiController
 
         return $this -> respondSuccess("okey");
     }// end_delete
+=======
+    public function destroy(){
+
+        echo("PPEPEPEPPEEP");
+        Redis::del('brands');
+        Redis::del('products');
+
+        return $this -> respondSuccess("okey");
+
+
+    }
+
+   
+>>>>>>> c5ac40264167a551fe2480c516dcb58c2813269a
     
 }

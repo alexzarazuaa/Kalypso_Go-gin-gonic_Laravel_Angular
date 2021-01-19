@@ -35,6 +35,7 @@ export class AdminComponent implements OnInit {
       })
   }
 
+<<<<<<< HEAD
   DelRedis() {
     console.log('HEY ENTRE DEL ------')
     this.BrandsService.DelRedisService()
@@ -50,6 +51,20 @@ export class AdminComponent implements OnInit {
       .subscribe(data => {
         console.log(data)
         this.toastr.success('UPDATE REDIS');
+=======
+
+  DelDB() {
+    this.BrandsService.DelRatingDB()
+      .subscribe(data => {
+        this.toastr.success('Del Rating');
+      })
+  }
+
+  DelRedis() {
+    this.BrandsService.DelRatingRedis()
+      .subscribe(data => {
+        this.toastr.success('Del Rating');
+>>>>>>> c5ac40264167a551fe2480c516dcb58c2813269a
       })
   }
 

@@ -37,6 +37,22 @@ export class BrandsService {
             }));
     }
 
+    DelRatingRedis(): Observable<[string]> {
+        return this.apiService.delete('/brands')
+            .pipe(map(data => {
+              
+                return data;
+            }));
+        }
+
+    DelRatingDB(): Observable<[string]> {
+            return this.apiService.put('/brands')
+                .pipe(map(data => {
+                  
+                    return data;
+                }));
+            }
+
 
     DelRedisService() : Observable<[string]>  {
         console.log('HEY ENTRE SERVICE ++++ ------')
