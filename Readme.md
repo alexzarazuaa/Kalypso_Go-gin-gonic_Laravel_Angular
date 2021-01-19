@@ -51,6 +51,10 @@ To get the repo running locally:
 
       <img src="./frontend/src/img/preview2.png">
 
+  * **Product Detail**
+
+      <img src="./frontend/src/img/preview_detail.png">     
+
   * **Register**
 
      <img src="./frontend/src/img/Register_Preview.png">
@@ -67,6 +71,7 @@ To get the repo running locally:
 | - | - |
 | Home | Carousel with some images,Popular Brands with GO and MySql , and Products More Visited by Go  |
 | Shop | List with GO and MySql, Details with Go and MySql |
+| Product | Product Info , and Favorite button and Buy Product Button |
 | Settings | LogOut and  User Settings |
 | Profile | User info, favourited Garment |
 | PanelAdmin | Dashborad For Users Admin that they can Create and Delete products with Laravel |
